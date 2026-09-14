@@ -1,0 +1,21 @@
+# --- secrets & runtime state (never in git; live ABOVE webroot on Hostinger) ---
+config/config.php
+cache/
+storage/
+releases/
+
+# --- extracted media datasets (regenerate with tools/extract_content.py --media) ---
+docs/data/media/
+
+# --- build output ---
+build/
+public_html/
+
+# --- env / editor / os noise ---
+.env
+.DS_Store
+Thumbs.db
+*.log
+node_modules/
+.vscode/
+.idea/
