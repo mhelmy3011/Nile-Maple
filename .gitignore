@@ -1,21 +1,31 @@
-# --- secrets & runtime state (never in git; live ABOVE webroot on Hostinger) ---
+# --- secrets & runtime state (live above the webroot on Hostinger, never in git) ---
 config/config.php
 cache/
 storage/
 releases/
+dist/
 
-# --- extracted media datasets (regenerate with tools/extract_content.py --media) ---
+# --- extracted source media: regenerate with  python3 tools/extract_content.py --media ---
 docs/data/media/
 
-# --- build output ---
-build/
-public_html/
+# --- build output. public_html is generated from the DB, so only the four shipped
+#     entry points are tracked; the language trees, sitemaps, assets and media are not. ---
+/public_html/*
+!/public_html/index.php
+!/public_html/.htaccess
+!/public_html/.user.ini
+!/public_html/manage/
+/public_html/manage/*
+!/public_html/manage/index.php
 
-# --- env / editor / os noise ---
+# --- dev-only tooling ---
+node_modules/
+tools/harness/
+*.log
+
+# --- editor / OS noise ---
 .env
 .DS_Store
 Thumbs.db
-*.log
-node_modules/
-.vscode/
 .idea/
+.vscode/

@@ -1,0 +1,102 @@
+# ──────────────────────────────────────────────────────────────────────────────────────
+# Nile-Maple · public_html front-door (doc 04 §2.2)
+# LiteSpeed on Hostinger evaluates Apache syntax. Static HTML built by tools/rebuild.php
+# is served straight from disk; PHP runs only for / , /api/ and the self-healing fallback.
+# ──────────────────────────────────────────────────────────────────────────────────────
+Options -Indexes -MultiViews +FollowSymLinks
+DirectoryIndex index.html index.php
+ServerSignature Off
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+
+# 1 · canonical https + bare domain (skipped on localhost/preview/IP hosts so local QA works)
+RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1|localhost:\d+|\d+\.\d+\.\d+\.\d+)(:\d+)?$ [NC]
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://nilemaple.com%{REQUEST_URI} [R=301,L]
+RewriteCond %{HTTP_HOST} ^www\.nilemaple\.com$ [NC]
+RewriteRule ^ https://nilemaple.com%{REQUEST_URI} [R=301,L]
+
+# 2 · "/" → language detector (cookie / Accept-Language → 302 /en|ar|fr/)
+RewriteRule ^$ index.php?r=lang [L,QSA]
+
+# 3 · dynamic endpoints (only these two ever touch PHP)
+RewriteRule ^api/(.*)$ index.php?r=api&path=$1 [L,QSA]
+RewriteCond %{REQUEST_URI} !^/manage/index\.php$
+RewriteRule ^manage/?(.*)$ manage/index.php?path=$1 [L,QSA]
+
+# 4 · pretty static: /en/about/ is physically /en/about/index.html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI}index.html -f
+RewriteRule ^(.+/)$ $1index.html [L]
+
+# 5 · self-healing fallback: unknown path → render from DB, write the file, serve it
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php?r=render [L,QSA]
+</IfModule>
+
+# ── hardening ─────────────────────────────────────────────────────────────────────────
+<FilesMatch "^\.|\.(sql|log|ini|bak|tmp|eml|sh|py|lock|gitignore)$">
+  Require all denied
+</FilesMatch>
+<IfModule mod_authz_core.c>
+  <Files "config.php"> Require all denied </Files>
+</IfModule>
+
+# ── types (LiteSpeed has avif/woff2 built in on current PHP stacks; declared for safety) ──
+AddType image/avif .avif
+AddType image/webp .webp
+AddType font/woff2 .woff2
+AddType application/manifest+json .webmanifest
+
+# ── caching: html revalidates, hashed assets are immutable for a year ───────────────────
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType image/avif "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+</IfModule>
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), geolocation=(), microphone=(), payment=()"
+  Header always set Content-Security-Policy "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'"
+  <IfModule mod_sed.c>
+    Header edit Set-Cookie ^(.*)$ "$1; HttpOnly; SameSite=Lax"
+  </IfModule>
+  <If "%{HTTPS} == 'on'">
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+  </If>
+  <FilesMatch "\.(avif|webp|jpg|png|svg|woff2|css|js)$">
+    Header always set Cache-Control "public, max-age=31536000, immutable"
+    Header unset Pragma
+    Header unset Expires
+  </FilesMatch>
+  <FilesMatch "index\.html$">
+    Header always set Cache-Control "public, max-age=0, must-revalidate, s-maxage=3600, stale-while-revalidate=86400"
+    Header unset Pragma
+  </FilesMatch>
+  <FilesMatch "robots\.txt|sitemap.*\.xml$">
+    Header always set Cache-Control "public, max-age=3600, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# ── compression (Brotli is enabled server-side by Hostinger; this covers the rest) ──────
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml application/javascript application/json image/svg+xml application/xml
+  DeflateCompressionLevel 6
+  BrowserMatch ^Mozilla/4 gzip-only-text/html
+</IfModule>
+<IfModule mod_brotili.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/css application/javascript application/json image/svg+xml
+</IfModule>
+
+ErrorDocument 404 /404.html
