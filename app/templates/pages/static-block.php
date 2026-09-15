@@ -1,6 +1,9 @@
 <?php
 use Nm\Content; use Nm\I18n; use Nm\Markdown; use Nm\View;
 $title = I18n::t('zone.' . $zone);
+/* the page-head <h1> comes from the block title / zone string; a markdown body that starts
+   with "# ..." would render a SECOND h1 — strip the leading ATX h1 before rendering. */
+$stripH1 = static fn(string $md): string => preg_replace('/^\s*#\s+[^\n]*\n+/', '', $md);
 ?>
 <div class="page-head">
   <div class="container">
@@ -14,7 +17,7 @@ $title = I18n::t('zone.' . $zone);
   <div class="container container-narrow">
     <?php foreach ($blocks as $b): $pl = Content::blockPayload($b); ?>
       <?php if ($b['kind'] === 'text'): ?>
-        <div class="prose"><?= Markdown::render($pl['text'] ?? '') ?></div>
+        <div class="prose"><?= Markdown::render($stripH1($pl['text'] ?? '')) ?></div>
       <?php elseif ($b['kind'] === 'list'): ?>
         <h2><?= View::e($b['title'] ?? '') ?></h2>
         <ul class="check-list"><?php foreach ($pl['items'] ?? [] as $it): ?>
@@ -30,7 +33,7 @@ $title = I18n::t('zone.' . $zone);
       <?php elseif ($b['kind'] === 'stat'): ?>
         <?= View::render('ui/stats-band', ['stats' => [$b], 'lang' => $lang]) ?>
       <?php elseif ($b['kind'] === 'markdown'): ?>
-        <div class="prose"><?= Markdown::render($pl['body'] ?? '') ?></div>
+        <div class="prose"><?= Markdown::render($stripH1($pl['body'] ?? '')) ?></div>
       <?php endif; ?>
     <?php endforeach; ?>
   </div>

@@ -3,27 +3,25 @@ use Nm\Content; use Nm\I18n; use Nm\Media; use Nm\View;
 $t = static fn(string $k, array $p = []) => I18n::t($k, $p);
 $hero = $hero[0] ?? null;
 $hp = $hero ? Content::blockPayload($hero) : [];
+/* D-03: a single art-directed hero, no carousel chrome. The previous markup declared a
+   2-slide carousel with one slide and empty dots — a screen reader announced navigation
+   that did not exist, and the LCP candidate was a text node. One honest hero, preloaded. */
+$heroImg = !empty($hp['media_id']) ? Media::img((int) $hp['media_id'], (string) ($hp['alt'] ?? $hero['title'] ?? ''), 'hero', '100vw') : '';
 ?>
-<section class="hero" data-carousel aria-roledescription="carousel" aria-label="<?= $t('home.hero.aria') ?>">
-  <div class="hero-track" tabindex="0">
-    <div class="hero-slide" role="group" aria-label="1/2">
-      <?= $hp['media_id'] ?? 0 ? Media::img((int) $hp['media_id'], $hp['alt'] ?? '', 'hero', '100vw') : '' ?>
-      <div class="hero-scrim" aria-hidden="true"></div>
-      <div class="container hero-copy">
-        <p class="eyebrow eyebrow-light"><?= View::e($hero['eyebrow'] ?? '') ?></p>
-        <h1><?= View::e($hero['title'] ?? '') ?></h1>
-        <p class="hero-lead"><?= View::e($hp['lead'] ?? '') ?></p>
-        <div class="hero-cta">
-          <a class="btn btn-primary btn-lg" href="/<?= $lang ?>/categories/"><?= $t('cta.explore') ?></a>
-          <a class="btn btn-outline-light btn-lg" href="/<?= $lang ?>/contact/"><?= $t('cta.quote') ?></a>
-        </div>
+<section class="hero">
+  <div class="hero-slide">
+    <?= $heroImg ?>
+    <div class="hero-scrim" aria-hidden="true"></div>
+    <div class="container hero-copy">
+      <p class="eyebrow eyebrow-light"><?= View::e($hero['eyebrow'] ?? '') ?></p>
+      <h1><?= View::e($hero['title'] ?? '') ?></h1>
+      <p class="hero-lead"><?= View::e($hp['lead'] ?? '') ?></p>
+      <div class="hero-cta">
+        <a class="btn btn-primary btn-lg" href="/<?= $lang ?>/categories/"><?= $t('cta.explore') ?></a>
+        <a class="btn btn-outline-light btn-lg" href="/<?= $lang ?>/contact/"><?= $t('cta.quote') ?></a>
       </div>
     </div>
-    <?php $h2 = $hero2 ?? null; ?>
-    <?php if (!empty($hero[1])): $s = $hero[1]; ?>
-    <?php endif; ?>
   </div>
-  <div class="hero-dots" role="tablist" aria-label="<?= $t('home.hero.slides') ?>"></div>
 </section>
 
 <?= View::render('ui/stats-band', ['stats' => $stats, 'lang' => $lang]) ?>
@@ -34,7 +32,11 @@ $hp = $hero ? Content::blockPayload($hero) : [];
     <div class="division-list">
       <?php foreach ($categories as $c): ?>
         <a class="division-card" href="/<?= $lang ?>/categories/<?= View::e($c['slug']) ?>/">
-          <span class="dc-media"><?= $c['cover_media_id'] ? Media::img((int) $c['cover_media_id'], $c['name']) : '' ?></span>
+          <?php if (!empty($c['cover_media_id'])): /* D-03: real division photography, never an empty box */ ?>
+            <span class="dc-media"><?= Media::img((int) $c['cover_media_id'], (string) $c['name'], 'lazy', '(min-width:768px) 46vw, 92vw') ?></span>
+          <?php else: ?>
+            <span class="dc-media dc-media-mono" aria-hidden="true"><?= \Nm\Icons::svg($c['icon_key'] ?? 'citrus') ?></span>
+          <?php endif; ?>
           <span class="dc-body">
             <span class="chip chip-green"><?= (int) $c['cnt'] ?> <?= $t('home.products') ?></span>
             <h3><?= View::e($c['name']) ?></h3>
@@ -52,11 +54,13 @@ $hp = $hero ? Content::blockPayload($hero) : [];
   <div class="container">
     <?= View::render('ui/section-head', ['eyebrow' => $t('home.process.eyebrow'), 'title' => $t('home.process.title'), 'lead' => $t('home.process.lead')]) ?>
     <ol class="timeline">
-      <?php foreach ($process as $i => $b): $pl = Content::blockPayload($b); ?>
+      <?php foreach ($process as $b): $pl = Content::blockPayload($b); ?>
+        <?php foreach (($pl['steps'] ?? [['t' => $b['title'] ?? '', 'x' => $pl['text'] ?? '']]) as $i => $st): ?>
         <li class="tl-item">
           <span class="tl-num tabular"><?= str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT) ?></span>
-          <div><h3><?= View::e($b['title'] ?? '') ?></h3><p><?= View::e($pl['text'] ?? '') ?></p></div>
+          <div><h3><?= View::e($st['t'] ?? '') ?></h3><p><?= View::e($st['x'] ?? '') ?></p></div>
         </li>
+        <?php endforeach; ?>
       <?php endforeach; ?>
     </ol>
   </div>

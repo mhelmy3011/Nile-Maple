@@ -10,7 +10,7 @@ if (!is_file($NM_CONFIG_FILE)) {
     copy(__DIR__ . '/../config/config.example.php', $NM_CONFIG_FILE);
     @chmod($NM_CONFIG_FILE, 0600);
 }
-$GLOBALS['NM_CONFIG'] = require $NM_CONFIG_FILE;
+$GLOBALS['NM_CONFIG'] = $GLOBALS['NM_CONFIG_OVERRIDE'] ?? require $NM_CONFIG_FILE;
 
 function cfg(string $key, mixed $default = null): mixed {
     $p = explode('.', $key); $v = $GLOBALS['NM_CONFIG'];
@@ -35,6 +35,26 @@ set_error_handler(static function (int $no, string $str, string $file = '', int 
     error_log("[nm] $str @ $file:$line");
     if (in_array($no, [E_USER_ERROR, E_RECOVERABLE_ERROR], true)) throw new ErrorException($str, 0, $no, $file, $line);
     return true;
+});
+/* Uncaught throwables log verbosely server-side and render a NEUTRAL page — never a stack
+ * trace with filesystem paths (D-01 secondary finding: the /manage/login fatal leaked paths). */
+set_exception_handler(static function (\Throwable $e): void {
+    error_log("[nm] UNCAUGHT " . get_class($e) . ": {$e->getMessage()} @ {$e->getFile()}:{$e->getLine()}\n{$e->getTraceAsString()}");
+    if (!headers_sent()) {
+        http_response_code(500);
+        header('Content-Type: text/html; charset=utf-8');
+        header('Cache-Control: no-store');
+    }
+    $dev = cfg('env') === 'dev';
+    echo '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
+        . '<title>Something went wrong — Nile-Maple</title>'
+        . '<body style="font:16px/1.6 system-ui;background:#fdf9f6;color:#1d2b25;display:grid;place-items:center;min-height:100vh;margin:0">'
+        . '<div style="max-width:36rem;padding:2rem;text-align:center"><h1 style="font-size:1.3rem">Something went wrong on our side.</h1>'
+        . '<p>The error has been logged and we are looking into it. Please try again in a moment.</p>'
+        . '<p><a href="/" style="color:#16382b">Back to the home page</a></p>'
+        . ($dev ? '<pre style="text-align:left;background:#fff;border:1px solid #e5ddd2;padding:1rem;overflow:auto;white-space:pre-wrap">'
+            . htmlspecialchars(get_class($e) . ': ' . $e->getMessage() . "\n" . $e->getTraceAsString(), ENT_QUOTES, 'UTF-8') . '</pre>' : '')
+        . '</div></body></html>';
 });
 
 foreach (['cache/data', 'cache/lang', 'cache/frag', 'storage/logs', 'storage/tmp', 'storage/mail', 'storage/backups'] as $d) {

@@ -7,7 +7,18 @@ final class Session
     private static bool $on = false;
     public static function start(): void
     {
-        if (self::$on || session_status() === PHP_SESSION_ACTIVE) { self::$on = true; return; }
+        if (self::$on) return;
+        /* Production SAPIs boot a fresh interpreter per request; long-running interpreters
+           (php-wasm dev server, RoadRunner-style runtimes) keep the previous request's session
+           open and its $_SESSION superglobal populated. Guard: when a session is already active
+           from an EARLIER request (different or absent sid cookie), close it and start clean —
+           otherwise an anonymous request would inherit the previous request's identity. */
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            $sid = (string) ($_COOKIE[session_name()] ?? '');
+            if ($sid !== '' && hash_equals(session_id(), $sid)) { self::$on = true; return; }
+            session_write_close();
+            $_SESSION = [];
+        }
         session_set_save_handler(new DbSessionHandler(), true);
         session_name('nm_sid');
         session_set_cookie_params([

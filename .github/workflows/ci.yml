@@ -1,0 +1,59 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  lint:
+    name: lint (php -l · node --check)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, pdo_sqlite
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: PHP syntax gate (authoritative `php -l`)
+        run: |
+          fail=0
+          while IFS= read -r f; do
+            php -l "$f" >/dev/null || { echo "SYNTAX FAIL: $f"; fail=1; }
+          done < <(find app tools -name '*.php' -not -path 'tools/harness/*' -not -path 'tools/test/*')
+          # test fixtures intentionally reference test-only symbols; lint them too but report only
+          find tools/test -name '*.php' | while IFS= read -r f; do php -l "$f" >/dev/null || echo "fixture lint: $f"; done
+          exit $fail
+      - name: JS/MJS syntax gate
+        run: |
+          fail=0
+          for f in tools/*.mjs tools/test/*.mjs assets/src/*.js; do
+            [ -e "$f" ] || continue
+            node --check "$f" || { echo "SYNTAX FAIL: $f"; fail=1; }
+          done
+          exit $fail
+
+  unit:
+    name: unit + integration (75 gates)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, pdo_sqlite, sqlite3, gd, fileinfo
+          ini-values: memory_limit=1G
+      - name: Run the self-contained suite (isolated tmp SQLite, dry-run mail)
+        run: php tools/test/unit.php
+
+  # The HTTP end-to-end suite (tools/test/e2e.mjs, 201 gates) needs the full built stack:
+  # seeded SQLite + media ladder + 582 built pages + the dev server. It runs against the
+  # preview server on every harness session:
+  #   node tools/serve.mjs &   node tools/test/e2e.mjs http://127.0.0.1:8080
+  # Promotion to CI requires publishing the seed/build pipeline as a workflow — tracked in
+  # Finalization-Plan §9; browser-only gates (touch targets, 360px, visual RTL) belong to the
+  # Playwright stage on a runner with browser downloads available.

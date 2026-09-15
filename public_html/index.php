@@ -131,6 +131,12 @@ if (Settings::get('sys.maintenance') === '1' && !Auth::user()) {
 }
 
 $res = PublicController::page($lang, $path, $_GET);
+if (!empty($res['location'])) {   /* D-14: foreign-slug fallback → 301 into the localized URL */
+    http_response_code((int) ($res['status'] ?: 301));
+    header('Cache-Control: public, max-age=86400');
+    header('Location: ' . $res['location'], true, (int) ($res['status'] ?: 301));
+    exit;
+}
 http_response_code((int) $res['status']);
 header('Content-Type: text/html; charset=utf-8');
 header('Cache-Control: ' . ($res['status'] === 200

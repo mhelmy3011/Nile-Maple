@@ -12,6 +12,7 @@ Output: docs/data/content-manifest.json   (categories, products, fields, media r
 The parser is deliberately strict: it fails loudly if a product row does not match
 the expected catalogue schema so that content gaps are caught at plan time, not launch.
 """
+import re
 import zipfile, re, os, sys, json, shutil
 from xml.etree import ElementTree as ET
 
@@ -113,6 +114,14 @@ def main():
                  product_count=len(products),products=products)
         manifest['categories'].append(cat)
         totals['products']+=len(products); totals['media']+=len(products)
+    if media_out:
+        # company-profile photography (word/media/image3-6.jpg): mango, broccoli, frozen
+        # strawberries, olives — referenced by seeded blocks/posts as profile/imageN.jpg
+        prof=os.path.join(media_out,'profile'); os.makedirs(prof,exist_ok=True)
+        with zipfile.ZipFile(os.path.join(ROOT,'Nile-Maple_Company_Profile.docx')) as zp:
+            for n in zp.namelist():
+                if re.fullmatch(r'word/media/image[3-6]\.jpg', n):
+                    shutil.copyfileobj(zp.open(n),open(os.path.join(prof,os.path.basename(n)),'wb'))
     manifest['totals']=totals
     out=os.path.join(ROOT,'docs','data','content-manifest.json')
     json.dump(manifest,open(out,'w'),ensure_ascii=False,indent=1)

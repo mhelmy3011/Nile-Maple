@@ -4,6 +4,9 @@ namespace Nm;
 /** Admin authentication & RBAC (doc 04 §7, doc 06 §6). */
 final class Auth
 {
+    /** Seed credential — accepted exactly once per account, then forced off (D-11). */
+    public const SEED_PASSWORD = 'ChangeMe!2026';
+
     public static function attempt(string $email, string $pass): array
     {
         $u = Db::one('SELECT * FROM users WHERE email=?', [strtolower(trim($email))]);
@@ -23,8 +26,21 @@ final class Auth
         $_SESSION['uid'] = (int) $u['id'];
         $_SESSION['role'] = $u['role'];
         $_SESSION['t0'] = time();
+        /* D-11: an account still on the seed password may go nowhere until it rotates.
+           The value is also blocked from ever being chosen again (see pgUsers / pgPassword). */
+        if (hash_equals(self::SEED_PASSWORD, $pass)) {
+            $_SESSION['force_pw'] = 1;
+            Audit::log('auth.seed-pw', 'user', (int) $u['id']);
+        }
         Audit::log('auth.login', 'user', (int) $u['id']);
         return ['ok' => true, 'user' => $u];
+    }
+
+    /** D-11: the logged-in account authenticated with the seed password and must rotate now. */
+    public static function needsRotation(): bool
+    {
+        Session::start();
+        return !empty($_SESSION['force_pw']);
     }
 
     public static function user(): ?array

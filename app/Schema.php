@@ -101,7 +101,10 @@ final class Schema
             'company' => 'varchar:160:null', 'country' => 'varchar:90:null', 'subject' => 'varchar:190',
             'product_interest' => 'varchar:190:null', 'message' => 'text', 'consent' => 'bool:d0',
             'lang' => 'lang', 'ip_hash' => 'char:64', 'ua' => 'varchar:250:null',
-            'status' => "enum:new,read,replied,closed:def=new", 'mailed' => 'bool:d0', 'mail_tries' => 'int:d0',
+            /* D-10: 'spam' rows are leads the gates flagged — kept, reviewable, never mailed, hidden
+               from the inbox by default. spam_reason records which gate tripped. */
+            'status' => "enum:new,read,replied,closed,spam:def=new", 'spam_reason' => 'varchar:40:null',
+            'mailed' => 'bool:d0', 'mail_tries' => 'int:d0',
             'created_at' => 'ts',
         ];
         $T['events'] = [
@@ -122,7 +125,7 @@ final class Schema
             'started_at' => 'dt:null', 'finished_at' => 'dt:null',
         ];
         $T['sessions'] = [
-            'id' => 'char:64:pk', 'user_id' => 'int:fk:users', 'data' => 'text:null',
+            'id' => 'char:64:pk', 'user_id' => 'int:null:fk:users', 'data' => 'text:null',
             'ip_hash' => 'char:64', 'ua' => 'varchar:250:null', 'created_at' => 'ts', 'expires_at' => 'dt',
         ];
         return $T;

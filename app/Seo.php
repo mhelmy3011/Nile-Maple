@@ -32,10 +32,10 @@ final class Seo
         $alt = Alternates::for($lang, $path);
         $out = '';
         foreach (cfg('langs') as $l) {
-            $out .= '<link rel="alternate" hreflang="' . $l . '" href="' . self::urlFor($l, $alt[$l] ?? $path) . '">' . "\n";
+            $out .= '<link rel="alternate" hreflang="' . $l . '" href="' . htmlspecialchars(self::urlFor($l, $alt[$l] ?? $path), ENT_QUOTES) . '">' . "\n";
         }
         $out .= '<link rel="alternate" hreflang="x-default" href="'
-              . self::urlFor(cfg('default_lang'), $alt[cfg('default_lang')] ?? $path) . '">' . "\n";
+              . htmlspecialchars(self::urlFor(cfg('default_lang'), $alt[cfg('default_lang')] ?? $path), ENT_QUOTES) . '">' . "\n";
         return $out;
     }
 
@@ -59,7 +59,29 @@ final class Seo
     {
         return ['@context' => 'https://schema.org', '@type' => 'WebSite', 'name' => 'Nile-Maple',
             'url' => rtrim(cfg('base_url'), '/') . '/en/',
-            'inLanguage' => ['en', 'ar', 'fr']];
+            'inLanguage' => ['en', 'ar', 'fr'],
+            'potentialAction' => ['@type' => 'SearchAction',
+                'target' => ['@type' => 'EntryPoint', 'urlTemplate' => rtrim(cfg('base_url'), '/') . '/{lang}/categories/?q={search_term_string}'],
+                'query-input' => 'required name=search_term_string']];
+    }
+
+    /** D-09: Service schema for the six service pages. */
+    public static function service(array $s, string $url): array
+    {
+        return ['@context' => 'https://schema.org', '@type' => 'Service',
+            'name' => $s['name'], 'description' => mb_substr((string) ($s['teaser'] ?? ''), 0, 300),
+            'url' => $url, 'serviceType' => $s['name'],
+            'provider' => ['@type' => 'Organization', 'name' => 'Nile-Maple',
+                'url' => rtrim(cfg('base_url'), '/') . '/en/'],
+            'areaServed' => ['@type' => 'AdministrativeArea', 'name' => 'Worldwide']];
+    }
+
+    /** D-09: AboutPage. */
+    public static function aboutPage(string $url): array
+    {
+        return ['@context' => 'https://schema.org', '@type' => 'AboutPage', 'name' => 'About Nile-Maple',
+            'url' => $url, 'inLanguage' => I18n::lang(),
+            'mainEntity' => self::organization()];
     }
     public static function breadcrumbs(array $crumbs): array
     {
@@ -83,7 +105,8 @@ final class Seo
             'countryOfOrigin' => ['@type' => 'Country', 'name' => 'Egypt'],
             'additionalProperty' => $props,
             'offers' => ['@type' => 'Offer', 'availability' => 'https://schema.org/InStock',
-                'description' => 'Quotation on request - B2B export'],
+                'url' => $url, 'description' => 'Quotation on request - B2B export'],
+            'seller' => ['@type' => 'Organization', 'name' => 'Nile-Maple'],
         ];
     }
     public static function faqPage(array $faqs): array
@@ -108,6 +131,10 @@ final class Seo
     }
     public static function ld(array $graph): string
     {
-        return '<script type="application/ld+json">' . json_encode($graph, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . '</script>';
+        /* UNESCAPED_UNICODE keeps Arabic legible; the str_replace hardens against </script>
+           breakouts for any attacker-influenced string echoed into the graph. */
+        $json = json_encode($graph, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        $json = str_replace(['<', '>', '&', "\u2028", "\u2029"], ['\u003c', '\u003e', '\u0026', '\u2028', '\u2029'], (string) $json);
+        return '<script type="application/ld+json">' . $json . '</script>';
     }
 }

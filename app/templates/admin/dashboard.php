@@ -2,6 +2,7 @@
 <div class="kpi-grid">
   <div class="kpi"><span class="kpi-v"><?= (int) $enq_new ?></span><span>new enquiries</span></div>
   <div class="kpi"><span class="kpi-v"><?= (int) $enq_30 ?></span><span>enquiries / 30 d</span></div>
+  <div class="kpi <?= $enq_spam > 20 ? 'warn' : '' ?>"><span class="kpi-v"><?= (int) $enq_spam ?></span><span>spam-held (review)</span></div>
   <div class="kpi"><span class="kpi-v"><?= (int) $published ?>/<?= (int) $products ?></span><span>products published</span></div>
   <?php foreach ($comp as $k => $c): ?>
     <div class="kpi <?= $c['incomplete'] ? 'warn' : '' ?>"><span class="kpi-v"><?= (int) $c['total'] - (int) $c['incomplete'] ?>/<?= (int) $c['total'] ?></span><span><?= View::e($k) ?> complete (3 langs)</span></div>

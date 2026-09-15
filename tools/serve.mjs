@@ -11,6 +11,7 @@
  *   PORT=9000 NM_ROOT=... node tools/serve.mjs
  */
 import http from 'node:http';
+import zlib from 'node:zlib';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -101,12 +102,6 @@ const handler = new PHPRequestHandler({
   php,
   documentRoot: root,
   absoluteUrl: `http://localhost:${port}/`,
-  rewriteRules: [
-    { match: '/api/', replacement: '/index.php?r=api&path=' },
-    { match: '/manage/', replacement: '/manage/index.php?path=' },
-    { match: '/manage', replacement: '/manage/index.php?path=' },
-    { match: '/', replacement: '/index.php?r=render&p=' },
-  ],
 });
 
 let busy = Promise.resolve();   // one interpreter → serialise PHP requests
@@ -126,6 +121,18 @@ const server = http.createServer(async (req, res) => {
     if (p.startsWith('/assets/')) heads['Cache-Control'] = 'public, max-age=31536000, immutable';
     else if (ext === '.html') heads['Cache-Control'] = 'no-cache';
     else heads['Cache-Control'] = 'public, max-age=3600, must-revalidate';
+    /* gzip parity with LiteSpeed: compress text payloads over 1 KiB when the client accepts it */
+    const compressible = /^(text\/|application\/(javascript|json|xml|manifest))/.test(String(heads['Content-Type']));
+    if (compressible && (req.headers['accept-encoding'] || '').includes('gzip') && fs.statSync(file).size > 1024) {
+      const gz = zlib.gzipSync(fs.readFileSync(file), { level: 6 });
+      heads['Content-Encoding'] = 'gzip';
+      heads['Content-Length'] = gz.length;
+      heads.Vary = 'Accept-Encoding';
+      res.writeHead(200, heads);
+      res.end(gz);
+      return;
+    }
+    heads['Content-Length'] = fs.statSync(file).size;
     res.writeHead(200, heads);
     fs.createReadStream(file).pipe(res);
     return;
@@ -137,11 +144,22 @@ const server = http.createServer(async (req, res) => {
   const headers = {};
   for (const [k, v] of Object.entries(req.headers)) headers[k] = Array.isArray(v) ? v.join(', ') : v;
 
-  /* Apache's `RewriteRule ^$ index.php?r=lang` — a literal-prefix rule cannot express the empty
-     path, so the root is mapped here. Everything else rides the rules above. */
-  const target = url.pathname === '/'
-    ? '/index.php?r=lang' + (url.search ? '&' + url.search.slice(1) : '')
-    : req.url;
+  /* .htaccess parity, applied here instead of php-wasm rewriteRules: the WASM rewriter does a
+     literal string replace of the matched prefix, which double-rewrites a target that already
+     starts with the replacement (e.g. /manage/ → /manage/index.php?path=manage/index.php?path=).
+     Explicit mapping below mirrors the same rules exactly:
+       ^$                      → index.php?r=lang
+       ^api/(.*)$              → index.php?r=api&path=$1
+       ^manage/?(.*)$          → manage/index.php?path=$1
+       everything else         → index.php?r=render&p=$path          (dev-only catch-all) */
+  const pathname = url.pathname;
+  let target;
+  if (pathname === '/') target = '/index.php?r=lang' + (url.search ? '&' + url.search.slice(1) : '');
+  else if (pathname === '/api/' || pathname.startsWith('/api/'))
+    target = '/index.php?r=api&path=' + pathname.slice('/api/'.length) + (url.search ? '&' + url.search.slice(1) : '');
+  else if (pathname === '/manage' || pathname === '/manage/' || pathname.startsWith('/manage/'))
+    target = '/manage/index.php?path=' + pathname.replace(/^\/manage\/?/, '') + (url.search ? '&' + url.search.slice(1) : '');
+  else target = '/index.php?r=render&p=' + pathname + (url.search ? '&' + url.search.slice(1) : '');
 
   const run = () => handler.request({
     url: target,

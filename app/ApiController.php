@@ -22,9 +22,15 @@ final class ApiController
     {
         $lang = in_array($_POST['lang'] ?? 'en', cfg('langs'), true) ? $_POST['lang'] : 'en';
         I18n::boot($lang);
-        // spam gates (doc 04 §7): honeypot + time-trap + rate limit
-        if (!empty($_POST['website'])) Util::json(['ok' => true], 200);           // silent honeypot accept
-        if ((int) ($_POST['_t'] ?? 0) > time() - 3) Util::json(['ok' => true], 200);
+        /* spam gates (doc 04 §7): honeypot + time-trap + rate limit.
+           D-10: a tripped honeypot/time-trap no longer DESTROYS the submission — it is persisted
+           as status='spam' with the trip reason (a fast autofill user can genuinely hit the 3 s
+           time-trap, and a B2B lead is worth more than the review costs). The response is still
+           the fake success so bots learn nothing. No mail is sent for spam rows. */
+        $spamReason = null;
+        if (!empty($_POST['website'])) $spamReason = 'honeypot';
+        elseif ((int) ($_POST['_t'] ?? 0) > time() - 3) $spamReason = 'time-trap';
+        if ($spamReason !== null) { self::persistSpam($lang, $spamReason); Util::json(['ok' => true, 'message' => I18n::t('form.success')]); }
         if (!RateLimit::hit('enq-' . Util::ipHash(), 5, 600)) Util::json(['error' => I18n::t('form.rate')], 429);
         if (!Csrf::check($_POST['_csrf'] ?? null)) Util::json(['error' => I18n::t('form.csrf')], 419);
 
@@ -52,6 +58,23 @@ final class ApiController
         Db::run('UPDATE enquiries SET mailed=? WHERE id=?', [$mailed ? 1 : 0, $id]);
         Audit::log('enquiry.submit', 'enquiry', $id);
         Util::json(['ok' => true, 'message' => I18n::t('form.success')]);
+    }
+
+    /** D-10: keep a gate-flagged lead on file — flagged, unmailed, reviewable in the Spam tab. */
+    private static function persistSpam(string $lang, string $reason): void
+    {
+        try {
+            $v = static fn(string $k, int $max) => mb_substr(trim((string) ($_POST[$k] ?? '')), 0, $max);
+            Db::run('INSERT INTO enquiries(full_name,email,phone,company,country,subject,product_interest,message,consent,lang,ip_hash,ua,status,spam_reason)
+                     VALUES(?,?,?,?,?,?,?,?,0,?,?,?,?,?)', [
+                $v('full_name', 120) ?: '(none)', $v('email', 190) ?: '(none)', $v('phone', 40),
+                $v('company', 160), $v('country', 90), $v('subject', 190) ?: '(spam)', $v('product_interest', 190),
+                $v('message', 4000) ?: '(empty)', $lang, Util::ipHash(), Util::ua(), 'spam', $reason,
+            ]);
+            Audit::log('enquiry.spam', 'enquiry', Db::lastId());
+        } catch (\Throwable $e) {
+            error_log('[nm] persistSpam failed: ' . $e->getMessage());
+        }
     }
 
     public static function deliverEnquiry(array $c, string $lang): bool

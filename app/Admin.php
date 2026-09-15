@@ -19,6 +19,9 @@ final class Admin
         $user = Auth::requireLogin();
         View::share('user', $user);
         View::share('section', $page);
+        /* D-11: an account that signed in with the seed password sees ONLY the rotation screen
+           until the credential is changed — no dashboard, no entity edits, no API surface. */
+        if (Auth::needsRotation() && $page !== 'password') Util::redirect(cfg('admin.path') . '/password');
         if (in_array($page, ['users', 'settings', 'rebuild'], true) && !Auth::isOwner()) { http_response_code(403); exit('Owner only'); }
         if (!method_exists(self::class, 'pg' . str_replace('-', '', ucfirst($page)))) { http_response_code(404); exit('Not found'); }
         self::{'pg' . str_replace('-', '', ucfirst($page))}($segs);
@@ -164,11 +167,35 @@ final class Admin
     }
     private static function pgLogout(array $s): void { Auth::logout(); Util::redirect(cfg('admin.path') . '/login'); }
 
+    /* D-11: forced credential rotation. The only screen reachable while $_SESSION['force_pw'] is set. */
+    private static function pgPassword(array $s): void
+    {
+        $user = Auth::user();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (!Csrf::check($_POST['_csrf'] ?? null)) Util::redirect(cfg('admin.path') . '/password?e=csrf');
+            $cur = (string) ($_POST['current'] ?? '');
+            $new = (string) ($_POST['password'] ?? '');
+            $row = Db::one('SELECT password_hash FROM users WHERE id=?', [(int) $user['id']]);
+            if (!$row || !password_verify($cur, (string) $row['password_hash'])) Util::redirect(cfg('admin.path') . '/password?e=current');
+            if (hash_equals(Auth::SEED_PASSWORD, $new)) Util::redirect(cfg('admin.path') . '/password?e=seed');
+            if (strlen($new) < 10) Util::redirect(cfg('admin.path') . '/password?e=short');
+            if ($new === $cur) Util::redirect(cfg('admin.path') . '/password?e=same');
+            Db::run('UPDATE users SET password_hash=? WHERE id=?', [password_hash($new, PASSWORD_DEFAULT), (int) $user['id']]);
+            unset($_SESSION['force_pw']);
+            Audit::log('auth.password-change', 'user', (int) $user['id']);
+            Util::redirect(cfg('admin.path') . '/?pw=1');
+        }
+        View::share('section', 'password');
+        echo View::page('admin/password', [], 'layouts/admin');
+        exit;
+    }
+
     private static function pgDashboard(array $s): void
     {
         $d = [
             'enq_new' => (int) Db::val("SELECT COUNT(*) FROM enquiries WHERE status='new'"),
             'enq_30' => (int) Db::val('SELECT COUNT(*) FROM enquiries WHERE created_at >= ?', [date('Y-m-d H:i:s', time() - 2592000)]),
+            'enq_spam' => (int) Db::val("SELECT COUNT(*) FROM enquiries WHERE status='spam'"), /* D-10 volume alert */
             'products' => (int) Db::val('SELECT COUNT(*) FROM products'),
             'published' => (int) Db::val('SELECT COUNT(*) FROM products WHERE is_published=1'),
             'jobs' => Db::all('SELECT * FROM build_jobs ORDER BY id DESC LIMIT 5'),
@@ -571,8 +598,11 @@ final class Admin
             exit;
         }
         $status = (string) ($_GET['status'] ?? '');
-        $rows = Db::all('SELECT * FROM enquiries ' . ($status ? 'WHERE status=?' : '') . ' ORDER BY created_at DESC LIMIT 300', $status ? [$status] : []);
-        echo View::page('admin/enquiries', ['rows' => $rows, 'status' => $status], 'layouts/admin');
+        /* D-10: the inbox shows real leads by default; flagged rows live behind the Spam tab */
+        $where = $status !== '' ? 'WHERE status=?' : "WHERE status<>'spam'";
+        $rows = Db::all("SELECT * FROM enquiries $where ORDER BY created_at DESC LIMIT 300", $status !== '' ? [$status] : []);
+        $spamCount = (int) Db::val("SELECT COUNT(*) FROM enquiries WHERE status='spam'");
+        echo View::page('admin/enquiries', ['rows' => $rows, 'status' => $status, 'spamCount' => $spamCount], 'layouts/admin');
     }
 
     /* ---------------- seo ---------------- */
@@ -707,6 +737,10 @@ final class Admin
             $email = strtolower(trim((string) ($_POST['email'] ?? '')));
             if (!empty($_POST['delete_id'])) { Db::run('DELETE FROM users WHERE id=? AND role<>\'owner\'', [(int) $_POST['delete_id']]); Audit::log('delete', 'user', (int) $_POST['delete_id']); }
             elseif ($email && !empty($_POST['password'])) {
+                /* D-11: the seed password is never a valid new credential */
+                if (hash_equals(Auth::SEED_PASSWORD, (string) $_POST['password'])) {
+                    Util::redirect(cfg('admin.path') . '/users?e=seedpw');
+                }
                 Db::upsert('users', ['email' => $email, 'password_hash' => password_hash((string) $_POST['password'], PASSWORD_DEFAULT),
                     'full_name' => (string) ($_POST['full_name'] ?? ''), 'role' => (string) ($_POST['role'] ?? 'editor')], ['email']);
                 Audit::log('save', 'user');

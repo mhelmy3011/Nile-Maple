@@ -74,7 +74,28 @@ foreach ($weak as $u) {
     $h = (string) Db::val('SELECT password_hash FROM users WHERE email=?', [$u['email']]);
     if (password_verify('ChangeMe!2026', $h)) $defaultPw = true;
 }
-chk('schema', 'default admin password rotated', !$defaultPw, 'owner still uses the seed password', !$prod);
+/* D-11: a live seed credential is a launch blocker, not a warning (Finalization-Plan §2 D-11). */
+/* D-11: hard FAIL at the deploy gate (prod). Dev keeps a warning; Auth::attempt() now forces
+   rotation on first login and the seed value is blocked from ever being set again. */
+chk('schema', 'default admin password rotated', !$defaultPw, 'owner still uses the seed password — rotate in /manage/users', !$prod);
+
+/* seo_meta completeness (D-08 / gate 9): every published entity × language must carry
+   an authored title+description, and titles/descriptions must be unique per language. */
+$seoExp = [
+    'product'  => 3 * (int) Db::val('SELECT COUNT(*) FROM products WHERE is_published=1'),
+    'category' => 3 * (int) Db::val('SELECT COUNT(*) FROM categories WHERE is_published=1'),
+    'service'  => 3 * (int) Db::val('SELECT COUNT(*) FROM services WHERE is_published=1'),
+    'post'     => 3 * (int) Db::val("SELECT COUNT(*) FROM posts WHERE status='published'"),
+];
+$seoBad = [];
+foreach ($seoExp as $t => $want) {
+    $got = (int) Db::val("SELECT COUNT(*) FROM seo_meta WHERE entity_type=? AND TRIM(COALESCE(title,''))<>'' AND TRIM(COALESCE(description,''))<>''", [$t]);
+    if ($got < $want) $seoBad[] = "$t $got/$want";
+}
+chk('seo', 'per-entity meta complete (D-08)', !$seoBad, $seoBad ? 'missing: ' . implode(', ', $seoBad) : (array_sum($seoExp) . ' entity records present'));
+$dupT = (int) Db::val('SELECT COUNT(*) FROM (SELECT lang, title FROM seo_meta WHERE title<>"" GROUP BY lang, title HAVING COUNT(*)>1)');
+$dupD = (int) Db::val('SELECT COUNT(*) FROM (SELECT lang, description FROM seo_meta WHERE description<>"" GROUP BY lang, description HAVING COUNT(*)>1)');
+chk('seo', 'titles & descriptions unique', $dupT === 0 && $dupD === 0, ($dupT + $dupD) . ' duplicated');
 
 /* content completeness — the client's headline requirement: every product, in 3 languages */
 $per = [];

@@ -13,7 +13,7 @@ $path = trim($path ?? '', '/');
   <ul class="lang-menu" role="listbox" aria-label="<?= \Nm\I18n::t('a11y.lang') ?>" hidden>
     <?php foreach (cfg('langs') as $l): ?>
       <li role="option" aria-selected="<?= $l === $lang ? 'true' : 'false' ?>">
-        <a href="/<?= $l ?>/<?= $path ? $path . '/' : '' ?>" hreflang="<?= $l ?>" lang="<?= $l ?>">
+        <a href="/<?= $l ?>/<?= $path ? View::e($path) . '/' : '' ?>" hreflang="<?= $l ?>" lang="<?= $l ?>">
           <span><?= View::e($labels[$l]) ?></span><?= $l === $lang ? '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 13 4 4L19 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' : '' ?>
         </a>
       </li>

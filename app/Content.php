@@ -125,8 +125,10 @@ final class Content
     }
     public static function blockPayload(array $b): array
     {
-        $p = json_decode($b['payload'] ?? '{}', true) ?: [];
-        return $p ?: (json_decode($b['base_payload'] ?? '{}', true) ?: []);
+        /* shared base payload (media refs, defaults) + per-locale payload (i18n wins per key) */
+        $base = json_decode($b['base_payload'] ?? '{}', true) ?: [];
+        $i18n = json_decode($b['payload'] ?? '{}', true) ?: [];
+        return array_merge($base, $i18n);
     }
 
     /** translation completeness per entity type/id (doc 06 §2) */

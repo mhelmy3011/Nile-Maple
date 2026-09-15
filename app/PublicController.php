@@ -9,6 +9,16 @@ final class PublicController
         I18n::boot($lang);
         $route = Routes::match($path);
         if (!$route) return self::notFound($lang, $path);
+        /* D-14: a foreign-language slug (e.g. /ar/categories/fresh-fruits/ — the EN slug) 301s
+           into the correct localized URL instead of a hard 404. Covers shared links, legacy
+           bookmarks and mistyped entity paths; structural pages keep the identical path everywhere. */
+        $local = self::localizedPath($lang, $path);
+        if ($local !== null && $local !== $path) {
+            /* Location is a header: non-ASCII (Arabic) slugs must be percent-encoded per segment.
+               A root-relative Location keeps the redirect inside whichever host is serving. */
+            $loc = implode('/', array_map('rawurlencode', explode('/', $local)));
+            return ['status' => 301, 'html' => '', 'location' => '/' . $lang . '/' . $loc . '/'];
+        }
         [$tpl, $params, $canon] = $route;
 
         $data = ['lang' => $lang, 'path' => $canon, 'query' => $query, 'crumbs' => [], 'ld' => [], 'preload' => null, 'meta' => null];
@@ -18,6 +28,19 @@ final class PublicController
         switch ($tpl) {
             case 'pages/home':
                 $data += self::home($lang);
+                /* D-03/D-04: the hero image is the LCP candidate — preload the ~viewport-size file */
+                $heroBlocks = $data['hero'] ?? [];
+                $heroPl = $heroBlocks ? Content::blockPayload($heroBlocks[0]) : [];
+                $data['preload'] = !empty($heroPl['media_id']) ? Media::url((int) $heroPl['media_id'], 800, 'webp') : null;
+                /* D-09: the home renders a visible FAQ section and a featured grid — they carry schema */
+                $feat = [];
+                foreach ($data['featuredByCat'] as $fc) {
+                    foreach ($fc['items'] as $p2) {
+                        $feat[] = ['name' => $p2['name'], 'url' => Seo::urlFor($lang, "products/{$p2['slug']}")];
+                    }
+                }
+                if ($feat) $data['ld'][] = Seo::itemList($feat);
+                if ($data['faqs']) $data['ld'][] = Seo::faqPage($data['faqs']);
                 $fb = ['title' => I18n::t('seo.home.title'), 'description' => I18n::t('seo.home.desc')];
                 break;
             case 'pages/about':
@@ -26,6 +49,7 @@ final class PublicController
                     $data['blocks'][$z] = Content::blocks($z, $lang);
                 }
                 $data['crumbs'][] = [I18n::t('nav.about'), Seo::urlFor($lang, 'about')];
+                $data['ld'][] = Seo::aboutPage(Seo::urlFor($lang, 'about'));   /* D-09 */
                 $fb = ['title' => I18n::t('seo.about.title'), 'description' => I18n::t('seo.about.desc')];
                 break;
             case 'pages/services':
@@ -40,7 +64,7 @@ final class PublicController
                 $data['related'] = array_values(array_filter(Content::services($lang), fn($x) => $x['id'] != $s['id'])) ?: [];
                 $data['crumbs'][] = [I18n::t('nav.services'), Seo::urlFor($lang, 'services')];
                 $data['crumbs'][] = [$s['name'], Seo::urlFor($lang, "services/{$s['slug']}")];
-                $data['ld'][] = Seo::breadcrumbs($data['crumbs']);
+                $data['ld'][] = Seo::service($s, Seo::urlFor($lang, "services/{$s['slug']}"));   /* D-09 */
                 $fb = ['title' => ($s['meta_title'] ?? '') ?: $s['name'] . ' | Nile-Maple', 'description' => ($s['meta_description'] ?? '') ?: $s['teaser']];
                 $data['meta'] = Seo::meta('service', (int) $s['id'], $lang, $fb);
                 break;
@@ -67,7 +91,10 @@ final class PublicController
                 $data['meta'] = Seo::meta('category', (int) $c['id'], $lang, $fb);
                 $items = [];
                 foreach ($data['products'] as $i => $p) $items[] = ['name' => $p['name'], 'url' => Seo::urlFor($lang, "products/{$p['slug']}")];
-                $data['ld'][] = Seo::itemList($items);
+                /* D-09: CollectionPage wrapping the product ItemList (doc matrix §5.2) */
+                $data['ld'][] = ['@context' => 'https://schema.org', '@type' => 'CollectionPage',
+                    'name' => $c['name'], 'url' => Seo::urlFor($lang, "categories/{$c['slug']}"),
+                    'inLanguage' => $lang, 'mainEntity' => Seo::itemList($items)];
                 break;
             case 'pages/product':
                 $p = Content::productBySlug($lang, $params['slug']);
@@ -140,6 +167,21 @@ final class PublicController
         array_unshift($data['ld'], Seo::organization(), Seo::website());
         $html = View::page($tpl, $data);
         return ['status' => 200, 'html' => $html];
+    }
+
+    /** D-14: [type, id, localized path] when $path's slug belongs to an entity in ANOTHER locale. */
+    public static function localizedPath(string $lang, string $path): ?string
+    {
+        $path = trim($path, '/');
+        if ($path === '' || substr_count($path, '/') !== 1) return null;
+        if (Alternates::entityOf($lang, $path) !== null) return null;   // already valid here
+        $hit = null;
+        foreach (cfg('langs') as $l) {
+            if ($l === $lang) continue;
+            if ($e = Alternates::entityOf($l, $path)) { $hit = $e; break; }
+        }
+        if (!$hit) return null;
+        return Alternates::path($hit[0], $hit[1], $lang);
     }
 
     private static function home(string $lang): array
