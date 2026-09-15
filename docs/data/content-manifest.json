@@ -1,0 +1,1692 @@
+{
+ "project": "Nile-Maple",
+ "source": "Company DOCX catalogues (git root)",
+ "extracted_with": "tools/extract_content.py",
+ "categories": [
+  {
+   "key": "fresh-fruits",
+   "title_en": "Fresh Fruits",
+   "field_schema": [
+    "varieties",
+    "export_handling",
+    "packing",
+    "cold_chain"
+   ],
+   "product_count": 31,
+   "products": [
+    {
+     "index": 1,
+     "name_en": "ORANGE",
+     "image": "image1.jpg",
+     "description_en": "Bright, juicy citrus selected for dependable eating quality and strong shelf presentation.",
+     "varieties": "Valencia, Navel, Baladi, Salustiana and Sukkari",
+     "export_handling": "Harvested at commercial maturity, field heat is removed promptly, then fruit is washed, graded by size and colour, and packed in ventilated cartons. Maintain a clean cold chain and protect from impact and moisture loss.",
+     "packing": "Ventilated cartons or telescopic boxes",
+     "cold_chain": "Typically 3-8 C"
+    },
+    {
+     "index": 2,
+     "name_en": "MANDARIN / TANGERINE",
+     "image": "image2.jpg",
+     "description_en": "Easy-peeling citrus with balanced sweetness, lively colour and excellent retail appeal.",
+     "varieties": "Fremont, Clementine, Merav, Tango, Murcott and W. Murcott",
+     "export_handling": "Fruit is clipped carefully to protect the rind, sorted for defects, calibrated, and packed to limit movement. Cool promptly and maintain airflow during refrigerated transport.",
+     "packing": "Open-top or telescopic cartons",
+     "cold_chain": "Typically 4-8 C"
+    },
+    {
+     "index": 3,
+     "name_en": "SPANISH HONEY MURCOTT MANDARIN",
+     "image": "image3.jpg",
+     "description_en": "A premium late-season mandarin valued for its rich honeyed flavour, juicy flesh and firm shipping character.",
+     "varieties": "Spanish Honey Murcott",
+     "export_handling": "Selected for colour, firmness and sound rind, then gently cleaned, sized and packed in ventilated cartons. Controlled cooling and careful stacking help preserve firmness and reduce compression during transit.",
+     "packing": "Ventilated cartons; loose or tray-packed",
+     "cold_chain": "Typically 4-8 C"
+    },
+    {
+     "index": 4,
+     "name_en": "LEMON",
+     "image": "image4.jpg",
+     "description_en": "Fresh aromatic lemons with strong colour, high juice content and versatile food-service use.",
+     "varieties": "Eureka, Adalia and Egyptian Baladi",
+     "export_handling": "Picked and handled gently to avoid oil spotting, then cleaned, graded and packed with good ventilation. Avoid excessive chilling and sudden temperature changes during storage and delivery.",
+     "packing": "Ventilated cartons or net packs",
+     "cold_chain": "Typically 10-13 C"
+    },
+    {
+     "index": 5,
+     "name_en": "LIME",
+     "image": "image5.jpg",
+     "description_en": "Fragrant green limes selected for juice, acidity and a clean, uniform appearance.",
+     "varieties": "Egyptian / Baladi Lime",
+     "export_handling": "Harvested at the required green stage, sorted for skin quality and size, then packed in moisture-resistant ventilated cartons. Maintain moderate refrigeration to limit yellowing without causing chilling injury.",
+     "packing": "Ventilated cartons or consumer packs",
+     "cold_chain": "Typically 9-12 C"
+    },
+    {
+     "index": 6,
+     "name_en": "GRAPEFRUIT",
+     "image": "image6.jpg",
+     "description_en": "Firm, refreshing citrus with attractive flesh colour and a distinctive sweet-tart profile.",
+     "varieties": "Star Ruby, Ruby Red and White Grapefruit",
+     "export_handling": "Fruit is cleaned, waxed where requested, graded by calibre and rind quality, and packed to prevent bruising. Consistent ventilation and moderate cooling support long-distance shipment.",
+     "packing": "Telescopic or open-top cartons",
+     "cold_chain": "Typically 10-14 C"
+    },
+    {
+     "index": 7,
+     "name_en": "MANGO",
+     "image": "image7.jpg",
+     "description_en": "A broad mango programme offering aromatic local favourites and firm export varieties for different markets.",
+     "varieties": "Owais, Alphonso, Keitt, Kent, Naomi, Zebda, Sukkari, Yasmina, Sideeka, Timor, Hindi, Tommy Atkins, Crimson, Maya / Aya and others",
+     "export_handling": "Mangoes are harvested at variety-specific maturity, de-sapped, cleaned, sorted and packed with protective inserts. Temperature and ripening are managed carefully; fruit is never compressed or exposed to chilling.",
+     "packing": "Single-layer or protected export cartons",
+     "cold_chain": "Typically 10-13 C"
+    },
+    {
+     "index": 8,
+     "name_en": "GRAPES",
+     "image": "image8.jpg",
+     "description_en": "Crisp table grapes supplied in green, red and black selections with strong bunch presentation.",
+     "varieties": "Superior Seedless, Early Sweet, Prime, Sugraone, Flame Seedless, Crimson Seedless, Red Globe, Autumn Royal and Black Magic",
+     "export_handling": "Bunches are hand-selected, trimmed and rapidly pre-cooled after harvest. They are packed in liners or punnets with controlled ventilation and maintained close to 0 C to preserve crispness and stem condition.",
+     "packing": "Cartons with liners, punnets or carry bags",
+     "cold_chain": "Typically 0-1 C"
+    },
+    {
+     "index": 9,
+     "name_en": "POMEGRANATE",
+     "image": "image9.jpg",
+     "description_en": "Deep-coloured pomegranates chosen for sound skin, full arils and reliable export durability.",
+     "varieties": "Wonderful, Early 116, Manfaluti and Baladi",
+     "export_handling": "Fruit is clipped, cleaned, graded by weight, colour and external condition, then cushioned in cartons. Gentle handling, humidity control and stable refrigeration help prevent skin damage and dehydration.",
+     "packing": "Tray-packed or layered cartons",
+     "cold_chain": "Typically 5-7 C"
+    },
+    {
+     "index": 10,
+     "name_en": "STRAWBERRY",
+     "image": "image10.jpg",
+     "description_en": "Bright, flavourful berries selected for firmness, colour and premium fresh-market presentation.",
+     "varieties": "Festival, Fortuna, Sensation and Winter Star",
+     "export_handling": "Berries are picked in cool hours, handled minimally and pre-cooled immediately. They are packed directly into punnets, inspected for uniform ripeness, and moved through an uninterrupted cold chain.",
+     "packing": "Clamshell punnets in master cartons",
+     "cold_chain": "Typically 0-2 C"
+    },
+    {
+     "index": 11,
+     "name_en": "FRESH DATES",
+     "image": "image11.jpg",
+     "description_en": "Fresh dates supplied at the appropriate maturity stage, including premium yellow Barhi for a crisp, sweet bite.",
+     "varieties": "Barhi, Siwi, Medjool, Hayani and Zaghloul",
+     "export_handling": "Clusters or individual fruit are selected for maturity, colour and freedom from splits, then cooled and packed with gentle cushioning. Humidity and airflow are managed to reduce drying and condensation.",
+     "packing": "Punnets, trays or ventilated cartons",
+     "cold_chain": "Typically 0-4 C"
+    },
+    {
+     "index": 12,
+     "name_en": "GUAVA",
+     "image": "image12.jpg",
+     "description_en": "Aromatic guava with fragrant flesh and a distinctive tropical flavour.",
+     "varieties": "Egyptian White and Pink Flesh",
+     "export_handling": "Fruit is harvested mature-firm, sorted for skin condition and packed in shallow, protective layers. Rapid cooling and careful temperature control are important because guava ripens quickly and bruises easily.",
+     "packing": "Shallow cartons with protective trays",
+     "cold_chain": "Typically 8-10 C"
+    },
+    {
+     "index": 13,
+     "name_en": "FIG",
+     "image": "image13.jpg",
+     "description_en": "Soft, naturally sweet figs selected for colour, intact skin and delicate flavour.",
+     "varieties": "Fresh Egyptian Figs",
+     "export_handling": "Figs are hand-picked, minimally handled and packed directly into shallow trays or punnets. Immediate pre-cooling and fast refrigerated distribution are essential because the fruit is highly perishable.",
+     "packing": "Single-layer punnets or trays",
+     "cold_chain": "Typically 0-2 C"
+    },
+    {
+     "index": 14,
+     "name_en": "PEACH",
+     "image": "image14.jpg",
+     "description_en": "Fragrant peaches offering juicy flesh, attractive colour and strong seasonal demand.",
+     "varieties": "White- and Yellow-Flesh Types",
+     "export_handling": "Harvested at firm maturity, pre-cooled quickly, graded for size and defects, and packed in trays that prevent rubbing. Maintain high humidity and a stable cold chain while avoiding compression.",
+     "packing": "Tray-packed telescopic cartons",
+     "cold_chain": "Typically 0-1 C"
+    },
+    {
+     "index": 15,
+     "name_en": "NECTARINE",
+     "image": "image15.jpg",
+     "description_en": "Smooth-skinned stone fruit with crisp-to-juicy texture and bright, balanced flavour.",
+     "varieties": "White- and Yellow-Flesh Types",
+     "export_handling": "Fruit is picked firm, cooled rapidly and sorted for firmness, colour and calibre. Protective trays and careful palletisation reduce bruising and pressure marks during transport.",
+     "packing": "Tray-packed export cartons",
+     "cold_chain": "Typically 0-1 C"
+    },
+    {
+     "index": 16,
+     "name_en": "APRICOT",
+     "image": "image16.jpg",
+     "description_en": "Delicate golden fruit with aromatic flavour and an appealing soft texture when ripe.",
+     "varieties": "Selected Egyptian Varieties",
+     "export_handling": "Apricots are harvested at firm maturity, pre-cooled without delay and packed in shallow protective layers. Short handling times and strict temperature control preserve appearance and eating quality.",
+     "packing": "Punnets or tray-packed cartons",
+     "cold_chain": "Typically 0-1 C"
+    },
+    {
+     "index": 17,
+     "name_en": "PLUM",
+     "image": "image17.jpg",
+     "description_en": "Colourful plums selected for firmness, bloom and a balanced sweet-tart taste.",
+     "varieties": "Red, Black and Yellow Types",
+     "export_handling": "Fruit is graded gently to preserve its natural bloom, then pre-cooled and placed in trays or punnets. Stable low temperatures and careful stacking reduce softening and bruising.",
+     "packing": "Punnets or tray-packed cartons",
+     "cold_chain": "Typically 0-1 C"
+    },
+    {
+     "index": 18,
+     "name_en": "CHERRY",
+     "image": "image18.jpg",
+     "description_en": "Premium cherries chosen for deep colour, firm flesh and fresh green stems.",
+     "varieties": "Selected Varieties Subject to Availability",
+     "export_handling": "Cherries are harvested with stems, hydro-cooled or forced-air cooled promptly, sorted carefully, and packed in moisture-controlled formats. Continuous refrigeration is critical for firmness and stem freshness.",
+     "packing": "Punnets, bags or cartons with liners",
+     "cold_chain": "Typically 0-1 C"
+    },
+    {
+     "index": 19,
+     "name_en": "WATERMELON",
+     "image": "image19.jpg",
+     "description_en": "Refreshing melons supplied for sweetness, sound rind and consistent internal quality.",
+     "varieties": "Crimson Sweet, Sugar Baby, Seedless and Egyptian Types",
+     "export_handling": "Each fruit is checked for maturity and rind condition, then handled to avoid drops and compression. Loads are secured with ventilation, kept dry, and protected from temperatures that can cause chilling injury.",
+     "packing": "Bulk bins, cartons or secured pallet loads",
+     "cold_chain": "Typically 10-15 C"
+    },
+    {
+     "index": 20,
+     "name_en": "CANTALOUPE",
+     "image": "image20.jpg",
+     "description_en": "Aromatic melons with netted rind, orange flesh and a sweet, refreshing profile.",
+     "varieties": "Selected Egyptian Varieties",
+     "export_handling": "Melons are harvested at the specified maturity, washed and sanitised where required, pre-cooled and graded. Ventilated cartons and controlled refrigeration help manage ripening and reduce decay.",
+     "packing": "Ventilated cartons with dividers",
+     "cold_chain": "Typically 2-5 C"
+    },
+    {
+     "index": 21,
+     "name_en": "HONEYDEW MELON",
+     "image": "image21.jpg",
+     "description_en": "Smooth-skinned melons valued for crisp, pale flesh and clean sweetness.",
+     "varieties": "Green- and Yellow-Skin Types",
+     "export_handling": "Fruit is selected for maturity and rind integrity, cleaned, cooled and packed with separators. Maintain ventilation and avoid rough handling or excessive chilling during storage and shipment.",
+     "packing": "Ventilated cartons or bins",
+     "cold_chain": "Typically 7-10 C"
+    },
+    {
+     "index": 22,
+     "name_en": "CUSTARD APPLE",
+     "image": "image22.jpg",
+     "description_en": "A distinctive premium fruit with creamy, aromatic flesh and naturally sweet flavour.",
+     "varieties": "Selected Egyptian Varieties",
+     "export_handling": "Harvested mature-firm and handled individually because the skin marks easily. Fruit is cushioned in trays, kept at a moderate temperature and monitored closely as ripening progresses.",
+     "packing": "Single-layer trays or cushioned cartons",
+     "cold_chain": "Typically 12-15 C"
+    },
+    {
+     "index": 23,
+     "name_en": "PERSIMMON / KAKI",
+     "image": "image23.jpg",
+     "description_en": "Glossy orange fruit supplied in firm or ready-to-eat condition according to buyer requirements.",
+     "varieties": "Selected Seasonal Varieties",
+     "export_handling": "Fruit is clipped carefully, graded for colour and firmness, and placed in moulded trays. Temperature and ripening management are adjusted to the variety and requested eating stage.",
+     "packing": "Tray-packed export cartons",
+     "cold_chain": "Typically 0-1 C"
+    },
+    {
+     "index": 24,
+     "name_en": "PRICKLY PEAR",
+     "image": "image24.jpg",
+     "description_en": "Vibrant seasonal cactus fruit with juicy flesh and a refreshing, mildly sweet flavour.",
+     "varieties": "Selected Egyptian Varieties",
+     "export_handling": "Fruit is harvested carefully, de-spined using controlled handling, graded and packed to protect the skin. Cool, dry storage and gentle movement help maintain quality.",
+     "packing": "Punnets or protected cartons",
+     "cold_chain": "Typically 5-8 C"
+    },
+    {
+     "index": 25,
+     "name_en": "LYCHEE",
+     "image": "image25.jpg",
+     "description_en": "Fragrant premium fruit with translucent flesh, floral sweetness and an attractive red-pink shell.",
+     "varieties": "Premium Fresh Lychee",
+     "export_handling": "Fruit is harvested in clusters, cooled promptly, sorted for colour and sound skin, and packed to limit moisture loss. High humidity and continuous refrigeration help control browning.",
+     "packing": "Punnets or lined ventilated cartons",
+     "cold_chain": "Typically 2-5 C"
+    },
+    {
+     "index": 26,
+     "name_en": "APPLE",
+     "image": "image26.jpg",
+     "description_en": "Crisp apples sourced to match buyer requirements for colour, calibre, firmness and flavour.",
+     "varieties": "Red, Green and Golden Types",
+     "export_handling": "Fruit is washed, graded and packed in moulded trays or layers to prevent pressure damage. Refrigerated or controlled-atmosphere handling may be used according to variety and voyage length.",
+     "packing": "Tray-packed cartons or bushel-style boxes",
+     "cold_chain": "Typically 0-4 C"
+    },
+    {
+     "index": 27,
+     "name_en": "PEAR",
+     "image": "image27.jpg",
+     "description_en": "Smooth, firm pears selected for consistent size and controlled ripening after delivery.",
+     "varieties": "Green and Red Types",
+     "export_handling": "Pears are harvested firm, cooled promptly and graded with minimal impact. Tray packing, high humidity and carefully managed temperatures protect against bruising and moisture loss.",
+     "packing": "Tray-packed cartons",
+     "cold_chain": "Typically 0-1 C"
+    },
+    {
+     "index": 28,
+     "name_en": "KIWIFRUIT",
+     "image": "image28.jpg",
+     "description_en": "Firm kiwifruit with bright flesh, refreshing acidity and reliable storage performance.",
+     "varieties": "Green and Gold",
+     "export_handling": "Fruit is selected by firmness and soluble solids, pre-cooled and packed in trays or punnets. It is kept away from ethylene-producing products unless ripening is intentionally required.",
+     "packing": "Trays, punnets or layered cartons",
+     "cold_chain": "Typically 0-1 C"
+    },
+    {
+     "index": 29,
+     "name_en": "AVOCADO",
+     "image": "image29.jpg",
+     "description_en": "Premium avocados offered at hard-green or programmed ripeness to suit retail and food-service needs.",
+     "varieties": "Hass and Fuerte",
+     "export_handling": "Fruit is clipped, cleaned, graded by size and dry-matter maturity, then protected in trays. Temperature is variety- and maturity-specific, with ethylene managed carefully during storage and ripening.",
+     "packing": "Tray-packed cartons",
+     "cold_chain": "Typically 5-7 C"
+    },
+    {
+     "index": 30,
+     "name_en": "BANANA",
+     "image": "image30.jpg",
+     "description_en": "Uniform green bananas sourced for controlled ripening, consistent colour and dependable retail quality.",
+     "varieties": "Cavendish and Other Selected Varieties",
+     "export_handling": "Hands are cleaned, graded and packed with liners that reduce abrasion and moisture loss. Fruit remains green under a stable cool chain and is protected from chilling until destination ripening.",
+     "packing": "Lined ventilated banana cartons",
+     "cold_chain": "Typically 13-14 C"
+    },
+    {
+     "index": 31,
+     "name_en": "PINEAPPLE",
+     "image": "image31.jpg",
+     "description_en": "Sweet tropical pineapple selected for crown condition, shell colour and internal maturity.",
+     "varieties": "Selected Varieties According to Source",
+     "export_handling": "Fruit is harvested at the agreed maturity, cleaned, graded and packed upright or securely layered. Ventilation, crown protection and moderate refrigeration reduce bruising, water loss and chilling risk.",
+     "packing": "Ventilated cartons with dividers",
+     "cold_chain": "Typically 7-10 C"
+    }
+   ]
+  },
+  {
+   "key": "fresh-vegetables",
+   "title_en": "Fresh Vegetables",
+   "field_schema": [
+    "varieties",
+    "export_handling",
+    "packing",
+    "cold_chain"
+   ],
+   "product_count": 37,
+   "products": [
+    {
+     "index": 1,
+     "name_en": "POTATO",
+     "image": "image1.jpg",
+     "description_en": "Firm export potatoes selected for uniform shape, clean skin and dependable cooking or processing quality.",
+     "varieties": "Spunta, Nicola, Lady Rosetta, Hermes, Cara and Diamant",
+     "export_handling": "Tubers are cured where appropriate, dry-cleaned or washed to specification, graded by size and inspected for damage, greening and sprouting. Keep dark, dry and well ventilated.",
+     "packing": "Mesh bags, paper bags, cartons or jumbo bags",
+     "cold_chain": "Typically 7-10 C for table stock"
+    },
+    {
+     "index": 2,
+     "name_en": "SWEET POTATO",
+     "image": "image2.jpg",
+     "description_en": "Naturally sweet roots with attractive skin, rich flesh colour and strong retail appeal.",
+     "varieties": "Beauregard, Bellevue and selected Egyptian varieties",
+     "export_handling": "Roots are carefully lifted, cured to strengthen the skin, dry-cleaned, graded and packed to prevent abrasion. Avoid chilling, moisture condensation and excessive handling.",
+     "packing": "Cartons, crates or mesh bags",
+     "cold_chain": "Typically 13-16 C"
+    },
+    {
+     "index": 3,
+     "name_en": "ONION",
+     "image": "image3.jpg",
+     "description_en": "Dry onions supplied with firm bulbs, sound skins and consistent colour for retail and food service.",
+     "varieties": "Red, golden/yellow and white onion",
+     "export_handling": "Bulbs are fully cured, topped, cleaned and graded by diameter. Dry ventilation, careful bagging and protection from moisture help control sprouting and decay.",
+     "packing": "Mesh bags, cartons or jumbo bags",
+     "cold_chain": "Typically 0-2 C for long holding"
+    },
+    {
+     "index": 4,
+     "name_en": "SPRING ONION",
+     "image": "image4.jpg",
+     "description_en": "Fresh spring onions with clean white shanks, upright green tops and a mild flavour.",
+     "varieties": "Green or bunching onion",
+     "export_handling": "Bunches are trimmed, washed, rapidly cooled and packed with high humidity protection. Gentle handling prevents crushing, yellowing and tip damage.",
+     "packing": "Bunched in lined cartons or crates",
+     "cold_chain": "Typically 0-2 C"
+    },
+    {
+     "index": 5,
+     "name_en": "SHALLOT",
+     "image": "image5.jpg",
+     "description_en": "Compact premium bulbs valued for firm texture, concentrated flavour and long storage potential.",
+     "varieties": "Red and golden shallots",
+     "export_handling": "Shallots are properly cured, cleaned and graded for size and skin integrity. Store dry with good airflow and avoid condensation inside the pack.",
+     "packing": "Mesh bags, punnets or cartons",
+     "cold_chain": "Typically 0-2 C"
+    },
+    {
+     "index": 6,
+     "name_en": "GARLIC",
+     "image": "image6.jpg",
+     "description_en": "Aromatic garlic bulbs selected for tight cloves, dry wrappers and strong commercial quality.",
+     "varieties": "White, red and Egyptian/Baladi garlic",
+     "export_handling": "Bulbs are cured thoroughly, roots and tops trimmed, then graded for diameter and freedom from mould or mechanical damage. Maintain dry, ventilated storage.",
+     "packing": "Mesh bags, cartons, nets or braids",
+     "cold_chain": "Typically 0-2 C"
+    },
+    {
+     "index": 7,
+     "name_en": "LEEK",
+     "image": "image7.jpg",
+     "description_en": "Clean, firm leeks with long white shanks and fresh green leaves.",
+     "varieties": "Standard and baby leek",
+     "export_handling": "Leeks are lifted, trimmed, washed and rapidly pre-cooled. They are packed to retain humidity while allowing ventilation and are protected from crushing.",
+     "packing": "Lined cartons or reusable crates",
+     "cold_chain": "Typically 0-2 C"
+    },
+    {
+     "index": 8,
+     "name_en": "CARROT",
+     "image": "image8.jpg",
+     "description_en": "Crisp carrots supplied with bright colour, smooth roots and consistent sizing.",
+     "varieties": "Standard orange and baby carrot",
+     "export_handling": "Roots are topped, washed, hydro-cooled or forced-air cooled, graded and packed quickly. High humidity limits wilting while careful handling prevents breakage.",
+     "packing": "Bags, cartons or lined crates",
+     "cold_chain": "Typically 0-2 C"
+    },
+    {
+     "index": 9,
+     "name_en": "BEETROOT",
+     "image": "image9.jpg",
+     "description_en": "Deep-coloured beetroot selected for firm roots, smooth skin and uniform calibre.",
+     "varieties": "Red beetroot",
+     "export_handling": "Roots are trimmed without damaging the crown, washed, graded and cooled. Moisture loss is controlled with liners or suitable consumer packaging.",
+     "packing": "Mesh bags, cartons or punnets",
+     "cold_chain": "Typically 0-2 C"
+    },
+    {
+     "index": 10,
+     "name_en": "RADISH",
+     "image": "image10.jpg",
+     "description_en": "Crisp radishes with bright colour, clean roots and a fresh peppery character.",
+     "varieties": "Red and white radish",
+     "export_handling": "Radishes are harvested young, washed, cooled immediately and packed at high humidity. Tops may be retained or removed according to buyer specification.",
+     "packing": "Bunches, bags or lined cartons",
+     "cold_chain": "Typically 0-2 C"
+    },
+    {
+     "index": 11,
+     "name_en": "TURNIP",
+     "image": "image11.jpg",
+     "description_en": "Firm, clean turnips with mild flavour and consistent root development.",
+     "varieties": "White and purple-top turnip",
+     "export_handling": "Roots are topped, washed, graded and rapidly cooled. High humidity and protective packing reduce shrivelling and surface damage.",
+     "packing": "Mesh bags, cartons or crates",
+     "cold_chain": "Typically 0-2 C"
+    },
+    {
+     "index": 12,
+     "name_en": "TOMATO",
+     "image": "image12.jpg",
+     "description_en": "Fresh tomatoes supplied at buyer-specified colour and maturity for retail, wholesale or food service.",
+     "varieties": "Round, beef and plum/Roma tomato",
+     "export_handling": "Fruit is hand-picked, graded for size, firmness and colour, then packed in shallow layers. Temperature is matched to maturity to manage ripening and avoid chilling injury.",
+     "packing": "Open-top, telescopic or tray-packed cartons",
+     "cold_chain": "Typically 10-13 C"
+    },
+    {
+     "index": 13,
+     "name_en": "CHERRY TOMATO",
+     "image": "image13.jpg",
+     "description_en": "Sweet bite-sized tomatoes with bright colour and premium pack presentation.",
+     "varieties": "Red, yellow and mixed cherry tomato",
+     "export_handling": "Clusters or loose fruit are selected for firmness and uniform ripeness, cooled moderately and packed in ventilated punnets. Rough handling and condensation are avoided.",
+     "packing": "Clamshell punnets or flow-wrapped trays",
+     "cold_chain": "Typically 10-12 C"
+    },
+    {
+     "index": 14,
+     "name_en": "BELL PEPPER / CAPSICUM",
+     "image": "image14.jpg",
+     "description_en": "Glossy sweet peppers selected for firm walls, vivid colour and sound stems.",
+     "varieties": "Green, red, yellow and orange",
+     "export_handling": "Peppers are clipped, cleaned, graded by colour and size, and packed to prevent rubbing. Moderate cooling preserves firmness without causing chilling injury.",
+     "packing": "Cartons, trays or consumer packs",
+     "cold_chain": "Typically 7-10 C"
+    },
+    {
+     "index": 15,
+     "name_en": "CHILI PEPPER",
+     "image": "image15.jpg",
+     "description_en": "Fresh chilies offering strong colour, firm texture and heat levels suited to buyer requirements.",
+     "varieties": "Green, red and selected hot varieties",
+     "export_handling": "Pods are harvested with sound stems, sorted for colour and defects, cooled and packed in ventilated formats. Prevent compression, dehydration and excess condensation.",
+     "packing": "Punnets, bags or ventilated cartons",
+     "cold_chain": "Typically 7-10 C"
+    },
+    {
+     "index": 16,
+     "name_en": "CUCUMBER",
+     "image": "image16.jpg",
+     "description_en": "Crisp cucumbers selected for straight shape, fresh colour and uniform size.",
+     "varieties": "English, mini and standard cucumber",
+     "export_handling": "Fruit is harvested before over-maturity, graded carefully and packed with moisture protection. Moderate temperatures reduce water loss while avoiding chilling damage.",
+     "packing": "Cartons, trays or shrink-wrapped packs",
+     "cold_chain": "Typically 10-12 C"
+    },
+    {
+     "index": 17,
+     "name_en": "ZUCCHINI / COURGETTE",
+     "image": "image17.jpg",
+     "description_en": "Tender courgettes with glossy skin, firm flesh and consistent export sizing.",
+     "varieties": "Green and yellow zucchini",
+     "export_handling": "Fruit is picked young, handled gently, pre-cooled and graded for length and diameter. Packs are ventilated and protected from abrasion and chilling.",
+     "packing": "Cartons, trays or crates",
+     "cold_chain": "Typically 7-10 C"
+    },
+    {
+     "index": 18,
+     "name_en": "EGGPLANT / AUBERGINE",
+     "image": "image18.jpg",
+     "description_en": "Glossy aubergines selected for rich colour, firm flesh and fresh green caps.",
+     "varieties": "Black, white and long eggplant",
+     "export_handling": "Fruit is clipped carefully, graded and packed with separators to prevent scuffing. Moderate cooling and high humidity help preserve shine and firmness.",
+     "packing": "Tray-packed or layered cartons",
+     "cold_chain": "Typically 10-12 C"
+    },
+    {
+     "index": 19,
+     "name_en": "OKRA",
+     "image": "image19.jpg",
+     "description_en": "Tender green okra pods chosen for fresh colour, clean shape and minimal fibre.",
+     "varieties": "Fine, medium and selected Egyptian varieties",
+     "export_handling": "Pods are harvested young, shaded and cooled promptly, then graded by length and packed with moisture control. Avoid bruising, wet packs and excessive chilling.",
+     "packing": "Punnets or ventilated cartons",
+     "cold_chain": "Typically 7-10 C"
+    },
+    {
+     "index": 20,
+     "name_en": "SWEET CORN",
+     "image": "image20.jpg",
+     "description_en": "Sweet corn supplied with plump kernels, fresh husks and strong eating quality.",
+     "varieties": "Fresh corn on the cob",
+     "export_handling": "Cobs are harvested at peak sweetness and cooled immediately to slow sugar loss. Husks are retained where required and cartons are kept continuously refrigerated.",
+     "packing": "Cartons, crates or consumer packs",
+     "cold_chain": "Typically 0-2 C"
+    },
+    {
+     "index": 21,
+     "name_en": "GREEN BEANS",
+     "image": "image21.jpg",
+     "description_en": "Fresh green beans selected for straight pods, crisp snap and uniform green colour.",
+     "varieties": "Fine, extra-fine and standard beans",
+     "export_handling": "Beans are hand-picked, sorted by length and diameter, pre-cooled and packed with ventilation. Moisture and temperature are balanced to limit wilting and chilling injury.",
+     "packing": "Lined cartons, bags or punnets",
+     "cold_chain": "Typically 5-7 C"
+    },
+    {
+     "index": 22,
+     "name_en": "GREEN PEAS",
+     "image": "image22.jpg",
+     "description_en": "Sweet green peas supplied in fresh, well-filled pods with bright colour and tender texture.",
+     "varieties": "Fresh garden peas",
+     "export_handling": "Pods are harvested young, cooled immediately and graded for fill and appearance. High humidity and fast refrigerated distribution protect sweetness and freshness.",
+     "packing": "Punnets, bags or lined cartons",
+     "cold_chain": "Typically 0-2 C"
+    },
+    {
+     "index": 23,
+     "name_en": "SNOW PEAS / MANGETOUT",
+     "image": "image23.jpg",
+     "description_en": "Delicate flat pods valued for crisp texture, vivid colour and premium culinary use.",
+     "varieties": "Flat edible-pod peas",
+     "export_handling": "Pods are hand-picked, sorted for tenderness and freedom from blemishes, then rapidly cooled. Moisture-protective packs reduce wilting during distribution.",
+     "packing": "Punnets or lined cartons",
+     "cold_chain": "Typically 0-2 C"
+    },
+    {
+     "index": 24,
+     "name_en": "SUGAR SNAP PEAS",
+     "image": "image24.jpg",
+     "description_en": "Plump, crisp pods combining clean sweetness with convenient whole-pod use.",
+     "varieties": "Fresh edible-pod sugar snap peas",
+     "export_handling": "Peas are harvested at the required fill, cooled promptly, graded and packed in small ventilated units. Maintain high humidity without free moisture.",
+     "packing": "Punnets, bags or lined cartons",
+     "cold_chain": "Typically 0-2 C"
+    },
+    {
+     "index": 25,
+     "name_en": "BROAD BEANS",
+     "image": "image25.jpg",
+     "description_en": "Fresh broad beans supplied in full green pods with tender, well-developed seeds.",
+     "varieties": "Fresh fava beans",
+     "export_handling": "Pods are harvested before fibrous maturity, shaded and cooled quickly, then graded for fill and colour. Refrigerated handling limits yellowing and moisture loss.",
+     "packing": "Ventilated cartons, crates or bags",
+     "cold_chain": "Typically 0-2 C"
+    },
+    {
+     "index": 26,
+     "name_en": "BROCCOLI",
+     "image": "image26.jpg",
+     "description_en": "Dense green broccoli with compact florets, fresh-cut stems and strong visual quality.",
+     "varieties": "Standard heads and tenderstem/baby broccoli",
+     "export_handling": "Heads are cut, trimmed and cooled immediately, commonly by hydrocooling or forced air. Continuous refrigeration and high humidity prevent yellowing and wilting.",
+     "packing": "Lined cartons, crates or retail packs",
+     "cold_chain": "Typically 0-2 C"
+    },
+    {
+     "index": 27,
+     "name_en": "CAULIFLOWER",
+     "image": "image27.jpg",
+     "description_en": "Compact white curds protected by fresh wrapper leaves and selected for uniform size.",
+     "varieties": "White cauliflower",
+     "export_handling": "Heads are trimmed, graded and rapidly pre-cooled. Protective leaves or liners reduce bruising, yellowing and moisture loss during refrigerated transport.",
+     "packing": "Lined cartons or crates",
+     "cold_chain": "Typically 0-2 C"
+    },
+    {
+     "index": 28,
+     "name_en": "CABBAGE",
+     "image": "image28.jpg",
+     "description_en": "Firm cabbage heads selected for compact structure, fresh leaves and consistent weight.",
+     "varieties": "White/green and red cabbage",
+     "export_handling": "Outer damaged leaves are removed, stems trimmed and heads graded. Cool, humid storage and secure stacking preserve crispness and limit dehydration.",
+     "packing": "Cartons, crates, bags or bulk bins",
+     "cold_chain": "Typically 0-2 C"
+    },
+    {
+     "index": 29,
+     "name_en": "BRUSSELS SPROUTS",
+     "image": "image29.jpg",
+     "description_en": "Compact green sprouts supplied with tight leaves and consistent small calibre.",
+     "varieties": "Selected seasonal varieties",
+     "export_handling": "Sprouts are trimmed, sorted and cooled immediately after harvest. High humidity and continuous refrigeration slow yellowing and leaf separation.",
+     "packing": "Punnets, bags or lined cartons",
+     "cold_chain": "Typically 0-2 C"
+    },
+    {
+     "index": 30,
+     "name_en": "ICEBERG LETTUCE",
+     "image": "image30.jpg",
+     "description_en": "Crisp compact lettuce with fresh wrapper leaves and dependable retail presentation.",
+     "varieties": "Standard iceberg",
+     "export_handling": "Heads are cut, trimmed, vacuum- or forced-air cooled promptly and packed to prevent compression. An uninterrupted high-humidity cold chain is essential.",
+     "packing": "Lined cartons or crates",
+     "cold_chain": "Typically 0-2 C"
+    },
+    {
+     "index": 31,
+     "name_en": "ROMAINE LETTUCE",
+     "image": "image31.jpg",
+     "description_en": "Upright romaine lettuce with crisp ribs, fresh green leaves and clean flavour.",
+     "varieties": "Standard and baby romaine",
+     "export_handling": "Heads are trimmed, washed where required, cooled immediately and packed upright or layered. Protect from crushing, dehydration and ethylene exposure.",
+     "packing": "Lined cartons, crates or retail packs",
+     "cold_chain": "Typically 0-2 C"
+    },
+    {
+     "index": 32,
+     "name_en": "SPINACH",
+     "image": "image32.jpg",
+     "description_en": "Tender green spinach selected for leaf colour, freshness and freedom from yellowing.",
+     "varieties": "Bunched and baby spinach",
+     "export_handling": "Leaves are harvested in cool conditions, washed where specified, dried, rapidly cooled and packed with controlled ventilation. Strict refrigeration supports short shelf life.",
+     "packing": "Bags, punnets or lined cartons",
+     "cold_chain": "Typically 0-2 C"
+    },
+    {
+     "index": 33,
+     "name_en": "CELERY",
+     "image": "image33.jpg",
+     "description_en": "Crisp celery with firm stalks, fresh leaves and uniform bunch formation.",
+     "varieties": "Standard celery",
+     "export_handling": "Plants are trimmed, washed and cooled quickly, then sleeved or lined to retain moisture. Careful stacking prevents splitting and crushing.",
+     "packing": "Sleeved bunches in cartons or crates",
+     "cold_chain": "Typically 0-2 C"
+    },
+    {
+     "index": 34,
+     "name_en": "ARTICHOKE",
+     "image": "image34.jpg",
+     "description_en": "Premium flower buds selected for compact scales, fresh colour and firm stems.",
+     "varieties": "Globe artichoke",
+     "export_handling": "Buds are clipped, graded by diameter and cooled promptly. High humidity and protective cartons reduce wilting, browning and mechanical damage.",
+     "packing": "Layered cartons or crates",
+     "cold_chain": "Typically 0-2 C"
+    },
+    {
+     "index": 35,
+     "name_en": "FENNEL",
+     "image": "image35.jpg",
+     "description_en": "Clean white fennel bulbs with crisp texture, green tops and a mild aromatic flavour.",
+     "varieties": "Florence fennel",
+     "export_handling": "Bulbs are trimmed, washed, graded and rapidly cooled. Lined packs and high humidity protect against dehydration while allowing ventilation.",
+     "packing": "Lined cartons, crates or consumer packs",
+     "cold_chain": "Typically 0-2 C"
+    },
+    {
+     "index": 36,
+     "name_en": "FRESH MOLOKHIA / JUTE MALLOW",
+     "image": "image36.jpg",
+     "description_en": "Tender Egyptian molokhia leaves valued for vibrant colour and traditional culinary use.",
+     "varieties": "Fresh whole leaves or trimmed bunches",
+     "export_handling": "Leaves are harvested young, shaded immediately, sorted and cooled promptly. They are packed lightly to avoid crushing, heat build-up and rapid moisture loss.",
+     "packing": "Bunches, perforated bags or lined cartons",
+     "cold_chain": "Typically 5-8 C"
+    },
+    {
+     "index": 37,
+     "name_en": "FRESH HERBS",
+     "image": "image37.jpg",
+     "description_en": "A versatile herb range supplied for fresh aroma, vivid colour and clean bunch presentation.",
+     "varieties": "Parsley, coriander/cilantro, dill, mint and basil",
+     "export_handling": "Herbs are harvested in cool hours, trimmed, washed where specified and cooled quickly. Moisture, ventilation and temperature are adjusted by herb type to prevent wilting or chilling.",
+     "packing": "Bunches, punnets or lined cartons",
+     "cold_chain": "Typically 2-8 C depending on herb"
+    }
+   ]
+  },
+  {
+   "key": "frozen-products",
+   "title_en": "Frozen Products",
+   "field_schema": [
+    "forms",
+    "processing",
+    "packing",
+    "chain_guide"
+   ],
+   "product_count": 36,
+   "products": [
+    {
+     "index": 1,
+     "name_en": "FROZEN OKRA",
+     "image": "image1.jpg",
+     "description_en": "Tender Egyptian okra preserved for year-round colour, flavour and convenient preparation.",
+     "forms": "Whole, cut, zero, extra and fine grades",
+     "processing": "Selected young pods are washed, trimmed, graded and individually quick frozen. Product remains free-flowing and is protected from thawing or temperature fluctuation.",
+     "packing": "Retail pouches, food-service bags or lined bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 2,
+     "name_en": "FROZEN MOLOKHIA",
+     "image": "image2.jpg",
+     "description_en": "A traditional Egyptian leafy product frozen soon after preparation to preserve its characteristic colour and flavour.",
+     "forms": "Minced portions or whole leaves",
+     "processing": "Fresh leaves are inspected, washed and either minced or kept whole before rapid freezing. Hygienic processing and an uninterrupted frozen chain protect quality.",
+     "packing": "Retail blocks, pouches or bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 3,
+     "name_en": "FROZEN GREEN PEAS",
+     "image": "image3.jpg",
+     "description_en": "Sweet green peas with uniform colour, tenderness and reliable year-round availability.",
+     "forms": "Standard and premium grades",
+     "processing": "Peas are shelled, washed, blanched, cooled and IQF frozen shortly after harvest. Careful grading maintains uniform size and free-flowing condition.",
+     "packing": "Retail pouches, food-service bags or bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 4,
+     "name_en": "FROZEN GREEN BEANS",
+     "image": "image4.jpg",
+     "description_en": "Crisp green beans prepared in convenient formats for retail, catering and industrial buyers.",
+     "forms": "Whole, cut and fine beans",
+     "processing": "Fresh pods are sorted, topped, washed, cut where required, blanched and IQF frozen. Size and cut length are agreed with the buyer.",
+     "packing": "Retail pouches, food-service bags or bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 5,
+     "name_en": "FROZEN CARROTS",
+     "image": "image5.jpg",
+     "description_en": "Bright frozen carrots offering consistent colour, sizing and preparation convenience.",
+     "forms": "Diced, sliced, strips or baby carrots",
+     "processing": "Roots are washed, peeled, cut, blanched and rapidly frozen. Pieces are graded to the requested dimensions and maintained free-flowing.",
+     "packing": "Retail pouches, food-service bags or bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 6,
+     "name_en": "FROZEN PEAS & CARROTS",
+     "image": "image6.jpg",
+     "description_en": "A practical two-way vegetable blend with balanced colour, texture and portion consistency.",
+     "forms": "Green peas with diced carrots",
+     "processing": "Each component is prepared and frozen before controlled blending. Ratios, dice size and grade can be aligned with the buyer specification.",
+     "packing": "Retail pouches, food-service bags or bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 7,
+     "name_en": "FROZEN MIXED VEGETABLES",
+     "image": "image7.jpg",
+     "description_en": "A colourful four-way blend designed for convenient retail, food-service and ingredient use.",
+     "forms": "Peas, carrots, yellow corn and green beans",
+     "processing": "Individually prepared vegetables are IQF frozen and blended to controlled proportions. Uniform cuts support even cooking and presentation.",
+     "packing": "Retail pouches, food-service bags or bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 8,
+     "name_en": "FROZEN SPINACH",
+     "image": "image8.jpg",
+     "description_en": "Prepared spinach frozen for dependable colour, flavour and convenient portioning.",
+     "forms": "Chopped, minced, leaf or portion blocks",
+     "processing": "Leaves are sorted, washed, blanched where specified, chopped or portioned and rapidly frozen. The product is protected from dehydration and thawing.",
+     "packing": "Retail blocks, pouches or bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 9,
+     "name_en": "FROZEN BROCCOLI",
+     "image": "image9.jpg",
+     "description_en": "Green broccoli florets supplied in uniform cuts for retail, catering and manufacturing.",
+     "forms": "IQF florets in selected size ranges",
+     "processing": "Heads are trimmed into florets, inspected, washed, blanched, cooled and IQF frozen. Floret size and stem allowance follow buyer requirements.",
+     "packing": "Retail pouches, food-service bags or bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 10,
+     "name_en": "FROZEN CAULIFLOWER",
+     "image": "image10.jpg",
+     "description_en": "Clean white cauliflower florets with consistent sizing and convenient year-round use.",
+     "forms": "IQF florets in selected size ranges",
+     "processing": "Curds are trimmed, washed, divided into florets, blanched, cooled and IQF frozen. Grading removes discoloured or damaged pieces.",
+     "packing": "Retail pouches, food-service bags or bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 11,
+     "name_en": "FROZEN ARTICHOKE",
+     "image": "image11.jpg",
+     "description_en": "Premium artichoke portions prepared for easy use in retail, catering and ingredient applications.",
+     "forms": "Hearts, bottoms, quarters or segments",
+     "processing": "Fresh buds are trimmed, peeled, cut to specification, treated to limit browning and rapidly frozen. Piece size and trim level are buyer-defined.",
+     "packing": "Retail pouches, food-service bags or bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 12,
+     "name_en": "FROZEN YELLOW SWEET CORN",
+     "image": "image12.jpg",
+     "description_en": "Sweet yellow corn preserved close to harvest for bright colour and clean flavour.",
+     "forms": "Kernels or corn-on-the-cob portions",
+     "processing": "Cobs are husked and cleaned; kernels are removed where required, then blanched, cooled and IQF frozen. Product is graded for colour and tenderness.",
+     "packing": "Retail pouches, food-service bags or bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 13,
+     "name_en": "FROZEN BROAD BEANS",
+     "image": "image13.jpg",
+     "description_en": "Tender broad beans supplied for traditional dishes, food service and industrial preparation.",
+     "forms": "Peeled or unpeeled fava beans",
+     "processing": "Beans are shelled, sorted, washed, blanched and rapidly frozen. Peeled formats may be produced according to buyer specification.",
+     "packing": "Retail pouches, food-service bags or bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 14,
+     "name_en": "FROZEN TARO CUBES",
+     "image": "image14.jpg",
+     "description_en": "Prepared taro supplied in uniform frozen cubes for convenient cooking and portion control.",
+     "forms": "Peeled cubes or selected cut pieces",
+     "processing": "Roots are washed, peeled, trimmed and cut to controlled dimensions before rapid freezing. Pieces are inspected for colour and defects.",
+     "packing": "Retail pouches, food-service bags or bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 15,
+     "name_en": "FROZEN FRENCH FRIES & POTATO PRODUCTS",
+     "image": "image15.jpg",
+     "description_en": "Convenient frozen potato formats produced for retail, catering and quick-service applications.",
+     "forms": "French fries, wedges and potato cubes",
+     "processing": "Potatoes are washed, peeled, cut, blanched and frozen; fries may be partially fried according to specification. Cut, coating and cooking performance are buyer-defined.",
+     "packing": "Retail bags, food-service bags or bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 16,
+     "name_en": "FROZEN ONION",
+     "image": "image16.jpg",
+     "description_en": "Prepared onion delivering consistent cuts and convenient year-round ingredient supply.",
+     "forms": "Diced, sliced, strips or whole baby onion",
+     "processing": "Bulbs are peeled, washed, cut to specification and rapidly frozen. Pieces are screened for size, colour and foreign material.",
+     "packing": "Retail pouches, food-service bags or bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 17,
+     "name_en": "FROZEN BELL PEPPER",
+     "image": "image17.jpg",
+     "description_en": "Colourful frozen peppers prepared for cooking, food service and manufacturing applications.",
+     "forms": "Strips, diced pieces or mixed colours",
+     "processing": "Peppers are washed, cored, deseeded, cut and IQF frozen. Green, red, yellow and mixed-colour programmes can be supplied.",
+     "packing": "Retail pouches, food-service bags or bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 18,
+     "name_en": "FROZEN ZUCCHINI",
+     "image": "image18.jpg",
+     "description_en": "Tender zucchini supplied in uniform frozen cuts for convenient recipe preparation.",
+     "forms": "Slices, half-slices or diced",
+     "processing": "Courgettes are washed, trimmed, cut, blanched where required and rapidly frozen. Cut size and skin specification follow buyer requirements.",
+     "packing": "Retail pouches, food-service bags or bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 19,
+     "name_en": "FROZEN GRILLED EGGPLANT",
+     "image": "image19.jpg",
+     "description_en": "Prepared aubergine with convenient formats for Mediterranean dishes and food-service use.",
+     "forms": "Grilled slices, cubes or peeled pieces",
+     "processing": "Fruit is washed, trimmed and cut; selected formats are grilled before rapid freezing. Thickness, peel and grill level can be customised.",
+     "packing": "Retail pouches, food-service bags or bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 20,
+     "name_en": "FROZEN STRAWBERRY",
+     "image": "image20.jpg",
+     "description_en": "A flagship Egyptian frozen fruit valued for vivid colour, natural flavour and broad industrial use.",
+     "forms": "Whole, halves, slices or diced",
+     "processing": "Berries are selected, washed, hulled, graded and IQF frozen soon after harvest. Size, Brix range and cut format are agreed by specification.",
+     "packing": "Retail pouches, food-service bags or lined bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 21,
+     "name_en": "FROZEN MANGO",
+     "image": "image21.jpg",
+     "description_en": "Aromatic mango pieces offering tropical colour and flavour throughout the year.",
+     "forms": "Chunks, slices or cubes",
+     "processing": "Ripe sound fruit is washed, peeled, destoned, cut and rapidly frozen. Variety, ripeness, cube size and Brix may be selected for the application.",
+     "packing": "Retail pouches, food-service bags or lined bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 22,
+     "name_en": "FROZEN GUAVA",
+     "image": "image22.jpg",
+     "description_en": "Fragrant guava prepared for beverages, desserts, food service and ingredient manufacturing.",
+     "forms": "Halves, slices, cubes or pulp",
+     "processing": "Fruit is washed, trimmed and cut or pulped before rapid freezing. Seed level, colour, cut size and ripeness are controlled to specification.",
+     "packing": "Retail pouches, food-service bags or lined bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 23,
+     "name_en": "FROZEN POMEGRANATE ARILS",
+     "image": "image23.jpg",
+     "description_en": "Bright pomegranate arils offering convenient use without peeling or preparation waste.",
+     "forms": "Individually frozen arils",
+     "processing": "Sound fruit is opened hygienically, arils are separated, inspected and IQF frozen. Gentle handling helps maintain colour and minimise broken arils.",
+     "packing": "Retail pouches, food-service bags or lined bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 24,
+     "name_en": "FROZEN FIG",
+     "image": "image24.jpg",
+     "description_en": "Naturally sweet figs prepared in practical frozen formats for desserts and processing.",
+     "forms": "Whole, halves or quarters",
+     "processing": "Fruit is selected for maturity, washed, trimmed, cut where required and rapidly frozen. Pieces are protected from crushing and thawing.",
+     "packing": "Retail pouches, food-service bags or lined bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 25,
+     "name_en": "FROZEN APRICOT",
+     "image": "image25.jpg",
+     "description_en": "Golden apricot pieces offering balanced sweetness, acidity and convenient seasonal continuity.",
+     "forms": "Halves, slices or diced",
+     "processing": "Fruit is washed, halved, destoned, cut to specification and rapidly frozen. Colour-protection treatment may be applied where agreed.",
+     "packing": "Retail pouches, food-service bags or lined bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 26,
+     "name_en": "FROZEN PEACH",
+     "image": "image26.jpg",
+     "description_en": "Juicy peach pieces prepared for desserts, bakery, smoothies and industrial applications.",
+     "forms": "Halves, slices or diced",
+     "processing": "Fruit is washed, peeled where required, destoned, cut and rapidly frozen. Ripeness, cut dimensions and colour are controlled.",
+     "packing": "Retail pouches, food-service bags or lined bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 27,
+     "name_en": "FROZEN GRAPES",
+     "image": "image27.jpg",
+     "description_en": "Naturally sweet whole grapes frozen for snacks, desserts and beverage applications.",
+     "forms": "Whole seedless grapes",
+     "processing": "Sound seedless berries are removed from stems, washed, inspected and IQF frozen. Product is handled gently to minimise splitting.",
+     "packing": "Retail pouches, food-service bags or lined bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 28,
+     "name_en": "FROZEN BLUEBERRY",
+     "image": "image28.jpg",
+     "description_en": "Free-flowing blueberries with deep colour and convenient year-round availability.",
+     "forms": "Whole IQF berries",
+     "processing": "Berries are cleaned, graded, inspected and IQF frozen. Size, firmness and foreign-material controls follow the agreed specification.",
+     "packing": "Retail pouches, food-service bags or lined bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 29,
+     "name_en": "FROZEN RASPBERRY",
+     "image": "image29.jpg",
+     "description_en": "Bright raspberries supplied for bakery, desserts, smoothies and ingredient use.",
+     "forms": "Whole and broken fruit grades",
+     "processing": "Delicate berries are inspected and frozen rapidly with minimal handling. Whole and crumble grades are separated according to buyer needs.",
+     "packing": "Retail pouches, food-service bags or lined bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 30,
+     "name_en": "FROZEN BLACKBERRY",
+     "image": "image30.jpg",
+     "description_en": "Dark, flavourful blackberries supplied for desserts, beverages and food manufacturing.",
+     "forms": "Whole IQF berries",
+     "processing": "Berries are selected, cleaned, graded and rapidly frozen. Packs are handled carefully to limit breakage and thaw damage.",
+     "packing": "Retail pouches, food-service bags or lined bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 31,
+     "name_en": "FROZEN PINEAPPLE",
+     "image": "image31.jpg",
+     "description_en": "Sweet pineapple pieces prepared in consistent cuts for retail, catering and industrial use.",
+     "forms": "Chunks, rings or diced",
+     "processing": "Fruit is peeled, cored, cut to specification, inspected and rapidly frozen. Maturity, Brix and piece dimensions can be buyer-defined.",
+     "packing": "Retail pouches, food-service bags or lined bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 32,
+     "name_en": "FROZEN MIXED BERRIES",
+     "image": "image32.jpg",
+     "description_en": "A colourful berry blend for smoothies, desserts, bakery and retail convenience.",
+     "forms": "Strawberry, blueberry, raspberry and blackberry",
+     "processing": "IQF berries are blended under controlled conditions to agreed ratios. Whole-fruit content and broken-fruit tolerance are specification-based.",
+     "packing": "Retail pouches, food-service bags or lined bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 33,
+     "name_en": "FROZEN TROPICAL FRUIT MIX",
+     "image": "image33.jpg",
+     "description_en": "A bright tropical blend offering balanced flavour and convenient multi-fruit preparation.",
+     "forms": "Mango, pineapple and guava",
+     "processing": "Individually frozen fruit pieces are combined to controlled ratios and cut sizes. Custom recipes may be produced for retail or food service.",
+     "packing": "Retail pouches, food-service bags or lined bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 34,
+     "name_en": "FROZEN MEDITERRANEAN VEGETABLE MIX",
+     "image": "image34.jpg",
+     "description_en": "A versatile vegetable blend designed for roasting, grilling and Mediterranean recipes.",
+     "forms": "Zucchini, eggplant, peppers and onion",
+     "processing": "Prepared IQF components are blended to agreed ratios and dimensions. Grilled or ungrilled formats may be developed by specification.",
+     "packing": "Retail pouches, food-service bags or lined bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 35,
+     "name_en": "FROZEN STIR-FRY VEGETABLE MIX",
+     "image": "image35.jpg",
+     "description_en": "A colourful ready-to-cook blend with varied textures and consistent portioning.",
+     "forms": "Broccoli, peppers, beans and carrots",
+     "processing": "IQF vegetables are combined after individual preparation and grading. Component choice, ratios and cut sizes are customisable.",
+     "packing": "Retail pouches, food-service bags or lined bulk cartons",
+     "chain_guide": "Keep frozen at -18 C or below"
+    },
+    {
+     "index": 36,
+     "name_en": "CUSTOM FROZEN MIXES",
+     "image": "image36.jpg",
+     "description_en": "Buyer-specific frozen blends developed for retail, food service or industrial programmes.",
+     "forms": "Fruit, vegetable or combined recipes",
+     "processing": "Approved IQF components are blended to the agreed recipe, cut, grade and tolerance requirements. Final specifications are confirmed before production.",
+     "packing": "Private-label retail, food-service or bulk formats",
+     "chain_guide": "Keep frozen at -18 C or below"
+    }
+   ]
+  },
+  {
+   "key": "processed-canned",
+   "title_en": "Manufactured, Processed & Canned Products",
+   "field_schema": [
+    "forms",
+    "processing",
+    "packing",
+    "chain_guide"
+   ],
+   "product_count": 55,
+   "products": [
+    {
+     "index": 1,
+     "name_en": "CANNED FAVA BEANS",
+     "image": "image1.jpg",
+     "description_en": "Ready-to-eat Egyptian fava beans offered in classic and seasoned recipes.",
+     "forms": "Plain, peeled, tomato sauce, tahini, chili or Lebanese recipe",
+     "processing": "Ingredients are sorted, washed and prepared, filled into containers, sealed and thermally processed under a validated product specification.",
+     "packing": "Retail cans, glass jars or food-service cans; private label subject to agreement",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 2,
+     "name_en": "CANNED CHICKPEAS",
+     "image": "image2.jpg",
+     "description_en": "Tender chickpeas prepared for retail, catering and ingredient applications.",
+     "forms": "Plain or seasoned",
+     "processing": "Ingredients are sorted, washed and prepared, filled into containers, sealed and thermally processed under a validated product specification.",
+     "packing": "Retail cans, glass jars or food-service cans; private label subject to agreement",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 3,
+     "name_en": "CANNED WHITE BEANS",
+     "image": "image3.jpg",
+     "description_en": "Creamy white beans supplied plain or in a rich tomato sauce.",
+     "forms": "Plain or in tomato sauce",
+     "processing": "Ingredients are sorted, washed and prepared, filled into containers, sealed and thermally processed under a validated product specification.",
+     "packing": "Retail cans, glass jars or food-service cans; private label subject to agreement",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 4,
+     "name_en": "CANNED RED KIDNEY BEANS",
+     "image": "image4.jpg",
+     "description_en": "Firm red kidney beans with consistent colour and convenient preparation.",
+     "forms": "Plain or in sauce",
+     "processing": "Ingredients are sorted, washed and prepared, filled into containers, sealed and thermally processed under a validated product specification.",
+     "packing": "Retail cans, glass jars or food-service cans; private label subject to agreement",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 5,
+     "name_en": "CANNED GREEN PEAS",
+     "image": "image5.jpg",
+     "description_en": "Tender green peas preserved for convenient year-round use.",
+     "forms": "Plain or with carrots",
+     "processing": "Ingredients are sorted, washed and prepared, filled into containers, sealed and thermally processed under a validated product specification.",
+     "packing": "Retail cans, glass jars or food-service cans; private label subject to agreement",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 6,
+     "name_en": "CANNED SWEET CORN",
+     "image": "image6.jpg",
+     "description_en": "Bright sweet corn kernels with consistent tenderness and colour.",
+     "forms": "Whole-kernel yellow sweet corn",
+     "processing": "Ingredients are sorted, washed and prepared, filled into containers, sealed and thermally processed under a validated product specification.",
+     "packing": "Retail cans, glass jars or food-service cans; private label subject to agreement",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 7,
+     "name_en": "CANNED GREEN BEANS",
+     "image": "image7.jpg",
+     "description_en": "Prepared green beans offered in uniform whole or cut formats.",
+     "forms": "Whole or cut",
+     "processing": "Ingredients are sorted, washed and prepared, filled into containers, sealed and thermally processed under a validated product specification.",
+     "packing": "Retail cans, glass jars or food-service cans; private label subject to agreement",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 8,
+     "name_en": "CANNED MIXED VEGETABLES",
+     "image": "image8.jpg",
+     "description_en": "A colourful vegetable blend for retail and food-service convenience.",
+     "forms": "Peas, carrots, corn and beans",
+     "processing": "Ingredients are sorted, washed and prepared, filled into containers, sealed and thermally processed under a validated product specification.",
+     "packing": "Retail cans, glass jars or food-service cans; private label subject to agreement",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 9,
+     "name_en": "CANNED ARTICHOKES",
+     "image": "image9.jpg",
+     "description_en": "Tender artichoke portions prepared for salads, cooking and food service.",
+     "forms": "Hearts, bottoms, quarters or slices",
+     "processing": "Ingredients are sorted, washed and prepared, filled into containers, sealed and thermally processed under a validated product specification.",
+     "packing": "Retail cans, glass jars or food-service cans; private label subject to agreement",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 10,
+     "name_en": "CANNED GRAPE LEAVES",
+     "image": "image10.jpg",
+     "description_en": "Selected grape leaves preserved for traditional stuffed-leaf recipes.",
+     "forms": "Plain, layered or ready for stuffing",
+     "processing": "Ingredients are sorted, washed and prepared, filled into containers, sealed and thermally processed under a validated product specification.",
+     "packing": "Retail cans, glass jars or food-service cans; private label subject to agreement",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 11,
+     "name_en": "CANNED WHOLE TOMATOES",
+     "image": "image11.jpg",
+     "description_en": "Ripe peeled tomatoes preserved whole for sauces and professional kitchens.",
+     "forms": "Whole peeled tomatoes",
+     "processing": "Ingredients are sorted, washed and prepared, filled into containers, sealed and thermally processed under a validated product specification.",
+     "packing": "Retail cans, glass jars or food-service cans; private label subject to agreement",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 12,
+     "name_en": "CANNED DICED TOMATOES",
+     "image": "image12.jpg",
+     "description_en": "Prepared tomato pieces offering consistent colour, texture and convenience.",
+     "forms": "Diced or crushed tomatoes",
+     "processing": "Ingredients are sorted, washed and prepared, filled into containers, sealed and thermally processed under a validated product specification.",
+     "packing": "Retail cans, glass jars or food-service cans; private label subject to agreement",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 13,
+     "name_en": "CANNED MUSHROOMS",
+     "image": "image13.jpg",
+     "description_en": "Cultivated mushrooms preserved whole or sliced for dependable ingredient use.",
+     "forms": "Whole or sliced",
+     "processing": "Ingredients are sorted, washed and prepared, filled into containers, sealed and thermally processed under a validated product specification.",
+     "packing": "Retail cans, glass jars or food-service cans; private label subject to agreement",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 14,
+     "name_en": "CANNED FRUIT COCKTAIL",
+     "image": "image14.jpg",
+     "description_en": "A colourful selection of prepared fruits packed together in syrup.",
+     "forms": "Mixed fruits in light or standard syrup",
+     "processing": "Ingredients are sorted, washed and prepared, filled into containers, sealed and thermally processed under a validated product specification.",
+     "packing": "Retail cans, glass jars or food-service cans; private label subject to agreement",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 15,
+     "name_en": "CANNED PINEAPPLE",
+     "image": "image15.jpg",
+     "description_en": "Sweet pineapple prepared in consistent formats for desserts and catering.",
+     "forms": "Rings, slices or chunks",
+     "processing": "Ingredients are sorted, washed and prepared, filled into containers, sealed and thermally processed under a validated product specification.",
+     "packing": "Retail cans, glass jars or food-service cans; private label subject to agreement",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 16,
+     "name_en": "CANNED PEACHES",
+     "image": "image16.jpg",
+     "description_en": "Golden peach halves or slices with a soft, attractive texture.",
+     "forms": "Halves or slices in syrup",
+     "processing": "Ingredients are sorted, washed and prepared, filled into containers, sealed and thermally processed under a validated product specification.",
+     "packing": "Retail cans, glass jars or food-service cans; private label subject to agreement",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 17,
+     "name_en": "TABLE OLIVES",
+     "image": "image17.jpg",
+     "description_en": "Selected table olives supplied in multiple colours, sizes and presentations.",
+     "forms": "Green, black, Kalamata-style, whole, pitted or sliced",
+     "processing": "Produce is sorted, prepared and packed in a controlled brine or marinade. Salt, acidity, recipe and cut are confirmed to buyer specification.",
+     "packing": "Glass jars, PET jars, cans or food-service containers",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 18,
+     "name_en": "STUFFED GREEN OLIVES",
+     "image": "image18.jpg",
+     "description_en": "Premium green olives filled with almond or anchovy for speciality retail ranges.",
+     "forms": "Almond-stuffed or anchovy-stuffed",
+     "processing": "Produce is sorted, prepared and packed in a controlled brine or marinade. Salt, acidity, recipe and cut are confirmed to buyer specification.",
+     "packing": "Glass jars, PET jars, cans or food-service containers",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 19,
+     "name_en": "PICKLED CUCUMBERS / GHERKINS",
+     "image": "image19.jpg",
+     "description_en": "Crisp cucumbers preserved in seasoned brine for snacks and food service.",
+     "forms": "Whole, sliced or baby gherkins",
+     "processing": "Produce is sorted, prepared and packed in a controlled brine or marinade. Salt, acidity, recipe and cut are confirmed to buyer specification.",
+     "packing": "Glass jars, PET jars, cans or food-service containers",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 20,
+     "name_en": "PICKLED ONIONS",
+     "image": "image20.jpg",
+     "description_en": "Firm onions pickled for a balanced sharp flavour and attractive appearance.",
+     "forms": "White, red or baby onions",
+     "processing": "Produce is sorted, prepared and packed in a controlled brine or marinade. Salt, acidity, recipe and cut are confirmed to buyer specification.",
+     "packing": "Glass jars, PET jars, cans or food-service containers",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 21,
+     "name_en": "PICKLED PEPPERS",
+     "image": "image21.jpg",
+     "description_en": "Colourful peppers preserved in brine with buyer-selected heat levels.",
+     "forms": "Green, red, chili or mixed peppers",
+     "processing": "Produce is sorted, prepared and packed in a controlled brine or marinade. Salt, acidity, recipe and cut are confirmed to buyer specification.",
+     "packing": "Glass jars, PET jars, cans or food-service containers",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 22,
+     "name_en": "PICKLED JALAPENOS",
+     "image": "image22.jpg",
+     "description_en": "Tangy jalapenos supplied whole or sliced for retail and food-service use.",
+     "forms": "Whole or sliced",
+     "processing": "Produce is sorted, prepared and packed in a controlled brine or marinade. Salt, acidity, recipe and cut are confirmed to buyer specification.",
+     "packing": "Glass jars, PET jars, cans or food-service containers",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 23,
+     "name_en": "PICKLED LEMONS WITH SAFFLOWER",
+     "image": "image23.jpg",
+     "description_en": "Traditional pickled lemons seasoned with safflower for a distinctive Egyptian profile.",
+     "forms": "Whole or quartered Egyptian-style lemons",
+     "processing": "Produce is sorted, prepared and packed in a controlled brine or marinade. Salt, acidity, recipe and cut are confirmed to buyer specification.",
+     "packing": "Glass jars, PET jars, cans or food-service containers",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 24,
+     "name_en": "PICKLED TURNIPS",
+     "image": "image24.jpg",
+     "description_en": "Crisp turnip pieces offered natural or with their familiar bright pink colour.",
+     "forms": "Natural or beet-coloured",
+     "processing": "Produce is sorted, prepared and packed in a controlled brine or marinade. Salt, acidity, recipe and cut are confirmed to buyer specification.",
+     "packing": "Glass jars, PET jars, cans or food-service containers",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 25,
+     "name_en": "PICKLED CARROTS",
+     "image": "image25.jpg",
+     "description_en": "Firm carrot pieces preserved in a balanced seasoned brine.",
+     "forms": "Slices, sticks or mixed formats",
+     "processing": "Produce is sorted, prepared and packed in a controlled brine or marinade. Salt, acidity, recipe and cut are confirmed to buyer specification.",
+     "packing": "Glass jars, PET jars, cans or food-service containers",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 26,
+     "name_en": "PICKLED MIXED VEGETABLES",
+     "image": "image26.jpg",
+     "description_en": "A colourful brined selection combining vegetables to the requested recipe.",
+     "forms": "Buyer-selected vegetable combination",
+     "processing": "Produce is sorted, prepared and packed in a controlled brine or marinade. Salt, acidity, recipe and cut are confirmed to buyer specification.",
+     "packing": "Glass jars, PET jars, cans or food-service containers",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 27,
+     "name_en": "ARTICHOKES IN BRINE",
+     "image": "image27.jpg",
+     "description_en": "Prepared artichokes held in brine for convenient culinary use.",
+     "forms": "Hearts, bottoms, quarters or slices",
+     "processing": "Produce is sorted, prepared and packed in a controlled brine or marinade. Salt, acidity, recipe and cut are confirmed to buyer specification.",
+     "packing": "Glass jars, PET jars, cans or food-service containers",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 28,
+     "name_en": "ROASTED RED PEPPERS",
+     "image": "image28.jpg",
+     "description_en": "Sweet roasted peppers with peeled flesh and a rich cooked flavour.",
+     "forms": "Whole, strips or pieces",
+     "processing": "Produce is sorted, prepared and packed in a controlled brine or marinade. Salt, acidity, recipe and cut are confirmed to buyer specification.",
+     "packing": "Glass jars, PET jars, cans or food-service containers",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 29,
+     "name_en": "EGGPLANT MAKDOUS",
+     "image": "image29.jpg",
+     "description_en": "Traditional preserved baby eggplant filled with a seasoned savoury mixture.",
+     "forms": "Stuffed baby eggplant",
+     "processing": "Produce is sorted, prepared and packed in a controlled brine or marinade. Salt, acidity, recipe and cut are confirmed to buyer specification.",
+     "packing": "Glass jars, PET jars, cans or food-service containers",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 30,
+     "name_en": "GRILLED EGGPLANT",
+     "image": "image30.jpg",
+     "description_en": "Smoky grilled eggplant prepared for appetisers, dips and ready-meal production.",
+     "forms": "Grilled slices, pieces or pulp",
+     "processing": "Produce is sorted, prepared and packed in a controlled brine or marinade. Salt, acidity, recipe and cut are confirmed to buyer specification.",
+     "packing": "Glass jars, PET jars, cans or food-service containers",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 31,
+     "name_en": "TOMATO PASTE",
+     "image": "image31.jpg",
+     "description_en": "Concentrated tomato paste offering deep colour and consistent solids.",
+     "forms": "22-24 or 28-30 Brix and buyer-specific grades",
+     "processing": "Ingredients are processed, blended and concentrated to the agreed recipe, then hot-filled or aseptically packed as applicable.",
+     "packing": "Glass jars, cans, pouches, bottles or aseptic bulk",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 32,
+     "name_en": "TOMATO SAUCE",
+     "image": "image32.jpg",
+     "description_en": "Smooth tomato sauce prepared for retail, catering and recipe manufacturing.",
+     "forms": "Plain or seasoned",
+     "processing": "Ingredients are processed, blended and concentrated to the agreed recipe, then hot-filled or aseptically packed as applicable.",
+     "packing": "Glass jars, cans, pouches, bottles or aseptic bulk",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 33,
+     "name_en": "TOMATO PASSATA",
+     "image": "image33.jpg",
+     "description_en": "Fine strained tomato passata with a clean texture and natural tomato character.",
+     "forms": "Smooth strained tomatoes",
+     "processing": "Ingredients are processed, blended and concentrated to the agreed recipe, then hot-filled or aseptically packed as applicable.",
+     "packing": "Glass jars, cans, pouches, bottles or aseptic bulk",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 34,
+     "name_en": "PIZZA SAUCE",
+     "image": "image34.jpg",
+     "description_en": "A ready-to-use tomato base developed for pizza and bakery applications.",
+     "forms": "Ready-seasoned or buyer-specific recipe",
+     "processing": "Ingredients are processed, blended and concentrated to the agreed recipe, then hot-filled or aseptically packed as applicable.",
+     "packing": "Glass jars, cans, pouches, bottles or aseptic bulk",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 35,
+     "name_en": "TOMATO KETCHUP",
+     "image": "image35.jpg",
+     "description_en": "Smooth tomato ketchup with buyer-selected sweetness, acidity and consistency.",
+     "forms": "Retail or food-service recipe",
+     "processing": "Ingredients are processed, blended and concentrated to the agreed recipe, then hot-filled or aseptically packed as applicable.",
+     "packing": "Glass jars, cans, pouches, bottles or aseptic bulk",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 36,
+     "name_en": "CHILI PASTE / HARISSA",
+     "image": "image36.jpg",
+     "description_en": "Concentrated chili paste supplying colour, aroma and controlled heat.",
+     "forms": "Mild, medium or hot",
+     "processing": "Ingredients are processed, blended and concentrated to the agreed recipe, then hot-filled or aseptically packed as applicable.",
+     "packing": "Glass jars, cans, pouches, bottles or aseptic bulk",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 37,
+     "name_en": "HOT SAUCE",
+     "image": "image37.jpg",
+     "description_en": "Pourable pepper sauce developed to the required heat and flavour profile.",
+     "forms": "Multiple heat levels and recipes",
+     "processing": "Ingredients are processed, blended and concentrated to the agreed recipe, then hot-filled or aseptically packed as applicable.",
+     "packing": "Glass jars, cans, pouches, bottles or aseptic bulk",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 38,
+     "name_en": "FRUIT JAM",
+     "image": "image38.jpg",
+     "description_en": "Fruit-rich jam offered in classic Egyptian and international flavours.",
+     "forms": "Strawberry, apricot, fig, mango, guava, blackberry or raspberry",
+     "processing": "Ingredients are cleaned, cooked or blended to the agreed solids and sweetness, then hygienically hot-filled and sealed.",
+     "packing": "Glass jars, plastic tubs, buckets or bulk formats",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 39,
+     "name_en": "ORANGE MARMALADE",
+     "image": "image39.jpg",
+     "description_en": "Bright citrus marmalade with adjustable peel content and sweetness.",
+     "forms": "Smooth or peel-rich",
+     "processing": "Ingredients are cleaned, cooked or blended to the agreed solids and sweetness, then hygienically hot-filled and sealed.",
+     "packing": "Glass jars, plastic tubs, buckets or bulk formats",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 40,
+     "name_en": "DATE JAM",
+     "image": "image40.jpg",
+     "description_en": "Rich naturally dark date spread with a smooth, full-bodied character.",
+     "forms": "Plain or flavoured",
+     "processing": "Ingredients are cleaned, cooked or blended to the agreed solids and sweetness, then hygienically hot-filled and sealed.",
+     "packing": "Glass jars, plastic tubs, buckets or bulk formats",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 41,
+     "name_en": "PRICKLY PEAR JAM",
+     "image": "image41.jpg",
+     "description_en": "A distinctive speciality jam made from colourful prickly pear fruit.",
+     "forms": "Seasonal speciality",
+     "processing": "Ingredients are cleaned, cooked or blended to the agreed solids and sweetness, then hygienically hot-filled and sealed.",
+     "packing": "Glass jars, plastic tubs, buckets or bulk formats",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 42,
+     "name_en": "BLACK MOLASSES",
+     "image": "image42.jpg",
+     "description_en": "Dense sugarcane molasses with a deep colour and characteristic robust flavour.",
+     "forms": "Retail or bulk",
+     "processing": "Ingredients are cleaned, cooked or blended to the agreed solids and sweetness, then hygienically hot-filled and sealed.",
+     "packing": "Glass jars, plastic tubs, buckets or bulk formats",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 43,
+     "name_en": "NATURAL HONEY",
+     "image": "image43.jpg",
+     "description_en": "Natural Egyptian honey selected by floral source and buyer requirements.",
+     "forms": "Clover, citrus or multifloral",
+     "processing": "Ingredients are cleaned, cooked or blended to the agreed solids and sweetness, then hygienically hot-filled and sealed.",
+     "packing": "Glass jars, plastic tubs, buckets or bulk formats",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 44,
+     "name_en": "FRUIT JUICE",
+     "image": "image44.jpg",
+     "description_en": "Fruit juice supplied in popular single-fruit flavours and export pack sizes.",
+     "forms": "Orange, lemon, apple, grape or pomegranate",
+     "processing": "Raw material is extracted or pulped, standardised to specification, pasteurised and hygienically filled in the selected format.",
+     "packing": "Glass, PET, cans, cartons or aseptic bulk",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 45,
+     "name_en": "FRUIT NECTAR",
+     "image": "image45.jpg",
+     "description_en": "Smooth fruit nectar balancing pulp, sweetness and drinkable consistency.",
+     "forms": "Mango, guava, peach or cocktail",
+     "processing": "Raw material is extracted or pulped, standardised to specification, pasteurised and hygienically filled in the selected format.",
+     "packing": "Glass, PET, cans, cartons or aseptic bulk",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 46,
+     "name_en": "FRUIT CONCENTRATES",
+     "image": "image46.jpg",
+     "description_en": "Concentrated fruit ingredients for beverage, dairy and food manufacturing.",
+     "forms": "Orange, lemon, grape or pomegranate",
+     "processing": "Raw material is extracted or pulped, standardised to specification, pasteurised and hygienically filled in the selected format.",
+     "packing": "Glass, PET, cans, cartons or aseptic bulk",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 47,
+     "name_en": "FRUIT PUREES / PULPS",
+     "image": "image47.jpg",
+     "description_en": "Prepared fruit pulp offering consistent colour, flavour and processing convenience.",
+     "forms": "Mango, guava, strawberry, peach or apricot",
+     "processing": "Raw material is extracted or pulped, standardised to specification, pasteurised and hygienically filled in the selected format.",
+     "packing": "Glass, PET, cans, cartons or aseptic bulk",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 48,
+     "name_en": "TOMATO JUICE",
+     "image": "image48.jpg",
+     "description_en": "Smooth tomato juice supplied for retail, catering and beverage programmes.",
+     "forms": "Natural or seasoned",
+     "processing": "Raw material is extracted or pulped, standardised to specification, pasteurised and hygienically filled in the selected format.",
+     "packing": "Glass, PET, cans, cartons or aseptic bulk",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 49,
+     "name_en": "FRUIT COCKTAIL DRINK",
+     "image": "image44.jpg",
+     "description_en": "A refreshing mixed-fruit drink developed to the required flavour and sweetness.",
+     "forms": "Mixed-fruit flavours",
+     "processing": "Raw material is extracted or pulped, standardised to specification, pasteurised and hygienically filled in the selected format.",
+     "packing": "Glass, PET, cans, cartons or aseptic bulk",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 50,
+     "name_en": "OLIVE OIL",
+     "image": "image49.jpg",
+     "description_en": "Egyptian olive oil supplied in retail and bulk formats according to grade.",
+     "forms": "Extra virgin, virgin or refined",
+     "processing": "Olives are processed and the oil is filtered or settled according to grade, then protected from heat, oxygen and light during filling.",
+     "packing": "Dark glass, PET, tins or bulk containers",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 51,
+     "name_en": "TAHINI",
+     "image": "image50.jpg",
+     "description_en": "Smooth sesame paste with a rich roasted flavour and consistent texture.",
+     "forms": "Natural sesame paste",
+     "processing": "Ingredients are prepared and blended under controlled hygienic conditions, then filled and sealed in the buyer-selected format.",
+     "packing": "Glass jars, tubs, cans or food-service containers",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 52,
+     "name_en": "HALVA",
+     "image": "image51.jpg",
+     "description_en": "Traditional sesame halva with a light, crumbly texture and optional nuts.",
+     "forms": "Plain, pistachio or mixed nuts",
+     "processing": "Ingredients are prepared and blended under controlled hygienic conditions, then filled and sealed in the buyer-selected format.",
+     "packing": "Glass jars, tubs, cans or food-service containers",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 53,
+     "name_en": "HUMMUS",
+     "image": "image52.jpg",
+     "description_en": "Ready-to-eat chickpea and tahini spread with a smooth savoury profile.",
+     "forms": "Plain or flavoured",
+     "processing": "Ingredients are prepared and blended under controlled hygienic conditions, then filled and sealed in the buyer-selected format.",
+     "packing": "Glass jars, tubs, cans or food-service containers",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 54,
+     "name_en": "BABA GHANOUSH",
+     "image": "image53.jpg",
+     "description_en": "Smoky eggplant dip prepared for retail and food-service appetiser ranges.",
+     "forms": "Classic or buyer-specific recipe",
+     "processing": "Ingredients are prepared and blended under controlled hygienic conditions, then filled and sealed in the buyer-selected format.",
+     "packing": "Glass jars, tubs, cans or food-service containers",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    },
+    {
+     "index": 55,
+     "name_en": "NATURAL VINEGAR",
+     "image": "image54.jpg",
+     "description_en": "Clear culinary vinegar supplied in multiple types and acidity specifications.",
+     "forms": "White, apple or other natural varieties",
+     "processing": "Ingredients are prepared and blended under controlled hygienic conditions, then filled and sealed in the buyer-selected format.",
+     "packing": "Glass jars, tubs, cans or food-service containers",
+     "chain_guide": "Store unopened in a cool, dry place away from direct sunlight. Refrigerate after opening and follow the final label instructions."
+    }
+   ]
+  }
+ ],
+ "company": {
+  "name_en": "Nile-Maple",
+  "tagline_en": "Egyptian for Food Industrial",
+  "descriptor_en": "Egyptian Import and Export of Food and Agricultural Products",
+  "email": "contact@nilemaple.com",
+  "phone": "+20 1515919135",
+  "whatsapp": "+20 1515919135",
+  "instagram": "https://www.instagram.com/nilemaple2025",
+  "facebook": "https://www.facebook.com/share/1Hk3W6guhD/?mibextid=wwXIfr",
+  "leadership": [
+   {
+    "name": "Eng. Issa Abousheloua",
+    "role_en": "Founder and Owner"
+   },
+   {
+    "name": "Eng. Omar Issa",
+    "role_en": "Co-Founder and Executive Manager"
+   }
+  ],
+  "logos": {
+   "mark": "word/media/image1.png",
+   "lockup_en": "word/media/image2.png",
+   "lockup_ar": "word/media/image7.png",
+   "note": "All logo PNGs are RGB with opaque #FDF9F6 background - MUST be re-cut to transparent + SVG"
+  },
+  "division_images": {}
+ },
+ "data_quality": {
+  "processed-canned": [
+   {
+    "issue": "duplicate_image",
+    "image": "image44.jpg",
+    "products": [
+     "FRUIT JUICE",
+     "FRUIT COCKTAIL DRINK"
+    ]
+   }
+  ]
+ },
+ "totals": {
+  "products": 159,
+  "media": 159
+ }
+}
