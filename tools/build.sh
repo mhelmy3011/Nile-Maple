@@ -7,8 +7,8 @@
 #   tools/build.sh --rebuild    rebuild the static site only
 #   tools/build.sh --assets     rebuild CSS/JS/fonts/manifest only
 #   tools/build.sh --verify     run the deploy gate (tools/verify.php)
-#   tools/build.sh --bootstrap  fresh database: extract → migrate --fresh → seed → images → brand
-#                               → assets → full rebuild → verify          (DESTRUCTIVE: wipes content)
+#   tools/build.sh --bootstrap  fresh database: extract → migrate --fresh → seed → seed_seo → hero
+#                               → images → brand → assets → full rebuild → verify (DESTRUCTIVE: wipes content)
 #   tools/build.sh --lint       php -l over every shipped file
 #
 # PHP is auto-detected: a system `php` when present, otherwise the php-wasm CLI used in this
@@ -77,6 +77,14 @@ if [ "$do_bootstrap" = 1 ]; then
   extract
   php_run tools/migrate.php --fresh
   php_run tools/seed.php
+  php_run tools/seed_seo.php
+  if [ -x "$(command -v node)" ] && [ -d tools/harness/node_modules ]; then
+    printf '\n\033[1m── tools/build_hero.mjs\033[0m\n'
+    node tools/build_hero.mjs
+  else
+    echo 'tools/build.sh: node/sharp not available — skipping hero collage composition' \
+         '(the hero renders without an image until tools/build_hero.mjs is run once)'
+  fi
   php_run tools/build_images.php
 fi
 [ "$do_assets" = 1 ] && php_run tools/build_assets.php
