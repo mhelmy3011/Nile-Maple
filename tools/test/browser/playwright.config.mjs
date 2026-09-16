@@ -23,7 +23,7 @@ export default defineConfig({
   // the 30s test timeout. Production (real LiteSpeed/Apache) has no such ceiling; this is a
   // dev-server-only constraint. serve.mjs has the same one-interpreter limit (see its own
   // comment), so the cap applies regardless of which local server is in front.
-  workers: process.env.CI ? 2 : 4,
+  workers: 2,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? [['list'], ['html', { open: 'never' }]] : 'list',

@@ -36,6 +36,14 @@ test.describe('admin auth', () => {
     await page.waitForLoadState();
     expect(page.url()).not.toContain('/login');
     await expect(page.getByText(/fatal error/i)).toHaveCount(0);
+    // Regression lock: the bare dashboard root (what login actually redirects to) 404'd under
+    // dev_server.php specifically — e2e.mjs only ever checked this route logged OUT (expects
+    // the auth redirect), so the authenticated path was never exercised anywhere until this.
+    // Root cause: Admin::handle()'s REQUEST_URI-parsing fallback mishandled the bare "manage"
+    // segment (no $_GET['path'] set), landing on a $page value with no matching pgXxx method.
+    const res = await page.goto(`${ADMIN}/`);
+    expect(res.status(), 'authenticated dashboard root').toBe(200);
+    await expect(page.getByText(/not found/i)).toHaveCount(0);
   });
 
   test('direct access to an entity list while logged out redirects to login', async ({ page }, testInfo) => {

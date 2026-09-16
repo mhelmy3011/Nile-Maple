@@ -8,7 +8,12 @@ final class Admin
     {
         Session::start();
         $uri = trim((string) ($_GET['path'] ?? parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH)), '/');
-        $uri = preg_replace('#^manage/#', '', $uri);
+        /* the trailing slash is gone after trim('/') above, so the bare "/manage/" request
+           (dashboard home) arrives here as exactly "manage" — `^manage/` (slash required)
+           would silently fail to strip it, leaving $page = 'manage' and 404ing a route that
+           exists. Optional slash so this fallback (normally short-circuited by $_GET['path']
+           from .htaccess/dev_server.php) is correct on its own too. */
+        $uri = preg_replace('#^manage/?#', '', $uri);
         $segs = $uri === '' ? [] : explode('/', trim($uri, '/'));
         $allow = cfg('admin.allow_ips');
         if ($allow && !in_array($_SERVER['REMOTE_ADDR'] ?? '', $allow, true)) { http_response_code(403); exit('Forbidden'); }

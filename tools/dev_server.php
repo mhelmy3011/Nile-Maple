@@ -46,7 +46,12 @@ if (preg_match('#^/api(/.*)?$#', $uri, $am)) {
     require $root . '/index.php';
     exit;
 }
-if ($uri === '/manage' || str_starts_with($uri, '/manage/')) {
+if (preg_match('#^/manage/?(.*)$#', $uri, $mm)) {
+    /* .htaccess: RewriteRule ^manage/?(.*)$ manage/index.php?path=$1 — Admin::handle() falls
+       back to parsing REQUEST_URI when $_GET['path'] is unset, and that fallback mishandles the
+       bare "/manage/" case (dashboard home) specifically, so this must set path explicitly to
+       match production rather than relying on the fallback. */
+    $_GET['path'] = $mm[1];
     require $root . '/manage/index.php';
     exit;
 }
