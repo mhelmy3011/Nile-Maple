@@ -55,7 +55,7 @@ $categories = [
         'summary' => $L('Canned vegetables and fruits, pickles, olives, sauces, juices, jams, spreads and pantry products.',
             'خضروات وفاكهة معلبة ومخللات وزيتون وصلصات وعصائر ومربى ومستلزمات مخزن.',
             'Légumes et fruits appertisés, pickles, olives, sauces, jus, confitures et épicerie.'),
-        'meta_t' => $L('Processed & Canned Foods from Egypt | 55 Lines | Nile-Maple', 'مصنعات ومعلبات مصرية | 55 خطًا | نيل مابل', 'Produits transformés & appertisés d’Égypte | 55 références | Nile-Maple'),
+        'meta_t' => $L('Processed & Canned Foods from Egypt | 55 Lines | Nile-Maple', 'مصنعات ومعلبات مصرية | 55 خطًا | نيل مابل', 'Conserves & Transformés d’Égypte | 55 références | Nile-Maple'),
         'meta_d' => $L('Egyptian canned, pickled and shelf-stable foods: forms, processing, packing and storage guides for 55 lines.',
             'معلبات ومخللات وأغذية مصرية طويلة الحفظ: أشكال وتصنيع وتعبئة وأدلة تخزين لـ55 خطًا.',
             'Appertisés, pickles et produits longue conservation égyptiens : formes, transformation, emballage, stockage.'),

@@ -62,3 +62,10 @@ foreach (['cache/data', 'cache/lang', 'cache/frag', 'storage/logs', 'storage/tmp
 }
 date_default_timezone_set('Africa/Cairo');
 mb_internal_encoding('UTF-8');
+
+/* One-time production bootstrap: no-op unless storage/SETUP_PENDING ships in the deploy
+   (see app/Ops/AutoSetup.php). Cost on every later request is a single file_exists(). */
+if (is_file(nm_path('storage/SETUP_PENDING'))) {
+    require_once __DIR__ . '/Ops/AutoSetup.php';
+    \Nm\Ops\AutoSetup::maybeRun();
+}

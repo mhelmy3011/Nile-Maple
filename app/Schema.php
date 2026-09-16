@@ -166,9 +166,15 @@ final class Schema
         $pk = $soloPk;
         $mysql = $driver === 'mysql';
         switch ($type) {
-            case 'pk':     $c = $mysql ? 'INT UNSIGNED NOT NULL AUTO_INCREMENT' : 'INTEGER PRIMARY KEY AUTOINCREMENT'; break;
-            case 'pk64':   $c = $mysql ? 'BIGINT UNSIGNED NOT NULL AUTO_INCREMENT' : 'INTEGER PRIMARY KEY AUTOINCREMENT'; break;
-            case 'int':    $c = ($mysql ? 'INT' : 'INTEGER') . ($null ? ' NULL' : ' NOT NULL'); break;
+            /* MySQL requires AUTO_INCREMENT columns to be a key inline (composite PKs are handled
+               separately below) — never caught before because every prior test ran on SQLite,
+               whose single-line "INTEGER PRIMARY KEY AUTOINCREMENT" needs no separate clause. */
+            case 'pk':     $c = $mysql ? 'INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY' : 'INTEGER PRIMARY KEY AUTOINCREMENT'; break;
+            case 'pk64':   $c = $mysql ? 'BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY' : 'INTEGER PRIMARY KEY AUTOINCREMENT'; break;
+            /* fk/pkfk columns always reference a 'pk'-type id, which is INT UNSIGNED on MySQL —
+               MySQL 8 rejects a signed-to-unsigned FK (error 3780); SQLite never checks this. */
+            case 'int':    $fk = in_array('fk', $flags, true) || in_array('pkfk', $flags, true);
+                           $c = ($mysql ? ('INT' . ($fk ? ' UNSIGNED' : '')) : 'INTEGER') . ($null ? ' NULL' : ' NOT NULL'); break;
             case 'bool':   $c = ($mysql ? 'TINYINT(1)' : 'INTEGER') . ($null ? ' NULL' : ' NOT NULL'); break;
             case 'dec':    $c = ($mysql ? 'DECIMAL(4,1)' : 'REAL') . ($null ? ' NULL' : ' NOT NULL'); break;
             case 'dec3':   $c = ($mysql ? 'DECIMAL(4,3)' : 'REAL') . ($null ? ' NULL' : ' NOT NULL'); break;
