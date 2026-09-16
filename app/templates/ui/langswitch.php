@@ -1,8 +1,13 @@
 <?php
 use Nm\View;
+use Nm\Alternates;
 $labels = ['en' => 'English', 'ar' => 'العربية', 'fr' => 'Français'];
 $short = ['en' => 'EN', 'ar' => 'ع', 'fr' => 'FR'];
 $path = trim($path ?? '', '/');
+/* entity pages (products/categories/services/blog) carry a per-locale slug — reusing the
+   current path verbatim under a new language prefix 404s (e.g. /en/categories/<arabic-slug>/).
+   Resolve the equivalent path per target language, same as Seo::hreflang already does. */
+$alt = Alternates::for($lang, $path);
 ?>
 <?php /* Plain disclosure menu of links, not an ARIA listbox: base.js only opens/closes it and
         treats the <a> elements as the interactive units — there is no roving-tabindex or
@@ -19,8 +24,9 @@ $path = trim($path ?? '', '/');
   </button>
   <ul class="lang-menu" aria-label="<?= \Nm\I18n::t('a11y.lang') ?>" hidden>
     <?php foreach (cfg('langs') as $l): ?>
+      <?php $lp = $alt[$l] ?? $path; ?>
       <li>
-        <a href="/<?= $l ?>/<?= $path ? View::e($path) . '/' : '' ?>" hreflang="<?= $l ?>" lang="<?= $l ?>"<?= $l === $lang ? ' aria-current="true"' : '' ?>>
+        <a href="/<?= $l ?>/<?= $lp ? View::e($lp) . '/' : '' ?>" hreflang="<?= $l ?>" lang="<?= $l ?>"<?= $l === $lang ? ' aria-current="true"' : '' ?>>
           <span><?= View::e($labels[$l]) ?></span><?= $l === $lang ? '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 13 4 4L19 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' : '' ?>
         </a>
       </li>
