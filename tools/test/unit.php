@@ -81,8 +81,24 @@ foreach (Schema::ddl('sqlite') as $ddlStmt) if (str_contains($ddlStmt, 'CREATE T
 ok($sessDdl !== '' && preg_match('/user_id\s+INTEGER\s+NULL/i', $sessDdl) === 1, 'Schema: sessions.user_id nullable in fresh DDL [D-01]');
 
 /* ── Auth (D-11 regression lock) ──────────────────────────────────────────────────── */
-$res = Auth::attempt('owner@test.nilemaple', Auth::SEED_PASSWORD);
-ok(empty($res['ok']), 'Auth: seed password rejected at the authentication layer [D-11]');
+/* NOTE: the previous version of this test called Auth::attempt() with the seed-password
+   *string* against the 'owner@test.nilemaple' fixture, whose hash is 'TestOwner!2026x' — that
+   assertion could only ever pass because ANY wrong password fails, not because the seed
+   password specifically was rejected. It never exercised the real D-11 behaviour (accept once,
+   force rotation — never a hard reject, or first login would be impossible) and would have
+   stayed green even if Auth::attempt() had no seed-password handling at all. Fixed to actually
+   seed an account still on the seed password and assert the real contract. */
+Db::run("INSERT INTO users(email,password_hash,full_name,role,status) VALUES('seedpw@test.nilemaple', ?, 'Seed User', 'editor', 'active')",
+    [password_hash(Auth::SEED_PASSWORD, PASSWORD_DEFAULT)]);
+$res = Auth::attempt('seedpw@test.nilemaple', Auth::SEED_PASSWORD);
+ok(!empty($res['ok']), 'Auth: seed password authenticates (D-11 is forced rotation, not a hard reject — a hard reject would make first login impossible)');
+ok(Auth::needsRotation() === true, 'Auth: seed-password login is flagged for forced rotation [D-11]');
+/* Admin::pgPassword's reuse guard (rejecting a rotation *to* the seed password) is an HTTP
+   handler, not a pure function — covered at that layer by tools/test/e2e.mjs / the Playwright
+   admin-auth suite, not here. In production this flag is cleared only by a successful
+   pgPassword rotation (app/Admin.php); this test never calls that handler, so it must clear
+   the flag itself before the next login — exactly as a real "log out, log back in" would. */
+unset($_SESSION['force_pw']);
 $res = Auth::attempt('owner@test.nilemaple', 'TestOwner!2026x');
 ok(!empty($res['ok']), 'Auth: real credential accepted');
 ok(Auth::needsRotation() === false, 'Auth: no forced rotation for a rotated credential');

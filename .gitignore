@@ -23,6 +23,12 @@ node_modules/
 tools/harness/node_modules/
 *.log
 
+# --- Playwright: browsers cache elsewhere (~/Library/Caches/ms-playwright); reports/traces are
+#     per-run output. RTL visual baselines (tests/*-snapshots/) ARE tracked — committed on purpose. ---
+tools/test/browser/test-results/
+tools/test/browser/playwright-report/
+tools/test/browser/blob-report/
+
 # --- editor / OS noise ---
 .env
 .DS_Store

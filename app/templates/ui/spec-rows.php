@@ -14,7 +14,7 @@ $rows = [
   <div class="spec-row">
     <dt><span class="sr-icon" aria-hidden="true"><?= Icons::svg($icon) ?></span><?= View::e($label) ?></dt>
     <dd><?= $temp
-        ? '<span class="temp-badge tabular">' . View::e(\Nm\Util::tempBadge((float) $p['temp_min'], (float) $p['temp_max'], $p['temp_unit'])) . '</span> ' . View::e($value)
+        ? '<span class="temp-badge tabular" dir="ltr">' . View::e(\Nm\Util::tempBadge((float) $p['temp_min'], (float) $p['temp_max'], $p['temp_unit'])) . '</span> ' . View::e($value)
         : View::e($value) ?></dd>
   </div>
 <?php endforeach; ?>

@@ -277,7 +277,20 @@ final class Admin
             foreach (cfg('langs') as $l) {
                 $i18n[$l] = $id ? (Db::one('SELECT * FROM ' . $e['i18n'] . ' WHERE ' . $e['fk'] . '=? AND lang=?', [$id, $l]) ?: []) : [];
             }
-            echo View::page('admin/form', ['e' => $e, 'key' => $key, 'row' => $row, 'i18n' => $i18n, 'id' => $id], 'layouts/admin');
+            /* redisplay exactly what was typed after a failed save, instead of the pre-edit DB
+               row (see flashFail()) — one-shot, so a manual reload of this URL goes back to the
+               saved state rather than reoffering stale draft data forever. */
+            Session::start();
+            $flashKey = $key . ':' . ($id ?: 'new');
+            if (!empty($_SESSION['form_flash'][$flashKey])) {
+                $posted = $_SESSION['form_flash'][$flashKey];
+                unset($_SESSION['form_flash'][$flashKey]);
+                $row = array_merge($row ?? [], array_intersect_key($posted, array_flip(array_map(fn($f) => $f['name'], $e['fields']))));
+                foreach (cfg('langs') as $l) {
+                    if (!empty($posted['i18n'][$l])) $i18n[$l] = array_merge($i18n[$l], $posted['i18n'][$l]);
+                }
+            }
+            echo View::page('admin/form', ['e' => $e, 'key' => $key, 'row' => $row, 'i18n' => $i18n, 'id' => $id, 'err' => $_GET['e'] ?? null], 'layouts/admin');
             return;
         }
         /* list */
@@ -314,6 +327,17 @@ final class Admin
         echo View::page('admin/list', ['e' => $e, 'key' => $key, 'rows' => $rows, 'total' => $total, 'page' => $page, 'per' => $per, 'q' => $q], 'layouts/admin');
     }
 
+    /** One-shot flash of a failed POST so the edit form can redisplay exactly what the admin
+        typed instead of losing it to the PRG redirect (docs/06 §2: "never loses posted data on
+        error"). Session-backed rather than query-string: i18n payloads are multi-field arrays
+        that would not survive a URL, and a flash naturally clears itself after one read. */
+    private static function flashFail(string $key, int $id, string $errParam): void
+    {
+        Session::start();
+        $_SESSION['form_flash'][$key . ':' . ($id ?: 'new')] = $_POST;
+        Util::redirect(cfg('admin.path') . "/$key/" . ($id ?: 'new') . '?e=' . $errParam);
+    }
+
     private static function saveEntity(string $key, array $e, int $id): void
     {
         if (!Csrf::check($_POST['_csrf'] ?? null)) Util::json(['error' => 'csrf'], 419);
@@ -336,7 +360,7 @@ final class Admin
             $rules[$f['name']] = $r;
         }
         [$errs, $clean] = Validator::make($_POST, $rules);
-        if ($errs) Util::redirect(cfg('admin.path') . "/$key/" . ($id ?: 'new') . '?e=' . implode(',', array_keys($errs)));
+        if ($errs) self::flashFail($key, $id, implode(',', array_keys($errs)));
         foreach ($e['fields'] as $f) {
             if (!isset($clean[$f['name']])) continue;
             if ($f['type'] === 'int') $clean[$f['name']] = (int) ($clean[$f['name']] ?? 0);
@@ -356,7 +380,7 @@ final class Admin
                 if ($v === '') $missing[] = $f['name'];
             }
             if ($missing) {
-                Util::redirect(cfg('admin.path') . "/$key/" . ($id ?: 'new') . '?e=incomplete:' . implode(',', $missing));
+                self::flashFail($key, $id, 'incomplete:' . implode(',', $missing));
             }
         }
         $cols = array_map(fn($f) => $f['name'], $e['fields']);

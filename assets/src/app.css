@@ -93,7 +93,10 @@ html[dir="rtl"] .chev,html[dir="rtl"] .cs-more .i,html[dir="rtl"] .tab-all .i,ht
 .header.is-scrolled{border-color:var(--border)}
 .header.is-hidden{transform:translateY(-100%)}
 .header-row{display:flex;align-items:center;gap:var(--sp-3);height:var(--header-h)}
-.brand{display:flex;align-items:center;gap:var(--sp-2);text-decoration:none;margin-inline-end:auto}
+/* touch target: the logo mark alone renders at 36x31 — under the 44px floor (axe-core /
+   Finalization-Plan D-05). --header-h is 56px, so 7px of block padding reaches 44px+ with room
+   to spare, purely enlarging the tap area (flex align-items:center keeps it visually centred). */
+.brand{display:flex;align-items:center;gap:var(--sp-2);text-decoration:none;margin-inline-end:auto;padding:7px 6px;margin-inline:-6px}
 .brand-mark{width:36px;height:31px}
 .brand-word{width:118px;height:25px}
 @media (max-width:379px){.brand-word{display:none}}
@@ -111,6 +114,12 @@ html[dir="rtl"] .chev,html[dir="rtl"] .cs-more .i,html[dir="rtl"] .tab-all .i,ht
 .lang-btn .i{width:17px;height:17px;color:var(--green-700)}
 .lang-menu{position:absolute;inset-inline-end:0;top:calc(100% + 6px);background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);box-shadow:var(--e2);list-style:none;margin:0;padding:6px;min-width:150px;z-index:80}
 .lang-menu a{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px;border-radius:var(--r-sm);text-decoration:none;color:var(--text);font-weight:700;min-height:44px}
+/* a11y fix: .lang-menu is always a floating white card (position:absolute, --surface bg) no
+   matter which chrome instance triggers it — but the footer's own instance is a <ul>, so
+   .footer ul a's pine-100 (light, meant for text sitting directly on the dark footer) beats the
+   rule above on specificity (0,1,2 > 0,1,1) and paints near-invisible light-on-white text.
+   Re-asserted here with matching specificity so the popup is legible from every trigger point. */
+.footer .lang-menu a{color:var(--text)}
 .lang-menu a:hover{background:var(--green-50)}
 .lang-menu .i{width:16px;height:16px;color:var(--green-600)}
 /* sheet */
@@ -159,7 +168,7 @@ html[dir="rtl"] .chev,html[dir="rtl"] .cs-more .i,html[dir="rtl"] .tab-all .i,ht
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding-inline:var(--sp-6);border-radius:var(--r-pill);
   font:inherit;font-weight:800;font-size:1rem;text-decoration:none;border:1.5px solid transparent;cursor:pointer;transition:transform .12s var(--ease),box-shadow .18s var(--ease),background .18s var(--ease)}
 .btn:active{transform:scale(.98)}
-.btn-sm{min-height:40px;padding-inline:var(--sp-4);font-size:.875rem}
+.btn-sm{min-height:44px;padding-inline:var(--sp-4);font-size:.875rem}
 .btn-lg{min-height:52px;padding-inline:var(--sp-8)}
 .btn-primary{background:var(--action);color:var(--action-text)}
 .btn-primary:hover{background:var(--action-hover);color:#fff;box-shadow:var(--e1)}
@@ -187,6 +196,10 @@ html[lang="ar"] .eyebrow{text-transform:none;letter-spacing:0}
 .section-dark{background:var(--surface-inverse);color:#fff}
 .section-dark .lead,.section-dark .muted{color:var(--pine-300)}
 .section-dark h2,.section-dark h3{color:#fff}
+/* a11y fix: ui/section-head's .eyebrow defaults to green-700, which fails contrast on the dark
+   surface (axe-core: color-contrast, serious) — every section-head inside .section-dark needs
+   the same light treatment the hero already gives its own eyebrow via .eyebrow-light */
+.section-dark .eyebrow{color:var(--amber-400)}
 .section-amber{background:var(--amber-100)}
 .section-first{padding-block-start:var(--sp-6)}
 .section-head{margin-block-end:var(--sp-8)}
@@ -195,10 +208,13 @@ html[lang="ar"] .eyebrow{text-transform:none;letter-spacing:0}
 .page-head{padding-block:var(--sp-8) var(--sp-6);background:var(--surface-2);border-block-end:1px solid var(--border)}
 .page-head-compact{padding-block:var(--sp-6)}
 .breadcrumbs{font-size:.8125rem;color:var(--text-muted);margin-block-end:var(--sp-4)}
-.breadcrumbs ol{list-style:none;display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0}
+.breadcrumbs ol{list-style:none;display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0;padding:0}
 .breadcrumbs li+li::before{content:"›";margin-inline-end:6px;color:var(--n-300)}
 html[dir="rtl"] .breadcrumbs li+li::before{content:"‹"}
-.breadcrumbs a{color:var(--text-muted);text-decoration:none}
+/* touch target: plain inline text collapsed to a 13px line-height box (D-05 class of bug) —
+   same invisible-padding technique as the footer/topbar links: visual size is untouched,
+   only the tap area grows. */
+.breadcrumbs a{color:var(--text-muted);text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
 .breadcrumbs a:hover{color:var(--green-700)}
 
 /* ---------- hero ---------- */
@@ -361,8 +377,11 @@ html[dir="rtl"] .breadcrumbs li+li::before{content:"‹"}
 .cc-body h2{font-size:1.375rem;margin:0}
 .cc-body p{margin:0;color:var(--text-muted)}
 @media (min-width:768px){.cat-grid{grid-template-columns:1fr 1fr}}
-.az-list{list-style:none;margin:0;padding:0;display:grid;gap:8px;grid-template-columns:1fr}
-.az-list a{color:var(--text);text-decoration:none;font-weight:700;font-size:.9375rem}
+.az-list{list-style:none;margin:0;padding:0;display:grid;gap:2px;grid-template-columns:1fr}
+/* touch target: ~159 links stacked at plain text line-height (15px) is a dense-list mis-tap
+   risk, not exempt "inline text in a sentence" (WCAG 2.5.8) — each is an independent nav
+   target. Visual size (font-size) is untouched; only the row's tap height grows. */
+.az-list a{color:var(--text);text-decoration:none;font-weight:700;font-size:.9375rem;display:flex;align-items:center;min-height:44px}
 .az-list a:hover{color:var(--green-700)}
 @media (min-width:640px){.az-list{grid-template-columns:1fr 1fr}}
 @media (min-width:1024px){.az-list{grid-template-columns:repeat(3,1fr)}}
@@ -412,6 +431,7 @@ html[lang="ar"] .spec-row dt{text-transform:none;letter-spacing:0}
 .contact-card strong{display:block;font-size:.8125rem;color:var(--text-muted)}
 .contact-card span:not(.cc-icon):not(.cc-social){font-weight:800}
 .cc-social{display:flex;gap:var(--sp-3)}
+.cc-social a{display:inline-flex;align-items:center;min-height:44px}
 .contact-promise{background:var(--amber-100);border-radius:var(--r-md);padding:var(--sp-4);font-weight:700;font-size:.875rem;color:var(--amber-950);margin:0}
 .form{display:grid;gap:var(--sp-4);background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:var(--sp-6)}
 .field{display:grid;gap:6px}
@@ -463,6 +483,12 @@ html[lang="ar"] .prose{line-height:2}
 .cta-inner{display:grid;gap:var(--sp-6);padding-block:var(--sp-12)}
 .cta-inner h2{color:var(--green-950)}
 .cta-inner p{margin:0;font-weight:600}
+/* a11y fix: .btn-outline-light is #fff-on-transparent — correct on the hero/quality-section's
+   dark surfaces, but white-on-green-500 is exactly the forbidden pairing this project's own
+   design system calls out (doc 02 §2.2: 2.4:1, fails AA). Scoped override, not a global change —
+   the other two .btn-outline-light usages sit on genuinely dark backgrounds and are correct. */
+.cta-band .btn-outline-light{color:var(--green-950);border-color:rgba(5,46,25,.5)}
+.cta-band .btn-outline-light:hover{background:rgba(5,46,25,.08)}
 .cta-actions{display:grid;gap:var(--sp-3)}
 @media (min-width:768px){.cta-inner{grid-template-columns:1fr auto;align-items:center}.cta-actions{display:flex}}
 

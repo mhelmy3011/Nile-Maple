@@ -2,9 +2,24 @@
 use Nm\Csrf; use Nm\Icons; use Nm\View;
 $base = cfg('admin.path') . "/$key";
 $iconKeys = array_keys(\Nm\Icons::all());
+/* Everything you typed is still in the fields below (Admin::flashFail) — this banner only
+   explains why the save didn't go through. */
+$errMsg = null;
+if (!empty($err)) {
+    if (str_starts_with((string) $err, 'incomplete:')) {
+        $missing = explode(',', substr((string) $err, strlen('incomplete:')));
+        $errMsg = 'Cannot publish — required in ' . strtoupper((string) cfg('default_lang')) . ': ' . implode(', ', $missing) . '. Save as draft, or fill these in first.';
+    } else {
+        $bad = array_filter(explode(',', (string) $err));
+        if ($bad) $errMsg = 'Please check: ' . implode(', ', $bad) . '.';
+    }
+}
 ?>
 <form class="adm-form" method="post" action="<?= $base ?>/<?= $id ? $id : 'new' ?>" data-autosave>
   <?= Csrf::field() ?>
+  <?php if ($errMsg): ?>
+    <p class="adm-toast err" role="alert"><?= View::e($errMsg) ?></p>
+  <?php endif; ?>
   <div class="adm-formbar">
     <a class="btn btn-ghost btn-sm" href="<?= $base ?>">← Back</a>
     <span class="adm-save-state" role="status"></span>

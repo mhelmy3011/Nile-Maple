@@ -31,14 +31,14 @@ jobs:
       - name: JS/MJS syntax gate
         run: |
           fail=0
-          for f in tools/*.mjs tools/test/*.mjs assets/src/*.js; do
+          for f in tools/*.mjs tools/test/*.mjs tools/test/browser/*.mjs tools/test/browser/tests/*.mjs assets/src/*.js; do
             [ -e "$f" ] || continue
             node --check "$f" || { echo "SYNTAX FAIL: $f"; fail=1; }
           done
           exit $fail
 
   unit:
-    name: unit + integration (75 gates)
+    name: unit + integration (76 gates)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -50,10 +50,80 @@ jobs:
       - name: Run the self-contained suite (isolated tmp SQLite, dry-run mail)
         run: php tools/test/unit.php
 
-  # The HTTP end-to-end suite (tools/test/e2e.mjs, 201 gates) needs the full built stack:
-  # seeded SQLite + media ladder + 582 built pages + the dev server. It runs against the
-  # preview server on every harness session:
-  #   node tools/serve.mjs &   node tools/test/e2e.mjs http://127.0.0.1:8080
-  # Promotion to CI requires publishing the seed/build pipeline as a workflow — tracked in
-  # Finalization-Plan §9; browser-only gates (touch targets, 360px, visual RTL) belong to the
-  # Playwright stage on a runner with browser downloads available.
+  build-and-e2e:
+    name: build site + HTTP e2e (201 gates)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, pdo_sqlite, sqlite3, gd, fileinfo, intl
+          ini-values: memory_limit=1G
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Full bootstrap build (fresh DB, seed, seo_meta, hero, images, static rebuild)
+        run: bash tools/build.sh --bootstrap
+      - name: Deploy gate
+        run: php tools/verify.php
+      - name: Start dev server
+        run: php -S 127.0.0.1:8080 -t public_html tools/dev_server.php &
+      - name: Wait for the server
+        run: |
+          for i in $(seq 1 20); do curl -sf http://127.0.0.1:8080/en/ >/dev/null && exit 0; sleep 1; done
+          echo "server never came up"; exit 1
+      - name: HTTP e2e suite
+        run: node tools/test/e2e.mjs http://127.0.0.1:8080
+      - name: Upload built site (for the browser job)
+        uses: actions/upload-artifact@v4
+        with:
+          name: built-site
+          path: |
+            public_html/
+            storage/db.sqlite
+          retention-days: 3
+
+  browser:
+    name: Playwright + axe-core (a11y, touch-targets, overflow, RTL, perf, admin)
+    runs-on: ubuntu-latest
+    needs: build-and-e2e
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, pdo_sqlite, sqlite3, gd, fileinfo, intl
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Download built site from the previous job
+        uses: actions/download-artifact@v4
+        with:
+          name: built-site
+      - name: Install Playwright
+        working-directory: tools/test/browser
+        run: |
+          npm install --no-audit --no-fund
+          npx playwright install --with-deps chromium
+      - name: Start dev server
+        run: php -S 127.0.0.1:8080 -t public_html tools/dev_server.php &
+      - name: Wait for the server
+        run: |
+          for i in $(seq 1 20); do curl -sf http://127.0.0.1:8080/en/ >/dev/null && exit 0; sleep 1; done
+          echo "server never came up"; exit 1
+      # CI runs the mobile-360 project only — the contract floor and where every regression
+      # this suite locks (D-01/02/03/05/06) actually shows up. The full 6-project x-engine
+      # matrix (webkit/firefox/tablet/desktop) is for a pre-release run locally: see README.md.
+      - name: Playwright suite [mobile-360]
+        working-directory: tools/test/browser
+        env:
+          BASE_URL: http://127.0.0.1:8080
+        run: npx playwright test --project=mobile-360
+      - name: Upload report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: tools/test/browser/playwright-report/
+          retention-days: 7

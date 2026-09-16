@@ -12,7 +12,7 @@ $badge = Util::tempBadge((float) $p['temp_min'], (float) $p['temp_max'], $p['tem
           <div class="pd-slide"><?= $p['card_media_id'] ? Media::img((int) $p['card_media_id'], $p['pname'], 'hero', '100vw') : '' ?></div>
         </div>
       </div>
-      <?php if ($badge): ?><p class="pd-temp"><span class="temp-badge tabular"><?= View::e($badge) ?></span> <span class="muted"><?= View::e($p['temp_note'] ?? '') ?></span></p><?php endif; ?>
+      <?php if ($badge): ?><p class="pd-temp"><span class="temp-badge tabular" dir="ltr"><?= View::e($badge) ?></span> <span class="muted"><?= View::e($p['temp_note'] ?? '') ?></span></p><?php endif; ?>
     </div>
     <div class="pd-info">
       <?php if ($cat): ?><a class="chip chip-amber" href="/<?= $lang ?>/categories/<?= View::e($cat['slug']) ?>/"><?= View::e($cat['name']) ?></a><?php endif; ?>
