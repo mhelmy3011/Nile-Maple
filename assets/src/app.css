@@ -120,6 +120,13 @@ html[dir="rtl"] .chev,html[dir="rtl"] .cs-more .i,html[dir="rtl"] .tab-all .i,ht
    rule above on specificity (0,1,2 > 0,1,1) and paints near-invisible light-on-white text.
    Re-asserted here with matching specificity so the popup is legible from every trigger point. */
 .footer .lang-menu a{color:var(--text)}
+/* real bug, not cosmetic: .footer ul{display:grid} (the nav-column layout, line ~510) also
+   matches .lang-menu's own <ul> since it happens to live inside .footer too, and beats the
+   browser's [hidden]{display:none} on specificity (0,1,1 vs 0,1,0) — so the closed footer
+   language dropdown never actually hid, only ever looked closed by coincidence of where JS
+   happened to leave it. Open state already renders fine as grid (single column, same as the
+   block layout it was meant to have), so only the hidden case needs correcting. */
+.footer .lang-menu[hidden]{display:none}
 .lang-menu a:hover{background:var(--green-50)}
 .lang-menu .i{width:16px;height:16px;color:var(--green-600)}
 /* sheet */
@@ -155,6 +162,11 @@ html[dir="rtl"] .chev,html[dir="rtl"] .cs-more .i,html[dir="rtl"] .tab-all .i,ht
     background:var(--action);color:var(--action-text);align-items:center;justify-content:center;box-shadow:var(--e2)}
   .wa-fab .i{width:28px;height:28px}
   body{padding-bottom:0}
+  /* the command bar is the mobile-only counterpart to .wa-fab (doc 03 §1.4: "WhatsApp FAB:
+     desktop only (mobile has command bar)") — .wa-fab correctly gated itself to this breakpoint
+     but nothing ever told .commandbar to hide at it, so JS's scroll-based .is-visible toggle
+     (which has no width check of its own) showed it full-width on desktop too. */
+  .commandbar{display:none}
 }
 /* cookie */
 .cookie{position:fixed;inset-inline:0;bottom:calc(var(--cb-h) + env(safe-area-inset-bottom) + 8px);z-index:95}
@@ -285,6 +297,12 @@ html[dir="rtl"] .breadcrumbs li+li::before{content:"‹"}
 .card-post{display:grid;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;text-decoration:none;color:var(--text);box-shadow:var(--e1)}
 .card-post:hover{box-shadow:var(--e2)}
 .cpo-media{position:relative;aspect-ratio:16/9;background:var(--surface-2)}
+/* defense in depth: a post created in the dashboard without a cover photo previously rendered
+   this as a flat, empty grey box (found live — every seeded post had cover_media_id NULL, now
+   backfilled with real photography, but a future post can still be saved without one). A
+   branded placeholder instead of blank grey, matching the design system's mark. */
+.cpo-media:empty{background:var(--surface-3);display:flex;align-items:center;justify-content:center}
+.cpo-media:empty::before{content:"";width:44px;height:38px;background:url(/assets/brand/logo-mark.webp) center/contain no-repeat;opacity:.35}
 .cpo-media picture,.cpo-media img{position:absolute;inset:0}
 .cpo-body{padding:var(--sp-4);display:grid;gap:6px}
 .cpo-meta{font-size:.75rem;color:var(--text-muted);font-weight:700}

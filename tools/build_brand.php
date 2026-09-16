@@ -116,7 +116,13 @@ function nm_tint(GdImage $im, int $rgb): GdImage
     for ($y = 0; $y < $h; $y++) for ($x = 0; $x < $w; $x++) {
         $c = imagecolorat($im, $x, $y);
         $a = ($c >> 24) & 0x7F;
-        if ($a === 0) imagesetpixel($im, $x, $y, $c);
+        /* GD alpha is inverted from CSS: 0 = fully opaque, 127 = fully transparent. This was
+           backwards — it kept every visible (opaque) text pixel in its original dark colour and
+           only re-tinted the already-invisible transparent background, so "logo-mono-light.webp"
+           rendered as the same dark-grey wordmark on the dark footer it was built for (found by
+           the client, who could not read it there). Opaque pixels are the ones that need the
+           white tint; transparent ones are already invisible regardless of their RGB. */
+        if ($a === 127) imagesetpixel($im, $x, $y, $c);
         else imagesetpixel($im, $x, $y, ($a << 24) | $rgb);
     }
     return $im;

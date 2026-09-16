@@ -8,7 +8,8 @@
 #   tools/build.sh --assets     rebuild CSS/JS/fonts/manifest only
 #   tools/build.sh --verify     run the deploy gate (tools/verify.php)
 #   tools/build.sh --bootstrap  fresh database: extract → migrate --fresh → seed → seed_seo → hero
-#                               → images → brand → assets → full rebuild → verify (DESTRUCTIVE: wipes content)
+#                               → images → sku-fix → post-covers → brand → assets → full rebuild
+#                               → verify                               (DESTRUCTIVE: wipes content)
 #   tools/build.sh --lint       php -l over every shipped file
 #
 # PHP is auto-detected: a system `php` when present, otherwise the php-wasm CLI used in this
@@ -86,6 +87,8 @@ if [ "$do_bootstrap" = 1 ]; then
          '(the hero renders without an image until tools/build_hero.mjs is run once)'
   fi
   php_run tools/build_images.php
+  php_run tools/fix_sku_prefixes.php
+  php_run tools/fix_post_covers.php
 fi
 [ "$do_assets" = 1 ] && php_run tools/build_assets.php
 if [ "$do_brand" = 1 ] && [ ! -f public_html/assets/brand/logo-mark.webp ]; then
