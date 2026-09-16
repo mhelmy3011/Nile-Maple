@@ -40,7 +40,13 @@ function nm_min_css(string $css): string
             $j = $i; while ($j < $len && ctype_space($css[$j])) $j++;
             $t = rtrim($out); $prev = $t === '' ? '' : substr($t, -1);
             $next = $css[$j] ?? '';
-            $need = !in_array($prev, ['', '{', '}', ';', ':', ',', '(', '&', '>', '+', '~', '!'], true)
+            /* '+' is deliberately NOT in either "no space needed" set: unlike the other
+               punctuation here, it is also a calc() arithmetic operator (calc(a + b)), where
+               the surrounding whitespace is not cosmetic — CSS requires it or the whole calc()
+               is invalid. Stripping it here silently zeroed out every calc(...+...) value
+               (command-bar body padding, .lang-menu positioning, sticky offsets, the cookie
+               banner) with no error, just layout that quietly stopped applying. */
+            $need = !in_array($prev, ['', '{', '}', ';', ':', ',', '(', '&', '>', '~', '!'], true)
                  && !in_array($next, ['}', ';', ',', ')', ']', '>', ''], true);
             $out .= $need ? ' ' : '';
             $i = $j; continue;
@@ -48,7 +54,7 @@ function nm_min_css(string $css): string
         $out .= $c; $i++;
     }
     $out = preg_replace('/;\s*}/', '}', $out) ?? $out;              // drop trailing ; in blocks
-    $out = preg_replace('/\s*([{}:;,>~+])\s*/', '$1', $out) ?? $out;
+    $out = preg_replace('/\s*([{}:;,>~])\s*/', '$1', $out) ?? $out;
     return trim($out);
 }
 
