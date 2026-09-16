@@ -480,10 +480,16 @@ final class Admin
         $zone = (string) ($_GET['zone'] ?? ($_POST['zone'] ?? ($zones[0]['zone'] ?? '')));
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && Csrf::check($_POST['_csrf'] ?? null)) {
             $bid = (int) ($_POST['block_id'] ?? 0);
-            $payload = (string) ($_POST['payload'] ?? '{}');
-            json_decode($payload); if (json_last_error() !== JSON_ERROR_NONE) Util::redirect(cfg('admin.path') . '/blocks?zone=' . urlencode($zone) . '&e=json');
+            /* admin/blocks.php has no input named "payload" — only payload_en/ar/fr — so
+               $_POST['payload'] was always absent and this fell back to the '{}' default on
+               every single save, then (further down) blindly overwrote blocks.payload with it.
+               blocks.payload holds shared/base data the form never exposed an editor for (media
+               refs — e.g. the D-03 hero's media_id, or about:export's media_id 160, resolved by
+               build_images.php pass 4) — so saving ANY block's title/eyebrow/text was silently
+               wiping that block's media link. The form was never meant to touch base payload at
+               all; it's build-pipeline-managed, so this handler now leaves it alone. */
             foreach (cfg('langs') as $l) {
-                $pl = (string) ($_POST['payload_' . $l] ?? $payload);
+                $pl = (string) ($_POST['payload_' . $l] ?? '{}');
                 json_decode($pl); if (json_last_error() !== JSON_ERROR_NONE) Util::redirect(cfg('admin.path') . '/blocks?zone=' . urlencode($zone) . '&e=json');
                 $title = (string) ($_POST['title_' . $l] ?? '');
                 $eyebrow = (string) ($_POST['eyebrow_' . $l] ?? '');
@@ -491,7 +497,6 @@ final class Admin
                     Db::run('UPDATE block_i18n SET title=?, eyebrow=?, payload=? WHERE block_id=? AND lang=?', [$title, $eyebrow, $pl, $bid, $l]);
                 }
             }
-            if ($bid) Db::run('UPDATE blocks SET payload=? WHERE id=?', [$payload, $bid]);
             Audit::log('update', 'block', $bid);
             self::afterWrite('blocks');
             Util::redirect(cfg('admin.path') . '/blocks?zone=' . urlencode($zone) . '&saved=1');
@@ -500,7 +505,18 @@ final class Admin
         $byId = [];
         foreach ($rows as $r) {
             $byId[$r['id']]['base'] = $byId[$r['id']]['base'] ?? $r;
-            if (!empty($r['lang'])) $byId[$r['id']]['langs'][$r['lang']] = $r;
+            if (!empty($r['lang'])) {
+                /* i.payload was aliased to i18n_payload so it wouldn't overwrite b.payload in the
+                   same row (b.* already claims the `payload` key for the shared/base value) — but
+                   admin/blocks.php reads $lr['payload'] expecting "this language's payload", so
+                   without this remap every language pane silently displayed the base row's
+                   payload instead of its own (harmless "[]" for most blocks, but for a block whose
+                   real content lives only per-language — e.g. about:export's Packing/Documentation/
+                   Loading/Arrival cards — the edit form showed empty ("[]") for content that is
+                   genuinely there and rendering correctly on the live site). */
+                $r['payload'] = $r['i18n_payload'];
+                $byId[$r['id']]['langs'][$r['lang']] = $r;
+            }
         }
         echo View::page('admin/blocks', ['zones' => $zones, 'zone' => $zone, 'blocks' => array_values($byId)], 'layouts/admin');
     }

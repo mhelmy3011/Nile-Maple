@@ -43,9 +43,16 @@ foreach ($manifest['categories'] as $i => $mc) {
 /* products: EN verbatim from manifest; AR/FR controlled-language baseline (D-14) */
 $names = $C['product_names']; $pack = $C['packing_glossary']; $tmpl = $C['desc_templates']; $chain = $C['chain_templates'];
 $labels = $C['spec_labels'];
+/* SKU prefix per category — NOT strtoupper(substr($ck,0,2)): three of the four category codes
+   (fresh-fruits, fresh-vegetables, frozen-products) all start with "fr", so that scheme collided
+   every single non-fruit product onto the fruits' own "FR-" prefix (found by an admin who
+   couldn't tell Orange and Potato apart in the product list — see Finalization-Plan). Explicit
+   map, not a substring trick, so a future category can't silently collide the same way again. */
+$skuPrefix = ['fresh-fruits' => 'FR', 'fresh-vegetables' => 'VG', 'frozen-products' => 'FZ', 'processed-canned' => 'PR'];
 $n = 0;
 foreach ($manifest['categories'] as $mc) {
     $ck = $mc['key'];
+    $prefix = $skuPrefix[$ck] ?? strtoupper(substr($ck, 0, 2));
     foreach ($mc['products'] as $p) {
         $nm = $names[$p['name_en']] ?? null;
         if (!$nm) { fwrite(STDERR, "MISSING NAME: {$p['name_en']}\n"); continue; }
@@ -54,7 +61,7 @@ foreach ($manifest['categories'] as $mc) {
         else {
             Db::run('INSERT INTO products(category_id,sku,source_index,sort_order,is_published,temp_min,temp_max,temp_unit,temp_note)
                      VALUES(?,?,?,?,1,?,?,?,?)',
-                [$catIds[$ck], strtoupper(substr($ck, 0, 2)) . '-' . str_pad((string) $p['index'], 2, '0', STR_PAD_LEFT),
+                [$catIds[$ck], $prefix . '-' . str_pad((string) $p['index'], 2, '0', STR_PAD_LEFT),
                  $p['index'], $p['index'], ...parseTemp($p[ $mc['field_schema'][3] ])]);
             $pid = Db::lastId();
         }

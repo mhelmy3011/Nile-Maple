@@ -19,15 +19,15 @@ $base = cfg('admin.path') . "/$key";
     <tbody>
     <?php foreach ($rows as $r): ?>
       <tr data-id="<?= (int) $r['id'] ?>">
-        <td class="chk"><input type="checkbox" name="ids[]" value="<?= (int) $r['id'] ?>"></td>
+        <td class="chk"><input type="checkbox" name="ids[]" value="<?= (int) $r['id'] ?>" aria-label="Select row"></td>
         <?php foreach ($e['list'] as $c): ?>
-          <td><?php
+          <td data-label="<?= View::e($c) ?>"><?php
             if ($c === 'comp') { foreach ($r['comp'] as $l => $p) echo '<span class="dot ' . ($p >= 100 ? 'ok' : 'no') . '" title="' . $l . ' ' . $p . '%"></span>'; }
             elseif ($c === 'name' || $c === 'title' || $c === 'question') echo View::e($r[$c] ?? '—');
             else echo View::e((string) ($r[$c] ?? '—'));
           ?></td>
         <?php endforeach; ?>
-        <td><?php foreach ($r['comp'] as $l => $p): ?><span class="langtag <?= $p >= 100 ? 'ok' : 'no' ?>"><?= $l ?></span><?php endforeach; ?></td>
+        <td data-label="Langs"><?php foreach ($r['comp'] as $l => $p): ?><span class="langtag <?= $p >= 100 ? 'ok' : 'no' ?>"><?= $l ?></span><?php endforeach; ?></td>
         <td class="row-actions">
           <a class="btn btn-ghost btn-sm" href="<?= $base ?>/<?= (int) $r['id'] ?>">Edit</a>
           <button class="btn btn-ghost btn-sm" type="submit" formaction="<?= $base ?>/delete/<?= (int) $r['id'] ?>" formmethod="post">Delete</button>

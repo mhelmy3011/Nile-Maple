@@ -4,9 +4,24 @@
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
-  /* side nav (mobile) */
+  /* side nav (mobile) — same contract as the public site's sheet menu (base.js): backdrop
+     click, Escape, scroll lock, focus moved in on open and back to the trigger on close. The
+     burger sits in the main header, which the open sidebar visually covers at phone widths, so
+     an explicit in-sidebar close button (and the backdrop) are the only way back out — not
+     "tap the same spot again", which is no longer there to tap. */
   var burger = $('.adm-burger'), side = $('#adm-side');
-  if (burger && side) burger.addEventListener('click', function () { side.classList.toggle('open'); });
+  if (burger && side) {
+    var setSide = function (on) {
+      side.classList.toggle('open', on);
+      document.body.style.overflow = on ? 'hidden' : '';
+      burger.setAttribute('aria-expanded', on ? 'true' : 'false');
+      if (on) { var f = side.querySelector('a,button'); if (f) f.focus(); }
+      else burger.focus();
+    };
+    burger.addEventListener('click', function () { setSide(!side.classList.contains('open')); });
+    $$('[data-side-close]').forEach(function (el) { el.addEventListener('click', function () { setSide(false); }); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && side.classList.contains('open')) setSide(false); });
+  }
 
   /* language tabs */
   $$('[data-langtab]').forEach(function (b) {
@@ -38,7 +53,7 @@
 
   /* slug sync + char counters + meters + SERP */
   function slugify(v, lang) {
-    if (lang === 'ar') return v.trim().toLowerCase().replace(/[^؀-0-9]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+    if (lang === 'ar') return v.trim().toLowerCase().replace(/[^؀-ۿ0-9]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
     return v.trim().toLowerCase().replace(/[äöüß]/g, function (c) { return { ä: 'a', ö: 'o', ü: 'u', ß: 'ss' }[c]; })
       .replace(/[^a-z0-9]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
   }

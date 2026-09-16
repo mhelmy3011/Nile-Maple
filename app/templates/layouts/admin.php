@@ -19,8 +19,13 @@ $nav = [
 </head>
 <body class="admin">
 <div class="adm-shell">
-  <aside class="adm-side" id="adm-side">
-    <div class="adm-brand"><img src="/assets/brand/logo-mark.webp" width="40" height="34" alt=""> <strong>Control Room</strong></div>
+  <aside class="adm-side" id="adm-side" role="dialog" aria-modal="true" aria-label="Navigation">
+    <div class="adm-brand">
+      <img src="/assets/brand/logo-mark.webp" width="40" height="34" alt=""> <strong>Control Room</strong>
+      <button class="icon-btn adm-side-close" type="button" data-side-close aria-label="Close menu">
+        <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+      </button>
+    </div>
     <nav>
       <?php foreach ($nav as $k => $label): ?>
         <a href="<?= cfg('admin.path') ?>/<?= $k === 'dashboard' ? '' : $k . '/' ?>" class="<?= $section === $k ? 'on' : '' ?>"><?= $label ?></a>
@@ -28,9 +33,10 @@ $nav = [
       <a href="<?= cfg('admin.path') ?>/logout" class="out">Log out</a>
     </nav>
   </aside>
+  <div class="adm-side-backdrop" data-side-close></div>
   <div class="adm-main">
     <header class="adm-top">
-      <button class="icon-btn adm-burger" type="button" data-side aria-label="Menu"><svg class="i" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></button>
+      <button class="icon-btn adm-burger" type="button" aria-expanded="false" aria-controls="adm-side" aria-label="Menu"><svg class="i" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></button>
       <strong><?= View::e(ucfirst($section)) ?></strong>
       <span class="adm-user"><?= View::e($user['full_name'] ?? '') ?> (<?= View::e($user['role'] ?? '') ?>)</span>
       <a class="btn btn-ghost btn-sm" href="/" target="_blank" rel="noopener">View site</a>

@@ -7,17 +7,22 @@
 .adm-side a{color:var(--pine-100);text-decoration:none;padding:12px 14px;border-radius:var(--r-sm);font-weight:700;font-size:.9375rem;min-height:44px;display:flex;align-items:center}
 .adm-side a.on{background:var(--green-600);color:#fff}
 .adm-side a.out{color:var(--amber-400);margin-top:auto}
-.adm-brand{display:flex;gap:10px;align-items:center;padding:var(--sp-3) var(--sp-4) var(--sp-6)}
+.adm-brand{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:var(--sp-3) var(--sp-4) var(--sp-6)}
 .adm-brand img{width:34px;height:29px}
+.adm-brand strong{margin-inline-end:auto}
+.adm-side-close{color:#fff}
+.adm-side-backdrop{display:none}
 .adm-main{display:flex;flex-direction:column;min-width:0}
 .adm-top{display:flex;gap:var(--sp-3);align-items:center;background:var(--surface);border-block-end:1px solid var(--border);padding:var(--sp-3) var(--sp-4);position:sticky;top:0;z-index:40}
 .adm-top strong{margin-inline-end:auto}
 .adm-user{font-size:.8125rem;color:var(--text-muted)}
 .adm-burger{display:inline-flex}
-@media (min-width:900px){.adm-burger{display:none}.adm-side{position:sticky;top:0;height:100dvh;height:100vh;overflow:auto}}
-@media (max-width:899px){.adm-side{position:fixed;inset-block:0;inset-inline-start:0;width:250px;z-index:70;transform:translateX(-100%);transition:transform .2s var(--ease)}
+@media (min-width:900px){.adm-burger{display:none}.adm-side{position:sticky;top:0;height:100dvh;height:100vh;overflow:auto}.adm-side-close{display:none}}
+@media (max-width:899px){.adm-side{position:fixed;inset-block:0;inset-inline-start:0;width:250px;z-index:70;transform:translateX(-100%);transition:transform .2s var(--ease);overflow:auto}
   html[dir="rtl"] .adm-side{transform:translateX(100%)}
-  .adm-side.open{transform:none}}
+  .adm-side.open{transform:none}
+  .adm-side-backdrop{display:block;position:fixed;inset:0;background:rgba(11,32,24,.45);z-index:69;opacity:0;pointer-events:none;transition:opacity .2s var(--ease)}
+  .adm-side.open ~ .adm-side-backdrop{opacity:1;pointer-events:auto}}
 .adm-body{padding:var(--sp-5);display:grid;gap:var(--sp-5);align-content:start}
 .adm-toast{border-radius:var(--r-sm);padding:var(--sp-3) var(--sp-4);font-weight:700;font-size:.875rem}
 .adm-toast.ok{background:var(--green-50);color:var(--green-800);border:1px solid var(--green-600)}
@@ -31,6 +36,24 @@
 .adm-table th,.adm-table td{padding:10px 12px;border-block-end:1px solid var(--n-100);text-align:start;vertical-align:top}
 .adm-table thead th{background:var(--surface-2);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted)}
 .adm-table .chk{width:34px}
+.adm-empty{color:var(--text-muted);text-align:center;padding:var(--sp-6)!important;font-style:italic}
+/* docs/06 §2: "tables collapse to cards < 640px" — was never implemented; every entity list
+   (Categories/Products/Services/Posts/FAQs share this one template) was clipped at the phone
+   viewport edge with no scroll affordance, and critically the Edit/Delete actions (the last
+   column) were entirely unreachable. CSS-only row->card collapse, data-label driven. */
+@media (max-width:639px){
+  .adm-table thead{display:none}
+  .adm-table,.adm-table tbody,.adm-table tr{display:block;width:100%}
+  .adm-table{border:none;background:none}
+  .adm-table tr{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);margin-block-end:var(--sp-3);padding:var(--sp-3) var(--sp-4);position:relative}
+  /* reserves the checkbox's own width+gap so a long field value (e.g. a long "code") can never
+     visually run underneath the absolutely-positioned checkbox in the corner */
+  .adm-table td:not(.chk):not(.row-actions){padding-inline-end:40px}
+  .adm-table td{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-3);padding-block:7px;border:none;min-height:32px}
+  .adm-table td[data-label]::before{content:attr(data-label);font-weight:800;font-size:.6875rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);flex:none}
+  .adm-table td.chk{position:absolute;top:var(--sp-3);inset-inline-end:var(--sp-4);padding:0;min-height:44px;width:44px;justify-content:center}
+  .adm-table td.row-actions{justify-content:flex-end;gap:var(--sp-2);border-block-start:1px solid var(--n-100);margin-block-start:6px;padding-block-start:var(--sp-3)}
+}
 .adm-actions{display:flex;gap:var(--sp-2);flex-wrap:wrap;align-items:center}
 .adm-search{display:flex;gap:var(--sp-2);flex:1}
 .adm-search input{min-height:40px;border:1.5px solid var(--border-strong);border-radius:var(--r-pill);padding-inline:var(--sp-4);font:inherit;flex:1}

@@ -10,9 +10,11 @@
 </div>
 <h2>Recent build jobs</h2>
 <table class="adm-table"><thead><tr><th>scope</th><th>status</th><th>pages</th><th>ms</th><th>when</th></tr></thead><tbody>
-<?php foreach ($jobs as $j): ?><tr><td><?= View::e($j['scope']) ?></td><td><?= View::e($j['status']) ?></td><td><?= (int) $j['pages'] ?></td><td><?= (int) $j['ms'] ?></td><td><?= View::e($j['finished_at']) ?></td></tr><?php endforeach; ?>
+<?php foreach ($jobs as $j): ?><tr><td data-label="Scope"><?= View::e($j['scope']) ?></td><td data-label="Status"><?= View::e($j['status']) ?></td><td data-label="Pages"><?= (int) $j['pages'] ?></td><td data-label="Ms"><?= (int) $j['ms'] ?></td><td data-label="When"><?= View::e($j['finished_at']) ?></td></tr><?php endforeach; ?>
+<?php if (!$jobs): ?><tr><td colspan="5" class="adm-empty">No builds yet.</td></tr><?php endif; ?>
 </tbody></table>
 <h2>Top events</h2>
 <table class="adm-table"><tbody>
-<?php foreach ($events as $e): ?><tr><td><?= View::e($e['name']) ?></td><td><?= (int) $e['c'] ?></td></tr><?php endforeach; ?>
+<?php foreach ($events as $e): ?><tr><td data-label="Event"><?= View::e($e['name']) ?></td><td data-label="Count"><?= (int) $e['c'] ?></td></tr><?php endforeach; ?>
+<?php if (!$events): ?><tr><td class="adm-empty">No events recorded yet.</td></tr><?php endif; ?>
 </tbody></table>

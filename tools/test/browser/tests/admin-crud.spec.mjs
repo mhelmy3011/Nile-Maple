@@ -1,8 +1,30 @@
 // FAQ CRUD end to end through the real dashboard UI (Finalization-Plan §7.4 `admin-crud`).
 // FAQs are the simplest entity (no media picker) so the full round trip — create, verify live,
 // edit, publish-gate, delete — stays fast and unambiguous about what broke.
+import { execFileSync } from 'node:child_process';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { test, expect } from '@playwright/test';
 import { loginAsAdmin, ADMIN } from './helpers.mjs';
+
+const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../../..');
+
+// Only "create -> edit -> delete" ever writes a row (Admin::saveEntity's validation and
+// publish-gate checks both `flashFail()` — a redirect — before the INSERT, so the other two
+// tests here can never persist one even on failure). That one test's own delete step is the
+// real cleanup; this is the backstop for when it doesn't get there — found live, once, as a
+// leftover "QA FAQ …" row surfacing as a permanent false "12/13 incomplete" on the real
+// dashboard after an earlier run was killed mid-test during concurrency debugging. DB-direct,
+// not through the UI, so it cleans up regardless of what state a failed run left the browser in.
+test.afterEach(async ({}, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile-390');
+  execFileSync('php', ['-r', `
+    require '${repoRoot}/app/bootstrap.php';
+    use Nm\\Db;
+    $ids = array_column(Db::all("SELECT faq_id FROM faq_i18n WHERE lang='en' AND (question LIKE 'QA FAQ %' OR question LIKE 'Incomplete publish test%' OR question LIKE 'Data-loss regression %')"), 'faq_id');
+    foreach (array_unique($ids) as $id) { Db::run('DELETE FROM faqs WHERE id=?', [(int) $id]); Db::run('DELETE FROM faq_i18n WHERE faq_id=?', [(int) $id]); }
+  `], { cwd: repoRoot });
+});
 
 test.describe('admin CRUD — FAQs', () => {
   test.beforeEach(async ({ page }, testInfo) => {

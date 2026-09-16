@@ -116,6 +116,18 @@ foreach ($per as $l => $v) {
     chk('content', "$l every product has a photo", $v['imaged'] === $want, "{$v['imaged']}/$want");
 }
 chk('content', 'duplicate slugs per locale', (int) Db::val("SELECT COUNT(*) FROM (SELECT lang,slug,COUNT(*) c FROM product_i18n GROUP BY lang,slug HAVING c>1)") === 0);
+/* regression lock: strtoupper(substr($categoryCode,0,2)) collided fresh-fruits, fresh-vegetables
+   and frozen-products onto one shared "FR-" SKU prefix (all three codes start with "fr") — found
+   by an admin who could not tell two different products apart in the dashboard list. Two
+   invariants a real catalog needs: no duplicate SKU at all, and no category sharing a prefix
+   with another (tools/seed.php now uses an explicit map instead of a substring guess). */
+chk('content', 'no duplicate SKUs', (int) Db::val("SELECT COUNT(*) FROM (SELECT sku,COUNT(*) c FROM products GROUP BY sku HAVING c>1)") === 0);
+chk('content', 'no two categories share a SKU prefix', (int) Db::val(
+    "SELECT COUNT(*) FROM (
+        SELECT SUBSTR(p.sku,1,INSTR(p.sku,'-')-1) AS px, COUNT(DISTINCT p.category_id) AS cats
+        FROM products p WHERE INSTR(p.sku,'-')>0 GROUP BY px HAVING cats>1
+    )"
+) === 0);
 chk('content', 'services ≥ 6 × 3 langs', (int) Db::val('SELECT COUNT(*) FROM service_i18n') >= 18, (int) Db::val('SELECT COUNT(*) FROM services') . ' services');
 chk('content', 'published posts ≥ 8 (D-10)', (int) Db::val("SELECT COUNT(*) FROM posts WHERE status='published'") >= 8, (int) Db::val("SELECT COUNT(*) FROM posts WHERE status='published'") . ' published', true);
 chk('content', 'FAQs ≥ 12 × 3 langs', (int) Db::val('SELECT COUNT(*) FROM faq_i18n') >= 36, (int) Db::val('SELECT COUNT(*) FROM faqs') . ' questions');
