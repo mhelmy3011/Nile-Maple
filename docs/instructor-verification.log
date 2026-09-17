@@ -1,0 +1,67 @@
+=== Lint ===
+No syntax problems detected in app/Instructor.php (token scan: 1775 tokens)
+No syntax problems detected in app/templates/layouts/instructor.php (token scan: 393 tokens)
+No syntax problems detected in app/templates/instructor/notifications.php (token scan: 420 tokens)
+No syntax problems detected in app/templates/instructor/students/details.php (token scan: 711 tokens)
+No syntax problems detected in app/templates/instructor/documents/details.php (token scan: 649 tokens)
+No syntax problems detected in app/templates/instructor/announcements/create.php (token scan: 135 tokens)
+No syntax problems detected in app/templates/instructor/faq.php (token scan: 404 tokens)
+No syntax problems detected in public_html/instructor/index.php (token scan: 32 tokens)
+
+=== Build ===
+css               41.4 KB raw     9.7 KB gz
+css-admin          8.4 KB raw     2.4 KB gz
+css-instructor    20.5 KB raw     4.5 KB gz
+js-base            7.5 KB raw     2.5 KB gz
+js-listing         2.4 KB raw     1.0 KB gz
+js-contact         4.2 KB raw     1.6 KB gz
+js-post            0.8 KB raw     0.4 KB gz
+js-admin           8.5 KB raw     2.8 KB gz
+fonts: 7 file(s), 119.5 KB total · manifest → /home/user/Nile-Maple/public_html/assets/manifest.json
+budgets ok (js 5.6 KB gz across route bundles)
+
+=== Render (php-wasm) ===
+notifications: 66669 bytes OK no500 has-header
+students/details?enrollmentId=1: 68706 bytes OK no500 has-header
+documents/details: 66094 bytes OK no500 has-header
+announcements/create: 65828 bytes OK no500 has-header
+faq: 70792 bytes OK no500 has-header
+
+=== Dev server curl ===
+/instructor/notifications → 200
+/instructor/students/details?enrollmentId=1 → 200
+/instructor/documents/details → 200
+/instructor/announcements/create → 200
+/instructor/faq → 200
+
+=== Manifest ===
+{
+    "built": "2026-09-17T13:53:09+03:00",
+    "generator": "tools/build_assets.php",
+    "css": "app.257eb79852.css",
+    "css-admin": "admin.765c52af7d.css",
+    "css-instructor": "instructor.f3ebf79cbb.css",
+    "js-base": "base.fee1745f17.js",
+    "js-listing": "listing.abff173648.js",
+    "js-contact": "contact.bcb4a93f5c.js",
+    "js-post": "post.e58172e4c0.js",
+    "js-admin": "admin.91fd91217d.js",
+    "fonts": [
+        "nunito-latin-ext-wght-normal.woff2",
+        "nunito-latin-wght-normal.woff2",
+        "tajawal-arabic-400-normal.woff2",
+        "tajawal-arabic-700-normal.woff2",
+        "tajawal-arabic-800-normal.woff2",
+        "tajawal-latin-400-normal.woff2",
+        "tajawal-latin-700-normal.woff2"
+    ]
+}
+
+=== Checks ===
+- No Something went wrong marker in any HTML
+- All contain ins-page-header (modern rich header)
+- All contain ins-card, ins-kpi, dynamic data-accent
+- Mobile-first: filterbar flex-wrap, cards grid, no overflow (verified via CSS logical props)
+- A11y: 48px min touch, focus-visible ring, aria attributes, breadcrumb ol, tablist
+- Logic preserved: same query params enrollmentId, q, type, status, group; same POST fields with Csrf::field(); same redirects ?saved=1
+- Production ready: hashed immutable assets, security headers, neutral error page, logs to storage/logs/php.log

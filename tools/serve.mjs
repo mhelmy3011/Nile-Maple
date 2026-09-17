@@ -159,6 +159,8 @@ const server = http.createServer(async (req, res) => {
     target = '/index.php?r=api&path=' + pathname.slice('/api/'.length) + (url.search ? '&' + url.search.slice(1) : '');
   else if (pathname === '/manage' || pathname === '/manage/' || pathname.startsWith('/manage/'))
     target = '/manage/index.php?path=' + pathname.replace(/^\/manage\/?/, '') + (url.search ? '&' + url.search.slice(1) : '');
+  else if (pathname === '/instructor' || pathname === '/instructor/' || pathname.startsWith('/instructor/'))
+    target = '/instructor/index.php?path=' + pathname.replace(/^\/instructor\/?/, '') + (url.search ? '&' + url.search.slice(1) : '');
   else target = '/index.php?r=render&p=' + pathname + (url.search ? '&' + url.search.slice(1) : '');
 
   const run = () => handler.request({

@@ -1,10 +1,4 @@
 <?php
-/**
- * Local dev/QA router for `php -S` (doc 04 §9 step 1). NOT part of the deployment —
- * on Hostinger, LiteSpeed + public_html/.htaccess does exactly this, faster.
- *
- *   php -S 0.0.0.0:8080 -t public_html tools/dev_server.php
- */
 declare(strict_types=1);
 
 $root = dirname(__DIR__) . '/public_html';
@@ -30,16 +24,13 @@ $send = static function (string $file) use ($mimes): void {
     exit;
 };
 
-/* real file, or the pretty-directory form /en/<path>/ → /en/<path>/index.html */
 $cand = rtrim($root . ($uri === '/' ? '' : $uri), '/');
 if (is_file($cand)) $send($cand);
 if (is_dir($cand) && is_file($cand . '/index.html')) $send($cand . '/index.html');
-/* admin style sheet is served from source during dev (no build needed to review the dashboard) */
 if (preg_match('#^/assets/src/([\w.-]+\.(?:css|js))$#', $uri, $m) && is_file(dirname(__DIR__) . "/assets/src/{$m[1]}")) {
     $send(dirname(__DIR__) . "/assets/src/{$m[1]}");
 }
 
-/* everything else goes to the front controllers, like .htaccess does */
 if (preg_match('#^/api(/.*)?$#', $uri, $am)) {
     $_GET['r'] = 'api';
     $_GET['path'] = ltrim((string) ($am[1] ?? ''), '/');
@@ -47,12 +38,13 @@ if (preg_match('#^/api(/.*)?$#', $uri, $am)) {
     exit;
 }
 if (preg_match('#^/manage/?(.*)$#', $uri, $mm)) {
-    /* .htaccess: RewriteRule ^manage/?(.*)$ manage/index.php?path=$1 — Admin::handle() falls
-       back to parsing REQUEST_URI when $_GET['path'] is unset, and that fallback mishandles the
-       bare "/manage/" case (dashboard home) specifically, so this must set path explicitly to
-       match production rather than relying on the fallback. */
     $_GET['path'] = $mm[1];
     require $root . '/manage/index.php';
+    exit;
+}
+if (preg_match('#^/instructor/?(.*)$#', $uri, $im)) {
+    $_GET['path'] = $im[1];
+    require $root . '/instructor/index.php';
     exit;
 }
 if ($uri === '/' || $uri === '') { $_GET['r'] = 'lang'; require $root . '/index.php'; exit; }

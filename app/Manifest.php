@@ -21,6 +21,7 @@ final class Manifest
      *  time would couple the dashboard to a directory that is not in the webroot (and warn when
      *  it is missing). */
     public static function cssAdmin(): string { return '/assets/css/' . (self::data()['css-admin'] ?? 'admin.css'); }
+    public static function cssInstructor(): string { return '/assets/css/' . (self::data()['css-instructor'] ?? 'instructor.css'); }
 
     public static function js(string $bundle = 'base'): string
     {

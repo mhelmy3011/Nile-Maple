@@ -25,6 +25,8 @@ RewriteRule ^$ index.php?r=lang [L,QSA]
 RewriteRule ^api/(.*)$ index.php?r=api&path=$1 [L,QSA]
 RewriteCond %{REQUEST_URI} !^/manage/index\.php$
 RewriteRule ^manage/?(.*)$ manage/index.php?path=$1 [L,QSA]
+RewriteCond %{REQUEST_URI} !^/instructor/index\.php$
+RewriteRule ^instructor/?(.*)$ instructor/index.php?path=$1 [L,QSA]
 
 # 4 · pretty static: /en/about/ is physically /en/about/index.html
 RewriteCond %{REQUEST_FILENAME} !-f

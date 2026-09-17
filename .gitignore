@@ -17,11 +17,15 @@ docs/data/media/
 !/public_html/manage/
 /public_html/manage/*
 !/public_html/manage/index.php
+!/public_html/instructor/
+/public_html/instructor/*
+!/public_html/instructor/index.php
 
 # --- dev-only tooling: the WASM runtime install is local; the shim is tracked ---
 node_modules/
 tools/harness/node_modules/
 *.log
+!docs/instructor-verification.log
 
 # --- Playwright: browsers cache elsewhere (~/Library/Caches/ms-playwright); reports/traces are
 #     per-run output. RTL visual baselines (tests/*-snapshots/) ARE tracked — committed on purpose. ---

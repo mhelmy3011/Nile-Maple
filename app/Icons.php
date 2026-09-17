@@ -29,6 +29,12 @@ final class Icons
         'chart' => '<path d="M4 20V4m0 16h16M8 16v-5m4 5V8m4 8v-3" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>',
         'users' => '<circle cx="9" cy="8" r="3.2" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M3.5 19c.6-3.4 2.8-5 5.5-5s4.9 1.6 5.5 5M16 5.5a3.2 3.2 0 0 1 0 6.4m1.5 2.3c2 .6 3.2 2.2 3.6 4.8" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>',
         'spark' => '<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>',
+        'search' => '<circle cx="11" cy="11" r="5.5" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="m15.5 15.5 4 4" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>',
+        'eye' => '<path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z" fill="none" stroke="currentColor" stroke-width="1.75"/><circle cx="12" cy="12" r="2.5" fill="none" stroke="currentColor" stroke-width="1.75"/>',
+        'plus' => '<path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>',
+        'arrow-r' => '<path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>',
+        'arrow-l' => '<path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>',
+        'external' => '<path d="M14 4h6v6M10 14 20 4M20 10v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>',
     ];
     public static function all(): array { return self::P; }
     public static function svg(string $key, string $class = 'i'): string

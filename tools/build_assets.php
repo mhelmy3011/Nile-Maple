@@ -82,7 +82,7 @@ $manifest = ['built' => date('c'), 'generator' => 'tools/build_assets.php'];
 $rows = [];
 
 /* CSS */
-foreach (['css' => ['app.css', 'app'], 'css-admin' => ['admin.css', 'admin']] as $key => [$file, $stem]) {
+foreach (['css' => ['app.css', 'app'], 'css-admin' => ['admin.css', 'admin'], 'css-instructor' => ['instructor.css', 'instructor']] as $key => [$file, $stem]) {
     $src = "$srcDir/$file";
     if (!is_file($src)) { fwrite(STDERR, "missing $src\n"); continue; }
     $body = (string) file_get_contents($src);
@@ -127,7 +127,7 @@ printf("fonts: %d file(s), %.1f KB total · manifest → %s/assets/manifest.json
 
 /* budgets (doc 04 §6) */
 $fail = [];
-foreach ([['css', 35], ['css-admin', 35]] as [$k, $maxKb]) {
+foreach ([['css', 35], ['css-admin', 35], ['css-instructor', 35]] as [$k, $maxKb]) {
     $f = "$pub/assets/css/" . ($manifest[$k] ?? '');
     if (($manifest[$k] ?? '') && ($f !== '' ) && is_file($f) && $gz((string) file_get_contents($f)) > $maxKb * 1024) {
         $fail[] = "$k over {$maxKb} KB gz";
