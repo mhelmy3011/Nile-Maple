@@ -1,0 +1,21 @@
+{
+    "built": "2026-09-17T14:18:17+03:00",
+    "generator": "tools/build_assets.php",
+    "css": "app.1915359d73.css",
+    "css-admin": "admin.86065b3c52.css",
+    "css-instructor": "instructor.80412cfeda.css",
+    "js-base": "base.fee1745f17.js",
+    "js-listing": "listing.abff173648.js",
+    "js-contact": "contact.bcb4a93f5c.js",
+    "js-post": "post.e58172e4c0.js",
+    "js-admin": "admin.91fd91217d.js",
+    "fonts": [
+        "nunito-latin-ext-wght-normal.woff2",
+        "nunito-latin-wght-normal.woff2",
+        "tajawal-arabic-400-normal.woff2",
+        "tajawal-arabic-700-normal.woff2",
+        "tajawal-arabic-800-normal.woff2",
+        "tajawal-latin-400-normal.woff2",
+        "tajawal-latin-700-normal.woff2"
+    ]
+}

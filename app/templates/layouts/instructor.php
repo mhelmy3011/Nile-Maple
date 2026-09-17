@@ -6,13 +6,20 @@ use Nm\View;
 I18n::boot('en');
 $section = $section ?? 'notifications';
 $user = $user ?? ['full_name' => 'Instructor', 'role' => 'instructor'];
-$nav = [
+$navTeaching = [
     'notifications' => ['label' => 'Notifications', 'icon' => 'mail', 'accent' => 'green'],
     'students/details' => ['label' => 'Students', 'icon' => 'users', 'accent' => 'amber'],
+    'courseinstructors' => ['label' => 'Course Instructors', 'icon' => 'users', 'accent' => 'pine'],
     'documents/details' => ['label' => 'Documents', 'icon' => 'doc', 'accent' => 'pine'],
     'announcements/create' => ['label' => 'Announcements', 'icon' => 'spark', 'accent' => 'green'],
     'faq' => ['label' => 'FAQ', 'icon' => 'clipboard', 'accent' => 'amber'],
 ];
+$navFinance = [
+    'coupons/create' => ['label' => 'Coupons', 'icon' => 'tag', 'accent' => 'amber'],
+    'earnings' => ['label' => 'Earnings', 'icon' => 'chart', 'accent' => 'green'],
+    'withdrawalrequests/create' => ['label' => 'Withdrawals', 'icon' => 'wallet', 'accent' => 'leaf'],
+];
+$nav = array_merge($navTeaching, $navFinance);
 $current = strtolower($section);
 ?>
 <!doctype html>
@@ -42,23 +49,32 @@ $current = strtolower($section);
 
     <nav class="ins-nav" aria-label="Primary">
       <div class="ins-nav-section">Teaching</div>
-      <?php foreach ($nav as $k => $meta): 
-        $isOn = $current === $k || str_starts_with($current, explode('/', $k)[0]);
-        if ($k === 'students/details' && !str_contains($current, 'students')) $isOn = false;
-        if ($k === 'documents/details' && !str_contains($current, 'documents')) $isOn = false;
-        if ($k === 'announcements/create' && !str_contains($current, 'announcements')) $isOn = false;
-        // special handling for exact match highlighting
+      <?php foreach ($navTeaching as $k => $meta): 
         $exactOn = $current === $k;
-        if ($k === 'notifications' && $current === 'notifications') $exactOn = true;
-        if ($k === 'faq' && $current === 'faq') $exactOn = true;
         if ($k === 'students/details' && str_contains($current, 'students')) $exactOn = true;
         if ($k === 'documents/details' && str_contains($current, 'documents')) $exactOn = true;
         if ($k === 'announcements/create' && str_contains($current, 'announcements')) $exactOn = true;
+        if ($k === 'courseinstructors' && (str_contains($current, 'courseinstructor') || str_contains($current, 'course-instructor'))) $exactOn = true;
+        if ($k === 'notifications' && $current === 'notifications') $exactOn = true;
+        if ($k === 'faq' && $current === 'faq') $exactOn = true;
       ?>
         <a href="/instructor/<?= $k ?>" class="<?= $exactOn ? 'on' : '' ?>" data-accent="<?= $meta['accent'] ?>">
           <?= Icons::svg($meta['icon'], 'i') ?>
           <span><?= $meta['label'] ?></span>
           <?php if ($k === 'notifications'): ?><span class="ins-count" style="margin-inline-start:auto; background:rgba(255,255,255,.14); color:#fff; border:none">3</span><?php endif; ?>
+        </a>
+      <?php endforeach; ?>
+
+      <div class="ins-nav-section">Finance</div>
+      <?php foreach ($navFinance as $k => $meta):
+        $exactOn = $current === $k;
+        if ($k === 'coupons/create' && str_contains($current, 'coupon')) $exactOn = true;
+        if ($k === 'earnings' && str_contains($current, 'earning')) $exactOn = true;
+        if ($k === 'withdrawalrequests/create' && str_contains($current, 'withdrawal')) $exactOn = true;
+      ?>
+        <a href="/instructor/<?= $k ?>" class="<?= $exactOn ? 'on' : '' ?>" data-accent="<?= $meta['accent'] ?>">
+          <?= Icons::svg($meta['icon'], 'i') ?>
+          <span><?= $meta['label'] ?></span>
         </a>
       <?php endforeach; ?>
 

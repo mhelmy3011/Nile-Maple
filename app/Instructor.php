@@ -4,12 +4,17 @@ namespace Nm;
 /**
  * Instructor dashboard controller — modern redesign using same design system.
  * No logic changes: only presentation, with dummy fallbacks to avoid 500 errors.
- * Routes:
+ * Routes Phase 1:
  *  - /instructor/notifications
  *  - /instructor/students/details?enrollmentId=1
  *  - /instructor/documents/details
  *  - /instructor/announcements/create
  *  - /instructor/faq
+ * Routes Phase 2:
+ *  - /instructor/courseinstructors
+ *  - /instructor/coupons/create
+ *  - /instructor/withdrawalrequests/create
+ *  - /instructor/earnings
  */
 final class Instructor
 {
@@ -53,6 +58,14 @@ final class Instructor
                 self::pgAnnouncementCreate();
             } elseif ($path === 'faq') {
                 self::pgFaq();
+            } elseif ($path === 'courseinstructors' || $path === 'course-instructors' || $first === 'courseinstructors') {
+                self::pgCourseInstructors();
+            } elseif ($path === 'coupons/create' || ($first === 'coupons' && $second === 'create')) {
+                self::pgCouponCreate();
+            } elseif ($path === 'withdrawalrequests/create' || $path === 'withdrawal-requests/create' || ($first === 'withdrawalrequests' && $second === 'create') || ($first === 'withdrawal-requests' && $second === 'create')) {
+                self::pgWithdrawalCreate();
+            } elseif ($path === 'earnings' || $first === 'earnings') {
+                self::pgEarnings();
             } else {
                 // fallback to notifications for unknown
                 self::pgNotifications();
@@ -321,6 +334,265 @@ final class Instructor
             'kpis' => $kpis,
             'q' => $_GET['q'] ?? '',
             'group' => $_GET['group'] ?? '',
+        ], 'layouts/instructor');
+    }
+
+    private static function pgCourseInstructors(): void
+    {
+        $courseId = (int) ($_GET['courseId'] ?? $_GET['course_id'] ?? 1);
+        if ($courseId < 1) $courseId = 1;
+        $q = trim((string) ($_GET['q'] ?? ''));
+        $page = max(1, (int) ($_GET['page'] ?? 1));
+        $perPage = 12;
+
+        // Dummy courses for filter
+        $courses = [
+            ['id' => 1, 'name' => 'Fresh Fruits Export', 'category' => 'fresh-fruits', 'accent' => 'green'],
+            ['id' => 2, 'name' => 'Cold-Chain Handling', 'category' => 'logistics', 'accent' => 'pine'],
+            ['id' => 3, 'name' => 'Citrus Mastery', 'category' => 'fresh-fruits', 'accent' => 'amber'],
+            ['id' => 4, 'name' => 'Vegetables Packaging', 'category' => 'packaging', 'accent' => 'leaf'],
+        ];
+        $currentCourse = null;
+        foreach ($courses as $c) { if ((int)$c['id'] === $courseId) { $currentCourse = $c; break; } }
+        if (!$currentCourse) $currentCourse = $courses[0];
+
+        // Dummy instructors with role coloring: owner green, co-instructor amber, assistant pine, pending leaf
+        $allInstructors = [
+            ['id'=>1,'name'=>'Dr. Amr Farouk','email'=>'amr.farouk@nilemaple.com','role'=>'owner','avatar'=>'AF','courses'=>['Fresh Fruits Export'],'joined'=>'2024-02-10','status'=>'active','lessons'=>24,'students'=>312],
+            ['id'=>2,'name'=>'Sara Nabil','email'=>'sara.nabil@nilemaple.com','role'=>'co-instructor','avatar'=>'SN','courses'=>['Fresh Fruits Export','Citrus Mastery'],'joined'=>'2024-06-15','status'=>'active','lessons'=>18,'students'=>210],
+            ['id'=>3,'name'=>'Omar Issa','email'=>'omar.issa@nilemaple.com','role'=>'assistant','avatar'=>'OI','courses'=>['Cold-Chain Handling'],'joined'=>'2025-01-20','status'=>'active','lessons'=>12,'students'=>98],
+            ['id'=>4,'name'=>'Laila Hassan','email'=>'laila.h@example.com','role'=>'co-instructor','avatar'=>'LH','courses'=>['Vegetables Packaging'],'joined'=>'2025-03-05','status'=>'pending','lessons'=>6,'students'=>45],
+            ['id'=>5,'name'=>'Khaled Youssef','email'=>'khaled.y@nilemaple.com','role'=>'assistant','avatar'=>'KY','courses'=>['Fresh Fruits Export'],'joined'=>'2025-07-11','status'=>'active','lessons'=>9,'students'=>76],
+            ['id'=>6,'name'=>'Mona Adel','email'=>'mona.adel@nilemaple.com','role'=>'assistant','avatar'=>'MA','courses'=>['Citrus Mastery','Cold-Chain Handling'],'joined'=>'2025-08-02','status'=>'pending','lessons'=>3,'students'=>22],
+        ];
+
+        // Filter by q
+        if ($q !== '') {
+            $lq = mb_strtolower($q);
+            $allInstructors = array_values(array_filter($allInstructors, function($ins) use ($lq) {
+                return str_contains(mb_strtolower($ins['name']), $lq) || str_contains(mb_strtolower($ins['email']), $lq) || str_contains(mb_strtolower($ins['role']), $lq);
+            }));
+        }
+
+        // Filter by courseId if provided
+        if ($courseId > 0) {
+            $cName = $currentCourse['name'];
+            $filtered = array_values(array_filter($allInstructors, fn($ins) => in_array($cName, $ins['courses'])));
+            // if no match keep all for demo but show filtered count
+            if (count($filtered) > 0) { /* keep filtered only when q empty? keep all for richer UI */ }
+        }
+
+        $total = count($allInstructors);
+        $offset = ($page - 1) * $perPage;
+        $instructors = array_slice($allInstructors, $offset, $perPage);
+
+        $roleMap = [
+            'owner' => ['label'=>'Owner','accent'=>'green','icon'=>'shield'],
+            'co-instructor' => ['label'=>'Co-Instructor','accent'=>'amber','icon'=>'users'],
+            'assistant' => ['label'=>'Assistant','accent'=>'pine','icon'=>'clipboard'],
+        ];
+        $statusMap = [
+            'active' => ['label'=>'Active','accent'=>'green'],
+            'pending' => ['label'=>'Pending','accent'=>'leaf'],
+        ];
+
+        $kpis = [
+            ['v'=>$total,'l'=>'Team size','icon'=>'users','accent'=>'green','trend'=>$currentCourse['name']],
+            ['v'=>count(array_filter($allInstructors, fn($i)=>$i['role']==='owner')),'l'=>'Owners','icon'=>'shield','accent'=>'green','trend'=>'lead'],
+            ['v'=>count(array_filter($allInstructors, fn($i)=>$i['role']==='co-instructor')),'l'=>'Co-Instructors','icon'=>'users','accent'=>'amber','trend'=>'2 active'],
+            ['v'=>count(array_filter($allInstructors, fn($i)=>$i['status']==='pending')),'l'=>'Pending','icon'=>'clock','accent'=>'leaf','trend'=>'needs action'],
+        ];
+
+        echo View::page('instructor/courseinstructors', [
+            'courses' => $courses,
+            'currentCourse' => $currentCourse,
+            'instructors' => $instructors,
+            'allInstructors' => $allInstructors,
+            'roleMap' => $roleMap,
+            'statusMap' => $statusMap,
+            'kpis' => $kpis,
+            'courseId' => $courseId,
+            'q' => $q,
+            'page' => $page,
+            'total' => $total,
+            'perPage' => $perPage,
+        ], 'layouts/instructor');
+    }
+
+    private static function pgCouponCreate(): void
+    {
+        $code = trim((string) ($_GET['code'] ?? $_POST['code'] ?? ''));
+        $type = strtolower(trim((string) ($_GET['type'] ?? $_POST['type'] ?? 'percent')));
+        if (!in_array($type, ['percent','fixed'])) $type = 'percent';
+        $value = $_GET['value'] ?? $_POST['value'] ?? '';
+        $limit = $_GET['limit'] ?? $_POST['limit'] ?? '';
+        $expiry = $_GET['expiry'] ?? $_POST['expiry'] ?? '';
+        $courseIds = $_GET['courseIds'] ?? $_GET['course_ids'] ?? $_POST['courseIds'] ?? '';
+
+        // Dummy courses for scope selector
+        $courses = [
+            ['id'=>1,'name'=>'Fresh Fruits Export','price'=>149,'accent'=>'green'],
+            ['id'=>2,'name'=>'Cold-Chain Handling','price'=>99,'accent'=>'pine'],
+            ['id'=>3,'name'=>'Citrus Mastery','price'=>129,'accent'=>'amber'],
+            ['id'=>4,'name'=>'Vegetables Packaging','price'=>79,'accent'=>'leaf'],
+        ];
+
+        $existingCoupons = [
+            ['code'=>'FRUIT20','type'=>'percent','value'=>20,'uses'=>42,'limit'=>100,'status'=>'active','accent'=>'green'],
+            ['code'=>'SAVE15','type'=>'fixed','value'=>15,'uses'=>12,'limit'=>50,'status'=>'active','accent'=>'amber'],
+            ['code'=>'WELCOME10','type'=>'percent','value'=>10,'uses'=>98,'limit'=>100,'status'=>'expired','accent'=>'leaf'],
+        ];
+
+        $preview = [
+            'code' => $code !== '' ? strtoupper($code) : 'NEW25',
+            'type' => $type,
+            'value' => $value !== '' ? (float)$value : ($type === 'percent' ? 25 : 20),
+            'originalPrice' => 149,
+        ];
+        $preview['discount'] = $type === 'percent' ? round($preview['originalPrice'] * $preview['value'] / 100, 2) : (float)$preview['value'];
+        $preview['final'] = max(0, $preview['originalPrice'] - $preview['discount']);
+        $preview['savingsText'] = $type === 'percent' ? $preview['value'] . '% off' : '$' . $preview['value'] . ' off';
+
+        echo View::page('instructor/coupons/create', [
+            'courses' => $courses,
+            'existingCoupons' => $existingCoupons,
+            'code' => $code,
+            'type' => $type,
+            'value' => $value,
+            'limit' => $limit,
+            'expiry' => $expiry,
+            'courseIds' => $courseIds,
+            'preview' => $preview,
+        ], 'layouts/instructor');
+    }
+
+    private static function pgWithdrawalCreate(): void
+    {
+        $amount = $_GET['amount'] ?? $_POST['amount'] ?? '';
+        $method = strtolower(trim((string) ($_GET['method'] ?? $_POST['method'] ?? 'paypal')));
+        if (!in_array($method, ['paypal','bank','wallet'])) $method = 'paypal';
+        $account = $_GET['account'] ?? $_POST['account'] ?? '';
+
+        $balance = [
+            'available' => 1240.50,
+            'pending' => 320.00,
+            'total' => 1560.50,
+            'currency' => 'USD',
+        ];
+
+        $methods = [
+            'paypal' => ['label'=>'PayPal','icon'=>'wallet','accent'=>'leaf','fee'=>'2.5%','eta'=>'Instant','desc'=>'Fastest payout, fee applies'],
+            'bank' => ['label'=>'Bank Transfer','icon'=>'doc','accent'=>'pine','fee'=>'$3 fixed','eta'=>'2-3 business days','desc'=>'Secure, best for large amounts'],
+            'wallet' => ['label'=>'Nile Wallet','icon'=>'tag','accent'=>'green','fee'=>'Free','eta'=>'Instant','desc'=>'No fees, use for marketplace'],
+        ];
+
+        $recentWithdrawals = [
+            ['id'=>'WD-1024','amount'=>250,'method'=>'paypal','status'=>'completed','date'=>date('Y-m-d', time()-86400*2),'accent'=>'green'],
+            ['id'=>'WD-1023','amount'=>500,'method'=>'bank','status'=>'pending','date'=>date('Y-m-d', time()-86400*5),'accent'=>'amber'],
+            ['id'=>'WD-1022','amount'=>100,'method'=>'wallet','status'=>'completed','date'=>date('Y-m-d', time()-86400*10),'accent'=>'green'],
+        ];
+
+        $amountNum = is_numeric($amount) ? (float)$amount : 0;
+        $feeRate = $method === 'paypal' ? 0.025 : ($method === 'bank' ? 0 : 0);
+        $feeFixed = $method === 'bank' ? 3 : 0;
+        $fee = $feeRate > 0 ? round($amountNum * $feeRate, 2) : $feeFixed;
+        if ($method === 'bank' && $amountNum > 0) $fee = $feeFixed;
+        if ($method === 'wallet') $fee = 0;
+        $net = max(0, $amountNum - $fee);
+
+        echo View::page('instructor/withdrawalrequests/create', [
+            'balance' => $balance,
+            'methods' => $methods,
+            'recentWithdrawals' => $recentWithdrawals,
+            'amount' => $amount,
+            'method' => $method,
+            'account' => $account,
+            'fee' => $fee,
+            'net' => $net,
+        ], 'layouts/instructor');
+    }
+
+    private static function pgEarnings(): void
+    {
+        $from = $_GET['from'] ?? date('Y-m-01');
+        $to = $_GET['to'] ?? date('Y-m-d');
+        $courseId = (int) ($_GET['courseId'] ?? $_GET['course_id'] ?? 0);
+        $page = max(1, (int) ($_GET['page'] ?? 1));
+        $perPage = 10;
+
+        $courses = [
+            ['id'=>1,'name'=>'Fresh Fruits Export','students'=>312,'price'=>149,'accent'=>'green'],
+            ['id'=>2,'name'=>'Cold-Chain Handling','students'=>210,'price'=>99,'accent'=>'pine'],
+            ['id'=>3,'name'=>'Citrus Mastery','students'=>98,'price'=>129,'accent'=>'amber'],
+            ['id'=>4,'name'=>'Vegetables Packaging','students'=>76,'price'=>79,'accent'=>'leaf'],
+        ];
+
+        // Dummy monthly earnings for chart-bars
+        $monthly = [
+            ['month'=>'Jan','amount'=>420,'accent'=>'green'],
+            ['month'=>'Feb','amount'=>580,'accent'=>'green'],
+            ['month'=>'Mar','amount'=>350,'accent'=>'amber'],
+            ['month'=>'Apr','amount'=>720,'accent'=>'green'],
+            ['month'=>'May','amount'=>610,'accent'=>'green'],
+            ['month'=>'Jun','amount'=>890,'accent'=>'green'],
+            ['month'=>'Jul','amount'=>540,'accent'=>'pine'],
+            ['month'=>'Aug','amount'=>760,'accent'=>'green'],
+            ['month'=>'Sep','amount'=>1240,'accent'=>'green'],
+        ];
+        $maxAmt = max(array_column($monthly, 'amount'));
+
+        $breakdown = [
+            ['course'=>'Fresh Fruits Export','earnings'=>820.50,'enrollments'=>42,'share'=>48,'accent'=>'green'],
+            ['course'=>'Citrus Mastery','earnings'=>310.00,'enrollments'=>18,'share'=>22,'accent'=>'amber'],
+            ['course'=>'Cold-Chain Handling','earnings'=>210.00,'enrollments'=>12,'share'=>18,'accent'=>'pine'],
+            ['course'=>'Vegetables Packaging','earnings'=>95.00,'enrollments'=>8,'share'=>12,'accent'=>'leaf'],
+        ];
+
+        $transactions = [
+            ['id'=>'TX-3041','date'=>date('Y-m-d', time()-3600*5),'course'=>'Fresh Fruits Export','student'=>'Ahmed H.','amount'=>149,'fee'=>22.35,'net'=>126.65,'status'=>'paid','accent'=>'green'],
+            ['id'=>'TX-3040','date'=>date('Y-m-d', time()-86400),'course'=>'Citrus Mastery','student'=>'Sara M.','amount'=>129,'fee'=>19.35,'net'=>109.65,'status'=>'paid','accent'=>'green'],
+            ['id'=>'TX-3039','date'=>date('Y-m-d', time()-86400*2),'course'=>'Cold-Chain Handling','student'=>'Omar K.','amount'=>99,'fee'=>14.85,'net'=>84.15,'status'=>'pending','accent'=>'amber'],
+            ['id'=>'TX-3038','date'=>date('Y-m-d', time()-86400*3),'course'=>'Fresh Fruits Export','student'=>'Laila A.','amount'=>149,'fee'=>22.35,'net'=>126.65,'status'=>'paid','accent'=>'green'],
+            ['id'=>'TX-3037','date'=>date('Y-m-d', time()-86400*4),'course'=>'Vegetables Packaging','student'=>'Khaled Y.','amount'=>79,'fee'=>11.85,'net'=>67.15,'status'=>'refunded','accent'=>'leaf'],
+            ['id'=>'TX-3036','date'=>date('Y-m-d', time()-86400*5),'course'=>'Fresh Fruits Export','student'=>'Mona A.','amount'=>149,'fee'=>22.35,'net'=>126.65,'status'=>'paid','accent'=>'green'],
+            ['id'=>'TX-3035','date'=>date('Y-m-d', time()-86400*6),'course'=>'Citrus Mastery','student'=>'Youssef S.','amount'=>129,'fee'=>19.35,'net'=>109.65,'status'=>'paid','accent'=>'green'],
+            ['id'=>'TX-3034','date'=>date('Y-m-d', time()-86400*7),'course'=>'Fresh Fruits Export','student'=>'Nadia F.','amount'=>149,'fee'=>22.35,'net'=>126.65,'status'=>'withdrawn','accent'=>'pine'],
+        ];
+
+        $filteredTx = $transactions;
+        if ($courseId > 0) {
+            $cName = null;
+            foreach ($courses as $c) if ($c['id']===$courseId) $cName = $c['name'];
+            if ($cName) {
+                $filteredTx = array_values(array_filter($transactions, fn($t)=>$t['course']===$cName));
+            }
+        }
+
+        $total = count($filteredTx);
+        $pagedTx = array_slice($filteredTx, ($page-1)*$perPage, $perPage);
+
+        $kpis = [
+            ['v'=>'$'.number_format(2435.50,2),'l'=>'Total earnings','icon'=>'wallet','accent'=>'green','trend'=>'+12%'],
+            ['v'=>'$'.number_format(890.00,2),'l'=>'This month','icon'=>'chart','accent'=>'green','trend'=>'+8%'],
+            ['v'=>'$'.number_format(320.00,2),'l'=>'Pending','icon'=>'clock','accent'=>'amber','trend'=>'3 tx'],
+            ['v'=>'$'.number_format(1240.50,2),'l'=>'Available','icon'=>'tag','accent'=>'pine','trend'=>'withdraw'],
+            ['v'=>'$'.number_format(875.00,2),'l'=>'Withdrawn','icon'=>'check','accent'=>'pine','trend'=>'ok'],
+        ];
+
+        echo View::page('instructor/earnings', [
+            'courses' => $courses,
+            'monthly' => $monthly,
+            'maxAmt' => $maxAmt,
+            'breakdown' => $breakdown,
+            'transactions' => $pagedTx,
+            'allTransactions' => $filteredTx,
+            'kpis' => $kpis,
+            'from' => $from,
+            'to' => $to,
+            'courseId' => $courseId,
+            'page' => $page,
+            'total' => $total,
+            'perPage' => $perPage,
         ], 'layouts/instructor');
     }
 

@@ -299,3 +299,132 @@ mark.ins-mark{background:var(--amber-100); color:var(--amber-950); padding:1px 4
 
 /* focus */
 .ins-card:focus-within, .ins-kpi:focus-within{outline:3px solid var(--focus); outline-offset:2px}
+
+/* ===== Phase 2 extensions ===== */
+
+/* avatar stack */
+.ins-avatar-stack{display:flex; align-items:center}
+.ins-avatar-stack .ins-avatar{margin-inline-start:-8px; border:2px solid var(--surface); box-shadow:var(--e1)}
+.ins-avatar-stack .ins-avatar:first-child{margin-inline-start:0}
+.ins-avatar-lg{width:56px; height:56px; font-size:1.1rem; border-radius:16px; background:linear-gradient(135deg, var(--green-500), var(--green-700)); color:#fff}
+.ins-avatar[data-accent=\"amber\"]{background:var(--amber-400); color:var(--pine-950)}
+.ins-avatar[data-accent=\"pine\"]{background:var(--pine-700); color:#fff}
+.ins-avatar[data-accent=\"leaf\"]{background:#fdecea; color:var(--leaf-600); border-color:var(--surface)}
+.ins-avatar[data-accent=\"green\"]{background:linear-gradient(135deg, var(--green-500), var(--green-700)); color:#fff}
+
+/* role badges already via chip but gradient avatar */
+.ins-instructor-grid{display:grid; gap:var(--sp-4)}
+@media (min-width:640px){.ins-instructor-grid{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1100px){.ins-instructor-grid{grid-template-columns:repeat(3,1fr)}}
+.ins-instructor-card{padding:var(--sp-5); gap:var(--sp-3)}
+.ins-instructor-card .ins-card-head{align-items:center}
+.ins-instructor-meta{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+.ins-stat-row{display:flex; gap:12px; flex-wrap:wrap}
+.ins-stat{font-size:.78rem; font-weight:700; color:var(--text-muted); display:inline-flex; gap:6px; align-items:center; background:var(--n-100); padding:4px 10px; border-radius:999px}
+.ins-stat .i{width:14px; height:14px}
+
+/* chart bars */
+.ins-chart{display:grid; gap:var(--sp-4)}
+.ins-chart-bars{display:flex; align-items:end; gap:10px; height:200px; padding:var(--sp-4) var(--sp-3) 0; border-bottom:1px solid var(--border); overflow-x:auto; scrollbar-width:thin}
+.ins-chart-bar{flex:1; min-width:32px; display:flex; flex-direction:column; align-items:center; gap:8px}
+.ins-chart-bar-track{width:100%; height:100%; display:flex; align-items:end; justify-content:center}
+.ins-chart-bar-fill{width:100%; max-width:48px; border-radius:10px 10px 4px 4px; background:var(--green-500); transition:height .6s var(--ease), transform .18s var(--ease); position:relative; box-shadow:var(--e1)}
+.ins-chart-bar-fill::before{content:\"\"; position:absolute; inset:0; border-radius:inherit; background:linear-gradient(180deg, rgba(255,255,255,.22), transparent); pointer-events:none}
+.ins-chart-bar[data-accent=\"amber\"] .ins-chart-bar-fill{background:linear-gradient(180deg, var(--amber-300), var(--amber-400))}
+.ins-chart-bar[data-accent=\"pine\"] .ins-chart-bar-fill{background:linear-gradient(180deg, var(--pine-400), var(--pine-600))}
+.ins-chart-bar[data-accent=\"leaf\"] .ins-chart-bar-fill{background:linear-gradient(180deg, #e98a7e, var(--leaf-600))}
+.ins-chart-bar[data-accent=\"green\"] .ins-chart-bar-fill{background:linear-gradient(180deg, var(--green-400), var(--green-600))}
+.ins-chart-bar-fill:hover{transform:translateY(-2px) scaleY(1.02); filter:brightness(1.06)}
+.ins-chart-bar-v{font-size:.72rem; font-weight:800; color:var(--text); position:absolute; top:-22px; left:50%; transform:translateX(-50%); white-space:nowrap; background:var(--surface); border:1px solid var(--border); padding:2px 6px; border-radius:999px; box-shadow:var(--e1)}
+.ins-chart-bar-l{font-size:.72rem; font-weight:700; color:var(--text-muted)}
+.ins-chart-legend{display:flex; gap:10px; flex-wrap:wrap}
+.ins-chart-legend .ins-chip{font-size:.68rem}
+
+/* coupon preview */
+.ins-coupon-preview{position:relative; overflow:hidden; border-radius:var(--r-lg); border:1px dashed var(--border-strong); background:var(--surface); padding:var(--sp-5); display:grid; gap:var(--sp-4)}
+.ins-coupon-preview::before{content:\"\"; position:absolute; inset:0; background:var(--ins-grad-green); opacity:.6; pointer-events:none}
+.ins-coupon-preview[data-type=\"fixed\"]::before{background:var(--ins-grad-amber)}
+.ins-coupon-preview > *{position:relative; z-index:1}
+.ins-coupon-code{font-family:ui-monospace,Menlo,monospace; font-weight:900; font-size:1.6rem; letter-spacing:.06em; background:var(--surface); border:1px solid var(--border); border-radius:var(--r-md); padding:8px 14px; display:inline-flex; box-shadow:var(--e1)}
+.ins-coupon-savings{display:inline-flex; align-items:center; gap:6px; font-weight:900; font-size:.9rem; padding:6px 12px; border-radius:999px; background:var(--green-600); color:#fff; box-shadow:var(--e1)}
+.ins-coupon-preview[data-type=\"fixed\"] .ins-coupon-savings{background:var(--amber-500); color:var(--pine-950)}
+.ins-coupon-price-row{display:flex; gap:12px; align-items:baseline; flex-wrap:wrap}
+.ins-coupon-price{font-weight:800; font-size:1.2rem}
+.ins-coupon-price.old{color:var(--text-muted); text-decoration:line-through; font-weight:600; font-size:.95rem}
+.ins-coupon-price.new{color:var(--green-700); font-size:1.4rem}
+
+/* method cards */
+.ins-method-grid{display:grid; gap:var(--sp-3)}
+@media (min-width:640px){.ins-method-grid{grid-template-columns:repeat(3,1fr)}}
+.ins-method-card{cursor:pointer; border-width:1.5px; padding:var(--sp-4)}
+.ins-method-card:has(input:checked){border-color:var(--green-600); background:var(--green-50); box-shadow:var(--e2); transform:translateY(-1px)}
+.ins-method-card[data-accent=\"leaf\"]:has(input:checked){border-color:#e55c4b; background:#fdf0ee}
+.ins-method-card[data-accent=\"pine\"]:has(input:checked){border-color:var(--pine-600); background:var(--pine-50)}
+.ins-method-card input{position:absolute; opacity:0; pointer-events:none}
+.ins-method-head{display:flex; gap:12px; align-items:center; margin-bottom:10px}
+.ins-method-icon{width:48px; height:48px; border-radius:14px; display:inline-flex; align-items:center; justify-content:center; background:var(--green-100); color:var(--green-800)}
+.ins-method-card[data-accent=\"leaf\"] .ins-method-icon{background:#fdecea; color:var(--leaf-600)}
+.ins-method-card[data-accent=\"pine\"] .ins-method-icon{background:var(--pine-100); color:var(--pine-800)}
+.ins-method-card[data-accent=\"green\"] .ins-method-icon{background:var(--green-100); color:var(--green-800)}
+.ins-method-title{font-weight:800; font-size:.95rem; margin:0}
+.ins-method-desc{font-size:.78rem; color:var(--text-muted); margin:0}
+.ins-method-meta{display:flex; gap:8px; flex-wrap:wrap; margin-top:8px}
+.ins-fee-chip{font-size:.68rem; font-weight:800; padding:3px 8px; border-radius:999px; background:var(--n-100); color:var(--text-muted); border:1px solid var(--border)}
+
+/* amount input with $ prefix and quick pills */
+.ins-amount-wrap{position:relative}
+.ins-amount-wrap::before{content:\"$\"; position:absolute; inset-inline-start:14px; top:50%; transform:translateY(-50%); font-weight:900; color:var(--text-muted); pointer-events:none}
+.ins-amount-wrap input{padding-inline-start:28px !important; font-weight:800; font-size:1.2rem; font-variant-numeric:tabular-nums}
+.ins-pill-row{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
+.ins-pill{border:1.5px solid var(--border); background:var(--surface); border-radius:999px; padding:6px 14px; font-weight:800; font-size:.8rem; cursor:pointer; transition:all .18s var(--ease)}
+.ins-pill:hover{border-color:var(--green-600); background:var(--green-50); transform:translateY(-1px)}
+.ins-pill.on{background:var(--green-600); color:#fff; border-color:var(--green-600)}
+
+/* balance gradient */
+.ins-balance{position:relative; overflow:hidden; border-radius:var(--r-lg); background:linear-gradient(135deg, var(--green-600), var(--green-700)); color:#fff; padding:var(--sp-6); display:grid; gap:var(--sp-3); box-shadow:var(--e2)}
+.ins-balance::before{content:\"\"; position:absolute; inset:0; background:radial-gradient(600px 300px at 20% 0%, rgba(255,255,255,.18), transparent 60%); pointer-events:none}
+.ins-balance > *{position:relative; z-index:1}
+.ins-balance small{color:rgba(255,255,255,.8); font-weight:700; text-transform:uppercase; letter-spacing:.06em; font-size:.72rem}
+.ins-balance-v{font-size:clamp(1.8rem,5vw,2.4rem); font-weight:900; letter-spacing:-.02em}
+.ins-balance-grid{display:flex; gap:var(--sp-4); flex-wrap:wrap}
+.ins-balance-item{background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.16); border-radius:var(--r-md); padding:10px 14px; backdrop-filter:blur(6px)}
+.ins-balance-item b{display:block; font-size:1rem}
+.ins-balance-item span{font-size:.72rem; opacity:.85}
+
+/* earnings breakdown */
+.ins-breakdown{display:grid; gap:var(--sp-3)}
+@media (min-width:640px){.ins-breakdown{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1024px){.ins-breakdown{grid-template-columns:repeat(4,1fr)}}
+.ins-break-card{position:relative; overflow:hidden}
+.ins-break-card::after{content:\"\"; position:absolute; inset:0; opacity:.55; background:var(--ins-grad-green); pointer-events:none}
+.ins-break-card[data-accent=\"amber\"]::after{background:var(--ins-grad-amber)}
+.ins-break-card[data-accent=\"pine\"]::after{background:var(--ins-grad-pine)}
+.ins-break-card[data-accent=\"leaf\"]::after{background:var(--ins-grad-leaf)}
+.ins-break-card > *{position:relative; z-index:1}
+.ins-break-share{height:6px; background:var(--n-100); border-radius:999px; overflow:hidden; margin-top:10px}
+.ins-break-share-bar{height:100%; border-radius:999px; background:var(--green-500)}
+.ins-break-card[data-accent=\"amber\"] .ins-break-share-bar{background:var(--amber-400)}
+.ins-break-card[data-accent=\"pine\"] .ins-break-share-bar{background:var(--pine-600)}
+.ins-break-card[data-accent=\"leaf\"] .ins-break-share-bar{background:var(--leaf-600)}
+
+/* fee breakdown box */
+.ins-fee-box{background:var(--surface-2); border:1px solid var(--border); border-radius:var(--r-md); padding:var(--sp-4); display:grid; gap:8px}
+.ins-fee-row{display:flex; justify-content:space-between; align-items:center; font-size:.875rem}
+.ins-fee-row.total{font-weight:900; font-size:1rem; border-top:1px solid var(--border); padding-top:8px; margin-top:4px}
+.ins-fee-row .muted{color:var(--text-muted)}
+
+/* scope chips */
+.ins-scope{display:flex; flex-wrap:wrap; gap:8px}
+.ins-scope .ins-chip{cursor:pointer; transition:all .18s var(--ease)}
+.ins-scope .ins-chip:hover{transform:translateY(-1px)}
+.ins-scope .ins-chip.on{background:var(--green-600); color:#fff; border-color:var(--green-600)}
+.ins-scope .ins-chip.on .dot{background:#fff}
+
+/* pagination simple */
+.ins-pagination{display:flex; gap:8px; align-items:center; justify-content:center; padding:var(--sp-4)}
+.ins-pagination a, .ins-pagination span{min-width:40px; min-height:40px; display:inline-flex; align-items:center; justify-content:center; border-radius:999px; border:1px solid var(--border); background:var(--surface); font-weight:800; font-size:.875rem; text-decoration:none; color:var(--text)}
+.ins-pagination a:hover{border-color:var(--green-600); background:var(--green-50)}
+.ins-pagination .on{background:var(--green-600); color:#fff; border-color:var(--green-600)}
+
+/* sticky preview for coupon create */
+@media (min-width:1100px){.ins-sticky{position:sticky; top:calc(56px + 16px)}}
