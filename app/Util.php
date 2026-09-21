@@ -28,6 +28,20 @@ final class Util
         $fmt = static fn($v) => rtrim(rtrim(number_format((float) $v, 1, '.', ''), '0'), '.');
         return $min !== null && $max !== null ? $fmt($min) . '–' . $fmt($max) . ' °' . $unit : $fmt($min ?? $max) . ' °' . $unit;
     }
+    /**
+     * True when a piece of text IS (essentially) a storage temperature: "0–4 °C",
+     * "Généralement 8 °C", "Généralement -18 °C", "عادة 8 °م" (Arabic Celsius),
+     * "Typically 0-4 C", "Keep frozen at -18 C or below".
+     *
+     * Client update (2026-09-21): temperatures are no longer displayed on product pages.
+     * Rows whose value matches this are hidden (spec rows, JSON-LD); rows with real
+     * handling guidance (e.g. canned storage notes, no temperature figures) are kept.
+     * Deliberately narrow: a bare "م"/"C" without a figure or degree sign is NOT matched.
+     */
+    public static function hasTempText(string $v): bool
+    {
+        return (bool) preg_match('/°\s*[CFم]|℃|-?\d+(?:\.\d+)?\s?C\b/i', $v);
+    }
     public static function waLink(string $text = ''): string
     {
         $num = preg_replace('/\D/', '', (string) Settings::get('contact.whatsapp'));

@@ -32,8 +32,9 @@ $heroImg = !empty($hp['media_id']) ? Media::img((int) $hp['media_id'], (string) 
     <div class="division-list">
       <?php foreach ($categories as $c): ?>
         <a class="division-card" href="/<?= $lang ?>/categories/<?= View::e($c['slug']) ?>/">
-          <?php if (!empty($c['cover_media_id'])): /* D-03: real division photography, never an empty box */ ?>
-            <span class="dc-media"><?= Media::img((int) $c['cover_media_id'], (string) $c['name'], 'lazy', '(min-width:768px) 46vw, 92vw') ?></span>
+          <?php $cover = (int) ($c['cover_media_id'] ?: ($c['cover_fallback_id'] ?? 0)); ?>
+          <?php if ($cover): /* D-03: real division photography, never an empty box (2026-09-21: falls back to the category's own product photo) */ ?>
+            <span class="dc-media"><?= Media::img($cover, (string) $c['name'], 'lazy', '(min-width:768px) 46vw, 92vw') ?></span>
           <?php else: ?>
             <span class="dc-media dc-media-mono" aria-hidden="true"><?= \Nm\Icons::svg($c['icon_key'] ?? 'citrus') ?></span>
           <?php endif; ?>
