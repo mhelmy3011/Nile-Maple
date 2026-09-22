@@ -40,7 +40,7 @@ final class Util
      */
     public static function hasTempText(string $v): bool
     {
-        return (bool) preg_match('/°\s*[CFم]|℃|-?\d+(?:\.\d+)?\s?C\b/i', $v);
+        return (bool) preg_match('/°\s*[CFم]|℃|-?\d+(?:\.\d+)?\s?C\b/iu', $v);
     }
     public static function waLink(string $text = ''): string
     {

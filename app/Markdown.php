@@ -73,11 +73,11 @@ final class Markdown
 
     public static function excerpt(string $md, int $chars = 160): string
     {
-        $txt = trim(preg_replace('/[#>*`|-]/', ' ', preg_replace('/\R+/', ' ', $md)));
+        $txt = trim(preg_replace('/[#>*`|-]/', ' ', preg_replace('/\R+/u', ' ', $md)));
         return mb_strlen($txt) > $chars ? mb_substr($txt, 0, $chars - 1) . '…' : $txt;
     }
     public static function readingMinutes(string $md): int
     {
-        return max(1, (int) round(str_word_count(preg_replace('/\R+/', ' ', $md)) / 200));
+        return max(1, (int) round(str_word_count(preg_replace('/\R+/u', ' ', $md)) / 200));
     }
 }
