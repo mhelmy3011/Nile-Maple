@@ -1,7 +1,8 @@
 <?php
 use Nm\I18n; use Nm\Media; use Nm\Util; use Nm\View;
 $p = $product;
-$badge = Util::tempBadge((float) $p['temp_min'], (float) $p['temp_max'], $p['temp_unit']);
+/* Client update (2026-09-21): the temperature line under the gallery is no longer
+   rendered. temp_min/temp_max/temp_note remain in the DB + dashboard. */
 ?>
 <div class="container pd-top"><?= View::render('ui/breadcrumbs', ['crumbs' => $crumbs]) ?></div>
 <section class="section section-first pd-layout">
@@ -12,7 +13,6 @@ $badge = Util::tempBadge((float) $p['temp_min'], (float) $p['temp_max'], $p['tem
           <div class="pd-slide"><?= $p['card_media_id'] ? Media::img((int) $p['card_media_id'], $p['pname'], 'hero', '100vw') : '' ?></div>
         </div>
       </div>
-      <?php if ($badge): ?><p class="pd-temp"><span class="temp-badge tabular" dir="ltr"><?= View::e($badge) ?></span> <span class="muted"><?= View::e($p['temp_note'] ?? '') ?></span></p><?php endif; ?>
     </div>
     <div class="pd-info">
       <?php if ($cat): ?><a class="chip chip-amber" href="/<?= $lang ?>/categories/<?= View::e($cat['slug']) ?>/"><?= View::e($cat['name']) ?></a><?php endif; ?>

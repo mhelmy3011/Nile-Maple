@@ -10,7 +10,14 @@ final class Content
     {
         return Cache::remember('data', "cats-$lang", static fn() => Db::all(
             'SELECT c.*, i.name, i.slug, i.headline, i.summary, i.meta_title, i.meta_description,
-                    (SELECT COUNT(*) FROM products p WHERE p.category_id=c.id AND p.is_published=1) AS cnt
+                    (SELECT COUNT(*) FROM products p WHERE p.category_id=c.id AND p.is_published=1) AS cnt,
+                    /* Client update (2026-09-21): category cards must never show an empty image box —
+                       a category without its own cover falls back to one of its own product photos
+                       (featured first, then sort order), so the division photography always matches
+                       the products it represents. cover_media_id (when set) always wins. */
+                    (SELECT p2.card_media_id FROM products p2
+                      WHERE p2.category_id=c.id AND p2.is_published=1 AND p2.card_media_id IS NOT NULL
+                      ORDER BY p2.is_featured DESC, p2.sort_order, p2.id LIMIT 1) AS cover_fallback_id
              FROM categories c JOIN category_i18n i ON i.category_id=c.id AND i.lang=?
              WHERE c.is_published=1 ORDER BY c.sort_order', [$lang]), 300);
     }

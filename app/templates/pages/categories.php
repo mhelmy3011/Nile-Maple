@@ -12,7 +12,8 @@
     <div class="cat-grid">
       <?php foreach ($categories as $c): ?>
         <a class="cat-card" href="/<?= $lang ?>/categories/<?= View::e($c['slug']) ?>/">
-          <span class="cc-media"><?= $c['cover_media_id'] ? Media::img((int) $c['cover_media_id'], $c['name']) : '' ?></span>
+          <?php $cover = (int) ($c['cover_media_id'] ?: ($c['cover_fallback_id'] ?? 0)); ?>
+          <span class="cc-media"><?= $cover ? Media::img($cover, $c['name']) : '' ?></span>
           <span class="cc-body">
             <h2><?= View::e($c['name']) ?></h2>
             <p><?= View::e($c['summary']) ?></p>

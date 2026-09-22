@@ -95,7 +95,11 @@ final class Seo
     {
         $props = [];
         foreach ([['Varieties', $i['varieties']], ['Packing', $i['packing']], [$i['label_chain'], $i['chain']]] as [$n, $v]) {
-            if ($v) $props[] = ['@type' => 'PropertyValue', 'name' => $n, 'value' => mb_substr($v, 0, 300)];
+            if (!$v) continue;
+            /* 2026-09-21: temperatures are not published on product pages — the cold-chain
+               property is omitted when its value is a temperature (kept in the dashboard). */
+            if ($n === $i['label_chain'] && Util::hasTempText((string) $v)) continue;
+            $props[] = ['@type' => 'PropertyValue', 'name' => $n, 'value' => mb_substr($v, 0, 300)];
         }
         return [
             '@context' => 'https://schema.org', '@type' => 'Product',
