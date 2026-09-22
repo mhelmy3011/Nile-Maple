@@ -439,7 +439,10 @@ html[lang="ar"] .spec-row dt{text-transform:none;letter-spacing:0}
 .spec-row dd{margin:0;color:var(--text);font-size:.9375rem}
 @media (min-width:768px){.spec-row{grid-template-columns:200px 1fr;gap:var(--sp-6);align-items:start}}
 .rail{overflow:hidden}
-.rail-track{overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-block:4px}
+/* real bug: no display:flex here means .rail-item's flex:0 0 78%/46%/24% below never
+   applied - each related-product card stacked full-container-width instead of sitting in
+   a horizontal scroll rail, and its 1:1 aspect-ratio image scaled up to match. */
+.rail-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-block:4px}
 .rail-track::-webkit-scrollbar{display:none}
 .rail-item{flex:0 0 78%;scroll-snap-align:start;padding-inline-end:var(--sp-3)}
 @media (min-width:640px){.rail-item{flex:0 0 46%}}
