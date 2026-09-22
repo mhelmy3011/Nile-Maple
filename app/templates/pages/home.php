@@ -75,7 +75,7 @@ $heroImg = !empty($hp['media_id']) ? Media::img((int) $hp['media_id'], (string) 
       <?= View::render('ui/section-head', ['eyebrow' => $t('home.why.eyebrow'), 'title' => $t('home.why.title'), 'lead' => $t('home.why.lead')]) ?>
       <ul class="check-list">
         <?php foreach ($why as $b): $pl = Content::blockPayload($b); foreach ($pl['items'] ?? [] as $it): ?>
-          <li><span class="ck" aria-hidden="true"><?= \Nm\Icons::svg('check') ?></span><div><strong><?= View::e($it['title'] ?? '') ?></strong><p><?= View::e($it['text'] ?? '') ?></p></div></li>
+          <li><span class="ck" aria-hidden="true"><?= \Nm\Icons::svg('check') ?></span><div><strong><?= View::e($it['t'] ?? '') ?></strong><p><?= View::e($it['x'] ?? '') ?></p></div></li>
         <?php endforeach; endforeach; ?>
       </ul>
     </div>
@@ -105,7 +105,7 @@ $heroImg = !empty($hp['media_id']) ? Media::img((int) $hp['media_id'], (string) 
     <?= View::render('ui/section-head', ['eyebrow' => $t('home.quality.eyebrow'), 'title' => $t('home.quality.title'), 'lead' => $t('home.quality.lead')]) ?>
     <div class="quality-grid">
       <?php foreach ($quality as $b): $pl = Content::blockPayload($b); foreach (array_slice($pl['items'] ?? [], 0, 6) as $it): ?>
-        <div class="q-item"><span class="q-icon" aria-hidden="true"><?= \Nm\Icons::svg($it['icon'] ?? 'shield') ?></span><strong><?= View::e($it['title'] ?? '') ?></strong><p><?= View::e($it['text'] ?? '') ?></p></div>
+        <div class="q-item"><span class="q-icon" aria-hidden="true"><?= \Nm\Icons::svg($it['i'] ?? 'shield') ?></span><strong><?= View::e($it['t'] ?? '') ?></strong><p><?= View::e($it['x'] ?? '') ?></p></div>
       <?php endforeach; endforeach; ?>
     </div>
     <a class="btn btn-outline-light" href="/<?= $lang ?>/quality-handling/"><?= $t('cta.quality') ?></a>

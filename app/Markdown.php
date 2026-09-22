@@ -10,7 +10,7 @@ final class Markdown
 {
     public static function render(string $md): string
     {
-        $lines = preg_split('/\R/', str_replace("\r", '', $md));
+        $lines = preg_split('/\R/u', str_replace("\r", '', $md));
         $out = []; $inList = false; $inOl = false; $inTable = false; $inQuote = false; $para = [];
         $closeAll = function () use (&$out, &$inList, &$inOl, &$inTable, &$inQuote, &$para) {
             if ($para) { $out[] = '<p>' . implode(' ', $para) . '</p>'; $para = []; }

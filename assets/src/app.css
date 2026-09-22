@@ -127,6 +127,11 @@ html[dir="rtl"] .chev,html[dir="rtl"] .cs-more .i,html[dir="rtl"] .tab-all .i,ht
    happened to leave it. Open state already renders fine as grid (single column, same as the
    block layout it was meant to have), so only the hidden case needs correcting. */
 .footer .lang-menu[hidden]{display:none}
+/* real bug: the footer instance sits at the bottom of the page, so opening downward
+   (the default, meant for the header instance) pushes it off-screen and under the
+   fixed mobile command bar (z-index 90) / cookie banner (95). Open upward instead and
+   sit above both. */
+.footer .lang-menu{top:auto;bottom:calc(100% + 6px);z-index:96}
 .lang-menu a:hover{background:var(--green-50)}
 .lang-menu .i{width:16px;height:16px;color:var(--green-600)}
 /* sheet */
