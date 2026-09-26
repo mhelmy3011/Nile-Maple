@@ -29,6 +29,7 @@ final class Routes
 
         $r = null;
         if ($m(0)) $r = ['pages/home', [], ''];
+        elseif ($m(1) && $g(0) === 'about-us') $r = ['pages/about', [], 'about'];
         elseif ($m(1) && $g(0) === 'about') $r = ['pages/about', [], 'about'];
         elseif ($m(1) && $g(0) === 'services') $r = ['pages/services', [], 'services'];
         elseif ($m(2) && $g(0) === 'services') $r = ['pages/service', ['slug' => $g(1)], "services/{$g(1)}"];

@@ -77,11 +77,18 @@ function nm_split_lockup(GdImage $im): array
         }
         $rowHas[$y] = $on > 3;
     }
-    /* longest empty band in the lower half = gap between symbol and lettering */
+    /* first significant empty band in the lower half = gap between symbol and lettering.
+       Use the first gap >= 3% of image height rather than the longest, so the AR lockup
+       splits between the maple leaf and the two-line Arabic text (not between the two lines). */
+    $minGap = max(5, (int) ($h * .03));
     $best = [0, 0]; $run = null;
-    for ($y = (int) ($h * .45); $y < $h; $y++) {
+    for ($y = (int) ($h * .35); $y < $h; $y++) {
         if (!$rowHas[$y]) { $run ??= $y; continue; }
-        if ($run !== null && $y - $run > $best[1] - $best[0]) $best = [$run, $y];
+        if ($run !== null) {
+            $gap = $y - $run;
+            if ($gap >= $minGap && $best[1] === 0) { $best = [$run, $y]; $run = null; break; }
+            if ($gap > $best[1] - $best[0]) $best = [$run, $y];
+        }
         $run = null;
     }
     if ($run !== null && $h - $run > $best[1] - $best[0]) $best = [$run, $h];

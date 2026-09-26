@@ -61,6 +61,7 @@ return [
  'faq.eyebrow' => 'الأسئلة الشائعة', 'faq.title' => 'الأسئلة الشائعة', 'faq.lead' => 'المنتجات والكميات والعلامات والتعبئة والدفع والمستندات والشحن ومدد التنفيذ.',
  'faq.search' => 'ابحث في الأسئلة…', 'faq.more' => 'لديك سؤال آخر؟ تواصل معنا',
  'faq.group.general' => 'عام', 'faq.group.products' => 'المنتجات', 'faq.group.packaging' => 'التعبئة',
+ 'faq.group.company' => 'الشركة', 'faq.group.export' => 'التصدير', 'faq.group.quality' => 'الجودة', 'faq.group.seasonal' => 'الموسمية',
  'faq.group.payment' => 'الدفع', 'faq.group.logistics' => 'اللوجستيات', 'faq.group.documents' => 'المستندات',
  'zone.eyebrow' => 'قدراتنا', 'zone.quality-handling' => 'الجودة والتداول', 'zone.packaging-logistics' => 'التعبئة واللوجستيات',
  'zone.seasonal-availability' => 'الإتاحة الموسمية', 'zone.export-documentation' => 'مستندات التصدير',
