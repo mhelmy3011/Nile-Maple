@@ -37,22 +37,55 @@
       if (page >= pages) btn.parentElement.style.display = 'none';
     }).catch(function () { btn.disabled = false; });
   });
+  var sort = document.querySelector('[data-filter-sort]');
+  var grid = wrap.firstElementChild;
+
+  function applyFilter() {
+    var v = q ? q.value.trim().toLowerCase() : '';
+    var shown = 0;
+    wrap.querySelectorAll('.card-product').forEach(function (c) {
+      var hit = !v || c.textContent.toLowerCase().indexOf(v) > -1;
+      c.style.display = hit ? '' : 'none';
+      if (hit) shown++;
+    });
+    label(shown);
+  }
+
+  function applySort() {
+    if (!sort || !grid) return;
+    var cards = Array.from(grid.querySelectorAll('.card-product'));
+    var mode = sort.value;
+    if (mode === 'az') {
+      cards.sort(function (a, b) {
+        var na = (a.querySelector('.cp-name') || a).textContent.trim().toLowerCase();
+        var nb = (b.querySelector('.cp-name') || b).textContent.trim().toLowerCase();
+        return na.localeCompare(nb);
+      });
+    } else {
+      cards.sort(function (a, b) {
+        return (parseInt(a.getAttribute('data-order'), 10) || 0) - (parseInt(b.getAttribute('data-order'), 10) || 0);
+      });
+    }
+    cards.forEach(function (c) { grid.appendChild(c); });
+    applyFilter();
+  }
+
   /* client-side instant filter over the loaded set (0 requests, doc 03 §6) */
   if (q) {
     var t;
     q.addEventListener('input', function () {
       clearTimeout(t);
-      t = setTimeout(function () {
-        var v = q.value.trim().toLowerCase();
-        var shown = 0;
-        wrap.querySelectorAll('.card-product').forEach(function (c) {
-          var hit = !v || c.textContent.toLowerCase().indexOf(v) > -1;
-          c.style.display = hit ? '' : 'none';
-          if (hit) shown++;
-        });
-        if (!v) label(parseInt(count ? count.textContent.replace(/\D/g, '') : '0', 10) || shown);
-        else label(shown);
-      }, 120);
+      t = setTimeout(applyFilter, 120);
+    });
+  }
+  if (sort) {
+    sort.addEventListener('change', applySort);
+  }
+
+  /* store original order as data attributes */
+  if (grid) {
+    Array.from(grid.querySelectorAll('.card-product')).forEach(function (c, i) {
+      c.setAttribute('data-order', String(i));
     });
   }
 })();

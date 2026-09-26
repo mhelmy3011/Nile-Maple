@@ -19,12 +19,10 @@ $current = trim($path ?? '', '/');
       <?php endforeach; ?>
       <a class="btn btn-primary btn-sm" href="/<?= $lang ?>/contact/"><?= $t('cta.quote') ?></a>
     </nav>
-    <div class="header-actions">
-      <?= View::render('ui/langswitch', ['lang' => $lang, 'path' => $path ?? '']) ?>
-      <button class="icon-btn menu-btn" type="button" data-sheet-open aria-expanded="false" aria-controls="sheet" aria-label="<?= $t('a11y.menu') ?>">
-        <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
-      </button>
-    </div>
+    <?= View::render('ui/langswitch', ['lang' => $lang, 'path' => $path ?? '']) ?>
+    <button class="icon-btn menu-btn" type="button" data-sheet-open aria-expanded="false" aria-controls="sheet" aria-label="<?= $t('a11y.menu') ?>">
+      <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+    </button>
   </div>
 </header>
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="<?= $t('a11y.menu') ?>" hidden>
