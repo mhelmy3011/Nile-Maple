@@ -11,13 +11,18 @@ $jsBundles = ['base', 'listing'];
 </div>
 <div class="filterbar" data-filterbar>
   <div class="container filter-row">
-    <label class="sr-only" for="q"><?= I18n::t('listing.search') ?></label>
-    <input id="q" type="search" inputmode="search" autocomplete="off" placeholder="<?= I18n::t('listing.search') ?>" value="<?= View::e($q) ?>" data-filter-q>
-    <label class="sr-only" for="sort"><?= I18n::t('listing.sort') ?></label>
-    <select id="sort" data-filter-sort>
-      <option value="order"><?= I18n::t('listing.sort.order') ?></option>
-      <option value="az"><?= I18n::t('listing.sort.az') ?></option>
-    </select>
+    <div class="filter-search">
+      <svg class="filter-search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="m16.5 16.5 4 4" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+      <label class="sr-only" for="q"><?= I18n::t('listing.search') ?></label>
+      <input id="q" type="search" inputmode="search" autocomplete="off" placeholder="<?= I18n::t('listing.search') ?>" value="<?= View::e($q) ?>" data-filter-q>
+    </div>
+    <div class="filter-sort">
+      <label class="sr-only" for="sort"><?= I18n::t('listing.sort') ?></label>
+      <select id="sort" data-filter-sort>
+        <option value="order"><?= I18n::t('listing.sort.order') ?></option>
+        <option value="az"><?= I18n::t('listing.sort.az') ?></option>
+      </select>
+    </div>
     <span class="filter-count tabular" role="status" aria-live="polite"><?= I18n::t('listing.count', ['n' => $total]) ?></span>
   </div>
 </div>

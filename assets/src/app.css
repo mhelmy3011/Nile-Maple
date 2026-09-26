@@ -96,14 +96,13 @@ html[dir="rtl"] .chev,html[dir="rtl"] .cs-more .i,html[dir="rtl"] .tab-all .i,ht
 /* touch target: the logo mark alone renders at 36x31 — under the 44px floor (axe-core /
    Finalization-Plan D-05). --header-h is 56px, so 7px of block padding reaches 44px+ with room
    to spare, purely enlarging the tap area (flex align-items:center keeps it visually centred). */
-.brand{display:flex;align-items:center;gap:var(--sp-2);text-decoration:none;margin-inline-end:auto;padding:7px 6px;margin-inline:-6px}
+.brand{display:flex;align-items:center;gap:var(--sp-2);text-decoration:none;padding:7px 6px;margin-inline-start:-6px;margin-inline-end:auto}
 .brand-mark{width:36px;height:31px}
 .brand-word{width:118px;height:25px}
 @media (max-width:379px){.brand-word{display:none}}
 .nav-desktop{display:none;align-items:center;gap:var(--sp-5)}
 .nav-desktop a{color:var(--text);text-decoration:none;font-weight:700;font-size:.9375rem;min-height:44px;display:inline-flex;align-items:center}
 .nav-desktop a[aria-current]{color:var(--green-700)}
-.header-actions{display:flex;align-items:center;gap:var(--sp-2)}
 .icon-btn{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border:0;background:none;color:var(--text);border-radius:var(--r-sm);cursor:pointer}
 @media (min-width:1024px){
   .nav-desktop{display:flex}.menu-btn{display:none}
@@ -410,11 +409,18 @@ html[dir="rtl"] .breadcrumbs li+li::before{content:"‹"}
 @media (min-width:1024px){.az-list{grid-template-columns:repeat(3,1fr)}}
 
 /* filter bar (category) */
-.filterbar{position:sticky;top:var(--header-h);z-index:50;background:var(--surface);border-block-end:1px solid var(--border);padding-block:var(--sp-2)}
-.filter-row{display:flex;gap:var(--sp-2);align-items:center}
-.filter-row input[type=search]{flex:1;min-height:44px;border:1.5px solid var(--border-strong);border-radius:var(--r-pill);padding-inline:var(--sp-4);font:inherit;background:var(--surface-2)}
-.filter-row select{min-height:44px;border:1.5px solid var(--border-strong);border-radius:var(--r-pill);padding-inline:var(--sp-3);font:inherit;font-weight:700;background:var(--surface)}
-.filter-count{font-size:.75rem;font-weight:800;color:var(--text-muted);white-space:nowrap}
+.filterbar{position:sticky;top:var(--header-h);z-index:50;background:var(--surface);border-block-end:1px solid var(--border);padding-block:var(--sp-3)}
+.filter-row{display:flex;gap:var(--sp-3);align-items:center}
+.filter-search{position:relative;flex:1;min-width:0}
+.filter-search-icon{position:absolute;inset-inline-start:var(--sp-3);top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--n-500);pointer-events:none}
+.filter-search input[type=search]{width:100%;min-height:44px;border:1.5px solid var(--border-strong);border-radius:var(--r-pill);padding-inline:calc(var(--sp-3) + 24px) var(--sp-4);font:inherit;font-size:.9375rem;background:var(--surface-2);transition:border-color .18s var(--ease),box-shadow .18s var(--ease)}
+.filter-search input[type=search]:focus{border-color:var(--green-600);box-shadow:0 0 0 3px color-mix(in srgb,var(--focus) 15%,transparent)}
+.filter-search input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none;width:18px;height:18px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='m6 6 12 12M18 6 6 18' stroke='%236d7d6f' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat;cursor:pointer}
+.filter-sort{flex:none}
+.filter-sort select{min-height:44px;border:1.5px solid var(--border-strong);border-radius:var(--r-pill);padding-inline:var(--sp-4) var(--sp-8);font:inherit;font-weight:700;font-size:.9375rem;background:var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='m7 10 5 5 5-5' fill='none' stroke='%236d7d6f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat;background-position:right var(--sp-3) center;background-size:16px;-webkit-appearance:none;appearance:none;cursor:pointer;transition:border-color .18s var(--ease)}
+html[dir="rtl"] .filter-sort select{background-position:left var(--sp-3) center}
+.filter-sort select:focus{border-color:var(--green-600);outline:3px solid color-mix(in srgb,var(--focus) 15%,transparent);outline-offset:0}
+.filter-count{font-size:.8125rem;font-weight:800;color:var(--text-muted);white-space:nowrap;background:var(--surface-2);border-radius:var(--r-pill);padding:4px 12px}
 .loadmore-wrap{text-align:center;margin-block-start:var(--sp-8)}
 
 /* product detail */

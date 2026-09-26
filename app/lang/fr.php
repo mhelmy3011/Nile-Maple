@@ -61,6 +61,7 @@ return [
  'faq.eyebrow' => 'FAQ', 'faq.title' => 'Questions fréquentes', 'faq.lead' => 'Produits, quantités, étiquetage, emballage, paiement, documents, fret et délais.',
  'faq.search' => 'Chercher une question…', 'faq.more' => 'Une autre question ? Contactez-nous',
  'faq.group.general' => 'Général', 'faq.group.products' => 'Produits', 'faq.group.packaging' => 'Emballage',
+ 'faq.group.company' => 'Société', 'faq.group.export' => 'Export', 'faq.group.quality' => 'Qualité', 'faq.group.seasonal' => 'Saisonnier',
  'faq.group.payment' => 'Paiement', 'faq.group.logistics' => 'Logistique', 'faq.group.documents' => 'Documents',
  'zone.eyebrow' => 'Savoir-faire', 'zone.quality-handling' => 'Qualité & manipulation', 'zone.packaging-logistics' => 'Emballage & logistique',
  'zone.seasonal-availability' => 'Disponibilité saisonnière', 'zone.export-documentation' => 'Documentation export',

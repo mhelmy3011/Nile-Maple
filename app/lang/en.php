@@ -61,6 +61,7 @@ return [
  'faq.eyebrow' => 'FAQ', 'faq.title' => 'Frequently asked questions', 'faq.lead' => 'Products, quantities, labelling, packing, payment, documents, freight and lead times.',
  'faq.search' => 'Search questions…', 'faq.more' => 'Still have a question? Contact us',
  'faq.group.general' => 'General', 'faq.group.products' => 'Products', 'faq.group.packaging' => 'Packaging',
+ 'faq.group.company' => 'Company', 'faq.group.export' => 'Export', 'faq.group.quality' => 'Quality', 'faq.group.seasonal' => 'Seasonal',
  'faq.group.payment' => 'Payment', 'faq.group.logistics' => 'Logistics', 'faq.group.documents' => 'Documents',
  'zone.eyebrow' => 'Capabilities', 'zone.quality-handling' => 'Quality & Handling', 'zone.packaging-logistics' => 'Packaging & Logistics',
  'zone.seasonal-availability' => 'Seasonal Availability', 'zone.export-documentation' => 'Export Documentation',
