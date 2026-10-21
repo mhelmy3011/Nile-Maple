@@ -2,7 +2,7 @@
 use Nm\I18n; use Nm\View;
 $t = static fn(string $k) => I18n::t($k);
 $nav = [
-    '' => $t('nav.home'), 'about' => $t('nav.about'), 'services' => $t('nav.services'),
+    '' => $t('nav.home'), 'about-us' => $t('nav.about'), 'services' => $t('nav.services'),
     'categories' => $t('nav.categories'), 'blog' => $t('nav.blog'), 'contact' => $t('nav.contact'), 'faq' => $t('nav.faq'),
 ];
 $current = trim($path ?? '', '/');

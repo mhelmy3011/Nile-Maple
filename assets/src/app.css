@@ -86,6 +86,9 @@ html[dir="rtl"] .chev,html[dir="rtl"] .cs-more .i,html[dir="rtl"] .tab-all .i,ht
 .topbar-link,.topbar-item{display:inline-flex;align-items:center;gap:6px;color:#fff;text-decoration:none;min-height:48px;flex:none}
 .topbar-link:hover{text-decoration:underline}
 .topbar .i{width:15px;height:15px;color:var(--amber-400)}
+.topbar-wa{color:#fff;display:inline-flex;align-items:center;gap:6px;background:var(--green-700);padding:0 12px;border-radius:24px;height:28px;text-decoration:none;font-weight:500;margin-inline-start:auto}
+.topbar-wa:hover{background:var(--green-800)}
+.topbar-wa .i{color:#fff !important;width:16px;height:16px}
 .topbar-social{color:#fff;display:inline-flex;width:48px;height:48px;flex:none;align-items:center;justify-content:center;border-radius:50%}
 .topbar-social:hover{background:rgba(255,255,255,.12)}
 .header{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--surface) 88%,transparent);backdrop-filter:blur(8px);

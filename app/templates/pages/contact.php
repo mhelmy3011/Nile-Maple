@@ -1,7 +1,6 @@
 <?php
 use Nm\Csrf; use Nm\I18n; use Nm\Settings; use Nm\View;
 $t = static fn(string $k) => I18n::t($k);
-$jsBundles = ['base', 'contact'];
 $pre = (string) ($query['product'] ?? '');
 ?>
 <div class="page-head">

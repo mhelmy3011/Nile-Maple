@@ -63,13 +63,11 @@ $n = 0;
 try {
     switch ($cmd) {
         case 'full':
-            foreach ($langs as $l) {
-                foreach (StaticBuilder::pageSpecs($l) as [$path, $page]) {
-                    $r = StaticBuilder::writePage($l, $path, $page);
-                    if (!$r['skipped']) $n++;
-                    if ($n % 100 === 0) fwrite(STDOUT, "  … $n pages\n");
-                }
-            }
+            /* delegate to buildAll so the CLI and the dashboard share one spec list (incl. aliases) */
+            $n = StaticBuilder::buildAll(static function (int $done) use (&$n): void {
+                $n = $done;
+                if ($done % 100 === 0) fwrite(STDOUT, "  … $done pages\n");
+            });
             break;
         case 'page':
             $path = (string) ($args[2] ?? '');

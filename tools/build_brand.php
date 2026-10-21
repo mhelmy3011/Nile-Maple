@@ -69,29 +69,42 @@ function nm_alpha_trim(string $png): ?GdImage
 function nm_split_lockup(GdImage $im): array
 {
     $w = imagesx($im); $h = imagesy($im);
-    $rowHas = [];
+    $rowHas = []; $rowColour = [];
     for ($y = 0; $y < $h; $y++) {
-        $on = 0;
+        $on = 0; $sat = 0;
         for ($x = 0; $x < $w; $x += 2) {
-            if (((imagecolorat($im, $x, $y) >> 24) & 0x7F) <= 100) { $on++; if ($on > 3) break; }
+            $c = imagecolorat($im, $x, $y);
+            if ((($c >> 24) & 0x7F) > 100) continue;                       // transparent
+            $on++;
+            $r = ($c >> 16) & 0xFF; $g = ($c >> 8) & 0xFF; $b = $c & 0xFF;
+            if (max($r, $g, $b) - min($r, $g, $b) > 40) $sat++;            // saturated (leaf red/green)
         }
         $rowHas[$y] = $on > 3;
+        $rowColour[$y] = $sat > 3;
     }
-    /* first significant empty band in the lower half = gap between symbol and lettering.
-       Use the first gap >= 3% of image height rather than the longest, so the AR lockup
-       splits between the maple leaf and the two-line Arabic text (not between the two lines). */
+    /* The mark is the coloured block at the top of the lockup; the lettering under it is slate
+       grey. Splitting at the FIRST empty band after the last coloured row is what keeps a
+       two-line AR wordmark whole — the leading between the Arabic lines is tighter than the
+       mark→text gap, so "tallest gap" would cut the brand name off. */
+    $lastColour = -1;
+    foreach ($rowColour as $y => $has) if ($has) $lastColour = $y;
     $minGap = max(5, (int) ($h * .03));
     $best = [0, 0]; $run = null;
-    for ($y = (int) ($h * .35); $y < $h; $y++) {
+    $from = $lastColour >= 0 ? $lastColour + 1 : (int) ($h * .35);
+    for ($y = $from; $y < $h; $y++) {
         if (!$rowHas[$y]) { $run ??= $y; continue; }
-        if ($run !== null) {
-            $gap = $y - $run;
-            if ($gap >= $minGap && $best[1] === 0) { $best = [$run, $y]; $run = null; break; }
-            if ($gap > $best[1] - $best[0]) $best = [$run, $y];
-        }
+        if ($run !== null && $y - $run >= $minGap) { $best = [$run, $y]; break; }
         $run = null;
     }
-    if ($run !== null && $h - $run > $best[1] - $best[0]) $best = [$run, $h];
+    if ($best[1] === 0) {                                                  // all-grey art: first band
+        $run = null;
+        for ($y = (int) ($h * .35); $y < $h; $y++) {
+            if (!$rowHas[$y]) { $run ??= $y; continue; }
+            if ($run !== null && $y - $run >= $minGap) { $best = [$run, $y]; break; }
+            $run = null;
+        }
+    }
+    if ($best[1] === 0 && $run !== null && $h - $run >= $minGap) $best = [$run, $h];
     $cut = $best[1] > 0 ? (int) round(($best[0] + $best[1]) / 2) : (int) ($h * .62);
 
     $crop = static function (GdImage $src, int $y0, int $y1) use ($w): GdImage {

@@ -14,9 +14,16 @@ namespace Nm;
 final class StaticBuilder
 {
     /** locale-independent pages (first entry is the home page) */
-    public const STRUCTURAL = ['', 'about', 'services', 'categories', 'blog', 'contact', 'faq',
+    public const STRUCTURAL = ['', 'about-us', 'services', 'categories', 'blog', 'contact', 'faq',
         'quality-handling', 'packaging-logistics', 'seasonal-availability', 'export-documentation',
         'privacy', 'terms'];
+
+    /**
+     * Legacy URLs kept alive as aliases of a STRUCTURAL page: they render (200) with the canonical
+     * page's meta/canonical, and are written to disk like any other page, but they are NOT in
+     * pageSpecs() so they never appear in the sitemaps.
+     */
+    public const ALIASES = ['about' => 'about-us'];
 
     public static function pageSpecs(string $lang): array
     {
@@ -77,6 +84,12 @@ final class StaticBuilder
                 $res = self::writePage($lang, $path, $page);
                 if (!$res['skipped']) $n++;
                 if ($progress) $progress($n, "$lang/$path" . ($page > 1 ? "/page-$page" : ''));
+            }
+            /* legacy aliases: written to disk (200 + canonical to the real page), never sitemapped */
+            foreach (array_keys(self::ALIASES) as $alias) {
+                $res = self::writePage($lang, $alias);
+                if (!$res['skipped']) $n++;
+                if ($progress) $progress($n, "$lang/$alias (alias)");
             }
         }
         self::sitemaps();

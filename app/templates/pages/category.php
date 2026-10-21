@@ -1,6 +1,5 @@
 <?php
 use Nm\I18n; use Nm\Media; use Nm\View;
-$jsBundles = ['base', 'listing'];
 ?>
 <div class="page-head page-head-compact">
   <div class="container">

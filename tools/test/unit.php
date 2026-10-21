@@ -12,7 +12,7 @@ require __DIR__ . '/bootstrap.php';
 
 use Nm\Audit; use Nm\Auth; use Nm\Alternates; use Nm\Cache; use Nm\Content; use Nm\Csrf; use Nm\Db;
 use Nm\I18n; use Nm\Icons; use Nm\Img; use Nm\Mailer; use Nm\Markdown; use Nm\Media; use Nm\RateLimit;
-use Nm\Routes; use Nm\Schema; use Nm\Seo; use Nm\Session; use Nm\Settings; use Nm\Slug; use Nm\Util;
+use Nm\Routes; use Nm\Schema; use Nm\Seo; use Nm\Session; use Nm\Settings; use Nm\Slug; use Nm\StaticBuilder; use Nm\Util;
 use Nm\Validator; use Nm\View;
 
 $P = $F = 0;
@@ -193,6 +193,14 @@ ok(Routes::match('products/test-orange')[0] === 'pages/product', 'Routes: produc
 ok(Routes::match('categories/fresh-fruits/page-2')[1]['page'] === 2, 'Routes: pagination marker');
 ok(Routes::match('page-2') === null, 'Routes: bare page-N rejected');
 ok(Routes::match('unknown-thing') === null, 'Routes: unknown → 404');
+/* /about is a legacy alias of /about-us: both resolve to the About template, and the canonical
+   path stays about-us so the old URL never competes with the new one in the index. */
+ok(Routes::match('about-us') === ['pages/about', [], 'about-us'], 'Routes: about-us canonical');
+ok(Routes::match('about') === ['pages/about', [], 'about-us'], 'Routes: /about aliases about-us (canonical path)');
+foreach (StaticBuilder::ALIASES as $alias => $target) {
+    ok(in_array($target, StaticBuilder::STRUCTURAL, true), "StaticBuilder: alias $alias → $target is a structural page");
+    ok(!in_array($alias, StaticBuilder::STRUCTURAL, true), "StaticBuilder: alias $alias is not sitemapped as its own page");
+}
 
 /* ── Mailer (dry-run, UTF-8 Arabic) ───────────────────────────────────────────────── */
 I18n::boot('ar');

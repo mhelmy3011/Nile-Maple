@@ -31,7 +31,8 @@ final class PublicController
                 /* D-03/D-04: the hero image is the LCP candidate — preload the ~viewport-size file */
                 $heroBlocks = $data['hero'] ?? [];
                 $heroPl = $heroBlocks ? Content::blockPayload($heroBlocks[0]) : [];
-                $data['preload'] = !empty($heroPl['media_id']) ? Media::url((int) $heroPl['media_id'], 800, 'webp') : null;
+                $mid = !empty($heroPl['media_id']) ? (int) $heroPl['media_id'] : (!empty($heroPl['media']) ? (int) \Nm\Db::val('SELECT id FROM media WHERE source_ref=?', [$heroPl['media']]) : 0);
+                $data['preload'] = $mid ? Media::url($mid, 800, 'webp') : null;
                 /* D-09: the home renders a visible FAQ section and a featured grid — they carry schema */
                 $feat = [];
                 foreach ($data['featuredByCat'] as $fc) {
@@ -48,8 +49,8 @@ final class PublicController
                 foreach (['about:intro', 'about:purpose', 'about:history', 'about:work', 'about:quality', 'about:export', 'about:progress', 'about:leadership', 'about:vision'] as $z) {
                     $data['blocks'][$z] = Content::blocks($z, $lang);
                 }
-                $data['crumbs'][] = [I18n::t('nav.about'), Seo::urlFor($lang, 'about')];
-                $data['ld'][] = Seo::aboutPage(Seo::urlFor($lang, 'about'));   /* D-09 */
+                $data['crumbs'][] = [I18n::t('nav.about'), Seo::urlFor($lang, 'about-us')];
+                $data['ld'][] = Seo::aboutPage(Seo::urlFor($lang, 'about-us'));   /* D-09 */
                 $fb = ['title' => I18n::t('seo.about.title'), 'description' => I18n::t('seo.about.desc')];
                 break;
             case 'pages/services':
@@ -70,6 +71,7 @@ final class PublicController
                 break;
             case 'pages/categories':
                 $data['categories'] = Content::categories($lang);
+                $data['jsBundles'] = ['base', 'listing'];
                 $data['products'] = Content::products($lang, null, 1, '', 'az');
                 $data['crumbs'][] = [I18n::t('nav.categories'), Seo::urlFor($lang, 'categories')];
                 $fb = ['title' => I18n::t('seo.categories.title'), 'description' => I18n::t('seo.categories.desc')];
@@ -80,6 +82,7 @@ final class PublicController
                 $page = max(1, (int) ($params['page'] ?? $query['page'] ?? 1));
                 $q = trim((string) ($query['q'] ?? ''));
                 $data['cat'] = $c;
+                $data['jsBundles'] = ['base', 'listing'];
                 $data['pageNo'] = $page;
                 $data['q'] = $q;
                 $data['total'] = Content::productCount($lang, (int) $c['id'], $q);
@@ -125,6 +128,7 @@ final class PublicController
                 $post = Content::postBySlug($lang, $params['slug']);
                 if (!$post) return self::notFound($lang, $path);
                 $data['post'] = $post;
+                $data['jsBundles'] = ['base', 'post'];
                 $data['related'] = array_values(array_slice(array_filter(Content::posts($lang, 1, 6), fn($x) => $x['id'] != $post['id']), 0, 2));
                 $data['crumbs'][] = [I18n::t('nav.blog'), Seo::urlFor($lang, 'blog')];
                 $data['crumbs'][] = [$post['title'], Seo::urlFor($lang, "blog/{$post['slug']}")];
@@ -140,6 +144,7 @@ final class PublicController
                 }
                 $data['faqs'] = Content::faqs($lang, null, 3);
                 $data['crumbs'][] = [I18n::t('nav.contact'), Seo::urlFor($lang, 'contact')];
+                $data['jsBundles'] = ['base', 'contact'];
                 $data['ld'][] = ['@context' => 'https://schema.org', '@type' => 'ContactPage', 'name' => I18n::t('contact.title'), 'url' => Seo::urlFor($lang, 'contact')];
                 $fb = ['title' => I18n::t('seo.contact.title'), 'description' => I18n::t('seo.contact.desc')];
                 break;

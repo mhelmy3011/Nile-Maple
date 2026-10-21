@@ -1,6 +1,5 @@
 <?php
 use Nm\I18n; use Nm\Markdown; use Nm\Media; use Nm\View;
-$jsBundles = ['base', 'post'];
 ?>
 <div class="progress-bar" aria-hidden="true"></div>
 <div class="page-head page-head-compact">
