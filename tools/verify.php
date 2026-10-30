@@ -254,10 +254,10 @@ if ($crawl) {
     $broken = []; $seen = 0;
     foreach ($files($pub) as $f) {
         $rel = dirname(substr($f, strlen($pub)));
-        preg_match_all('#(?:href|src)="(/[^"#]*)"#', (string) file_get_contents($f), $mm);
+        preg_match_all('~(?:href|src)="(/[^"]*)"~', (string) file_get_contents($f), $mm);
         foreach (array_unique($mm[1]) as $u) {
             $seen++;
-            $p = parse_url($u, PHP_URL_PATH) ?: '/';
+            $p = rawurldecode(substr($u, 0, strcspn($u, '?#'))) ?: '/';
             if (str_starts_with($p, '/api/') || str_starts_with($p, '/manage')) continue;
             $t = $pub . rtrim($p, '/');
             if (is_file($t)) continue;

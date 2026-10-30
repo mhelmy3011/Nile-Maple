@@ -63,10 +63,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Install build asset tooling
+        run: npm ci --prefix tools/harness --no-audit --no-fund
       - name: Full bootstrap build (fresh DB, seed, seo_meta, hero, images, static rebuild)
         run: bash tools/build.sh --bootstrap
       - name: Deploy gate
-        run: php tools/verify.php
+        run: php tools/verify.php --links
       - name: Start dev server
         run: php -S 127.0.0.1:8080 -t public_html tools/dev_server.php &
       - name: Wait for the server
