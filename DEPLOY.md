@@ -98,8 +98,18 @@ Set before the first request:
 ```bash
 HOST=uXXXXXX@nilemaple.com REMOTE_ROOT=/home/uXXXXXX ./tools/deploy.sh --push
 # or: upload the tarball in hPanel → File Manager, extract in /home/uXXXXXX, then
-ssh uXXXXXX@nilemaple.com 'cd /home/uXXXXXX && php tools/rebuild.php -- full && php tools/verify.php'
+ssh uXXXXXX@nilemaple.com 'cd /home/uXXXXXX && php tools/migrate.php && php tools/rebuild.php full && php tools/verify.php --links'
 ```
+
+For an existing production site, `--push` refuses a missing or non-production config, backs up the
+application/config/database/public files, applies idempotent migrations, fully rebuilds from the
+existing database, and runs `verify.php --links`; any failed gate stops the deploy. It never replaces
+the live config or database.
+
+For a non-production code-only update, use `--code-only --push`. This requires the existing
+`dev`/SQLite/log-mail config, backs up the same files, and updates code plus the packaged static
+site without migrating, replacing, or rebuilding the database. It checks that all locale roots,
+assets manifest and sitemap were installed, but does not validate database-backed routes.
 
 Media (42 MB, 1 431 derivatives) is the slow part. `--no-media` skips it; upload
 `public_html/assets/media/` once over SFTP and re-run `deploy.sh --push` without the flag only when
